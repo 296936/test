@@ -1,0 +1,2 @@
+window.VCARD_MEDIA_LISTS ||= {};
+window.VCARD_MEDIA_LISTS[document.currentScript.src] = ["p01.jpg?v=f8f3e6327f36","m01.png?v=f64802443c1f","p02.jpg?v=e6b5430d0e80","m02.png?v=63d7c0b22ba8","p03.jpg?v=8b8f87c923c9","m03.png?v=ab792bc38335","p04.jpg?v=f6d60a121b91","m04.png?v=02963ddead63","p05.jpg?v=8e4b889fe759","m05.png?v=93c19516ba6c","p06.jpg?v=aba8b175c9af","m06.png?v=8d7620811c72","p07.jpg?v=d84ec59e91e8","m07.png?v=afc0cae129e6"];
