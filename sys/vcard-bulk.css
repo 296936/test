@@ -405,7 +405,6 @@ body::after {
   color: black;
   background-color: transparent;
   -webkit-text-stroke: 0 transparent;
-  filter: brightness(1.08);
   outline: none;
 }
 
@@ -2591,85 +2590,10 @@ html.vcard-settings-dialog-open {
   pointer-events: none;
 }
 
-/* Advanced player surface wear. One mask spans the complete two-storey dock
-   instead of restarting independently inside each control row. */
-.vcard-player-dock:not(.is-simplified) {
-  isolation: isolate;
-}
-
-.vcard-player-dock:not(.is-simplified) .vcard-player-topline,
-.vcard-player-dock:not(.is-simplified) .vcard-player-secondline,
-.vcard-player-dock:not(.is-simplified) > .plyr,
-.vcard-player-dock:not(.is-simplified) .plyr--audio .plyr__controls {
-  background: transparent !important;
-}
-
-.vcard-player-dock:not(.is-simplified) .plyr__progress__container,
-.vcard-player-dock:not(.is-simplified) .plyr__volume {
-  background: var(--vc-player-clean-control-background, black);
-}
-
-.vcard-player-dock:not(.is-simplified) > * {
-  position: relative;
-  z-index: 1;
-}
-
+/* Player title edge shading is CSS-only and applies in both player modes. */
 .vcard-player-dock .vcard-player-title {
   position: relative;
   isolation: isolate;
-}
-
-.vcard-player-dock:not(.is-simplified)::before,
-.vcard-player-dock:not(.is-simplified)::after {
-  content: "";
-  position: absolute;
-  z-index: 0;
-  inset: 0;
-  pointer-events: none;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-}
-
-.vcard-player-dock:not(.is-simplified)::before {
-  background-image:
-    linear-gradient(var(--vc-player-color), var(--vc-player-color)),
-    var(--vc-player-material-image, none);
-  background-blend-mode: multiply;
-  opacity: 0.82;
-}
-
-.vcard-player-dock:not(.is-simplified)::after {
-  background: var(--vc-player-color);
-  opacity: 0.14;
-  -webkit-mask-image: var(--vc-player-texture-image, none);
-  mask-image: var(--vc-player-texture-image, none);
-  -webkit-mask-position: center;
-  mask-position: center;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-size: 100% 100%;
-  mask-size: 100% 100%;
-}
-
-:root[data-color-preset="newspaper"]
-  .vcard-player-dock:not(.is-simplified)::before {
-  background-color: transparent;
-  background-image: var(--vc-player-material-image, none);
-  background-blend-mode: normal;
-  filter: invert(1);
-  opacity: 0.34;
-}
-
-:root[data-color-preset="newspaper"]
-  .vcard-player-dock:not(.is-simplified)::after {
-  background: black;
-  opacity: 0.16;
-}
-
-:root[data-color-preset="newspaper"]
-  .vcard-player-dock:not(.is-simplified) {
-  --vc-player-clean-control-background: white;
 }
 
 .vcard-player-dock .vcard-player-title::before {
@@ -2680,15 +2604,19 @@ html.vcard-settings-dialog-open {
   background: linear-gradient(
     90deg,
     rgba(0, 0, 0, 0.88) 0%,
-    rgba(0, 0, 0, 0.72) 7%,
-    rgba(0, 0, 0, 0.2) 11%,
-    transparent 15%,
-    transparent 85%,
-    rgba(0, 0, 0, 0.2) 89%,
-    rgba(0, 0, 0, 0.72) 93%,
+    rgba(0, 0, 0, 0.72) 3%,
+    rgba(0, 0, 0, 0.2) 5.5%,
+    transparent 8%,
+    transparent 92%,
+    rgba(0, 0, 0, 0.2) 94.5%,
+    rgba(0, 0, 0, 0.72) 97%,
     rgba(0, 0, 0, 0.88) 100%
   );
   pointer-events: none;
+}
+
+:root[data-vis-bri="0"] .vcard-player-dock .vcard-player-title::before {
+  display: none;
 }
 
 .vcard-player-dock .vcard-player-title > * {
@@ -2727,4 +2655,50 @@ html.vcard-settings-dialog-open {
 .song__track-verse.is-active::after {
   content: none;
   display: none;
+}
+
+/* Background brightness 0 is the global quiet rendering mode.  Keep tinting,
+   masks, borders and control state intact, but remove decorative light from
+   page content and stop every Portal TV motion layer. */
+:root[data-vis-bri="0"] * {
+  text-shadow: none !important;
+}
+
+:root[data-vis-bri="0"] [ids="sun"] h1::before {
+  display: none;
+}
+
+:root[data-vis-bri="0"] :is(
+  .frame-shadow,
+  .frame-glow,
+  .shadow-mid,
+  .shadow-large,
+  .image-vibeframe,
+  .song-vibeframe,
+  .vcard-player-dock.has-player.is-simplified
+) {
+  box-shadow: none !important;
+}
+
+:root[data-vis-bri="0"] a.song-video-link img {
+  filter:
+    url("#vc-video-logo-tint")
+    brightness(1.3)
+    saturate(1.12);
+}
+
+:root[data-vis-bri="0"]
+  a.song-video-link:is(:hover, :focus-visible, :active, .is-active)
+  img {
+  filter:
+    url("#vc-video-logo-tint")
+    grayscale(1)
+    brightness(0.22)
+    contrast(1.5);
+}
+
+:root[data-vis-bri="0"] :is(.image-vibeframe, .song-vibeframe),
+:root[data-vis-bri="0"] :is(.image-vibeframe, .song-vibeframe) * {
+  animation: none !important;
+  transition-duration: 0s !important;
 }

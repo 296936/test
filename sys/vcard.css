@@ -58,7 +58,7 @@
   --list-inline-padding: 5px;
   --portal-small-width: min(35vw, 420px);
   --vc-h-divider-image: url("v_divs/divider-01.png");
-  --playlist-cassette-tint: color-mix(in srgb, var(--vc-muted) 25%, white);
+  --playlist-cassette-tint: var(--vc-muted);
   --playlist-cassette-width: clamp(30px, calc(var(--font-size) * 1.65), 38px);
   --playlist-cassette-height: calc(var(--font-size) * 10.75);
 }
@@ -443,6 +443,7 @@ a.song-video-link:is(:hover, :focus-visible, :active, .is-active)
 }
 
 .tabs-block {
+  --playlist-cassette-glow-room: 24px;
   position: relative;
   display: flex;
   flex-wrap: nowrap;
@@ -452,7 +453,11 @@ a.song-video-link:is(:hover, :focus-visible, :active, .is-active)
   width: 100%;
   max-width: 100%;
   min-height: 20px;
-  padding: 0 0 10px;
+  margin-block: calc(-1 * var(--playlist-cassette-glow-room));
+  padding:
+    var(--playlist-cassette-glow-room)
+    0
+    calc(10px + var(--playlist-cassette-glow-room));
   overflow-x: auto;
   overflow-y: hidden;
   overscroll-behavior-inline: contain;
@@ -462,7 +467,10 @@ a.song-video-link:is(:hover, :focus-visible, :active, .is-active)
 
 .tabs-block--bottom {
   align-items: flex-start;
-  padding-top: 10px;
+  padding:
+    calc(10px + var(--playlist-cassette-glow-room))
+    0
+    var(--playlist-cassette-glow-room);
 }
 
 .tabs__item {
@@ -478,7 +486,10 @@ a.song-video-link:is(:hover, :focus-visible, :active, .is-active)
   height: var(--playlist-cassette-height);
   margin: 0;
   padding: 0.15em 0.1em;
+  overflow: hidden;
+  border-radius: 4px;
   color: black;
+  font-family: var(--vc-page-font);
   font-size: 82%;
   font-weight: 700;
   text-align: center;
@@ -506,12 +517,13 @@ a.song-video-link:is(:hover, :focus-visible, :active, .is-active)
   inset: 0;
   z-index: -1;
   pointer-events: none;
+  border-radius: inherit;
   background-color: var(--playlist-cassette-tint);
   background-image: url("playlist-cassette/passive.webp");
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100% 100%;
-  background-blend-mode: multiply;
+  background-blend-mode: soft-light;
   -webkit-mask-image: url("playlist-cassette/passive.webp");
   mask-image: url("playlist-cassette/passive.webp");
   -webkit-mask-repeat: no-repeat;
@@ -521,7 +533,6 @@ a.song-video-link:is(:hover, :focus-visible, :active, .is-active)
   -webkit-mask-size: 100% 100%;
   mask-size: 100% 100%;
   transform: rotate(180deg);
-  filter: brightness(1.35);
   transition: filter 180ms ease;
 }
 
@@ -529,25 +540,18 @@ a.song-video-link:is(:hover, :focus-visible, :active, .is-active)
   top: 10px;
   z-index: 2;
   --playlist-cassette-tint: var(--vc-acc);
-}
-
-html:is([data-color-preset="duo"], [data-color-preset="mono"]) .tabs__item {
-  --playlist-cassette-tint: var(
-    --playlist-cassette-session-page,
-    var(--vc-page)
-  );
-  --playlist-cassette-glow: var(--playlist-cassette-session-accent, var(--vc-acc));
+  --playlist-cassette-glow: var(--vc-acc);
 }
 
 .tabs-block--bottom .tabs__item.is-active {
   top: -10px;
 }
 
-.tabs__item.is-active::before {
-  filter:
-    brightness(1.45)
-    drop-shadow(0 0 3px var(--playlist-cassette-glow, var(--playlist-cassette-tint)))
-    drop-shadow(0 0 9px color-mix(in srgb, var(--playlist-cassette-glow, var(--playlist-cassette-tint)) 82%, transparent));
+:root:not([data-vis-bri="0"]) .tabs__item.is-active {
+  box-shadow:
+    0 0 3px 1px color-mix(in srgb, var(--playlist-cassette-glow) 88%, transparent),
+    0 0 9px 3px color-mix(in srgb, var(--playlist-cassette-glow) 58%, transparent),
+    0 0 18px 5px color-mix(in srgb, var(--playlist-cassette-glow) 30%, transparent);
 }
 
 .list {

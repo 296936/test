@@ -69,7 +69,7 @@
   --list-inline-padding: 5px;
   --portal-small-width: min(35vw, 420px);
   --vc-h-divider-image: url("sys/v_divs/divider-01.png");
-  --playlist-cassette-tint: color-mix(in srgb, var(--vc-muted) 25%, white);
+  --playlist-cassette-tint: var(--vc-muted);
   --playlist-cassette-width: clamp(30px, calc(var(--font-size) * 1.65), 38px);
   --playlist-cassette-height: calc(var(--font-size) * 10.75);
 }
@@ -454,6 +454,7 @@ a.song-video-link:is(:hover, :focus-visible, :active, .is-active)
 }
 
 .tabs-block {
+  --playlist-cassette-glow-room: 24px;
   position: relative;
   display: flex;
   flex-wrap: nowrap;
@@ -463,7 +464,11 @@ a.song-video-link:is(:hover, :focus-visible, :active, .is-active)
   width: 100%;
   max-width: 100%;
   min-height: 20px;
-  padding: 0 0 10px;
+  margin-block: calc(-1 * var(--playlist-cassette-glow-room));
+  padding:
+    var(--playlist-cassette-glow-room)
+    0
+    calc(10px + var(--playlist-cassette-glow-room));
   overflow-x: auto;
   overflow-y: hidden;
   overscroll-behavior-inline: contain;
@@ -473,7 +478,10 @@ a.song-video-link:is(:hover, :focus-visible, :active, .is-active)
 
 .tabs-block--bottom {
   align-items: flex-start;
-  padding-top: 10px;
+  padding:
+    calc(10px + var(--playlist-cassette-glow-room))
+    0
+    var(--playlist-cassette-glow-room);
 }
 
 .tabs__item {
@@ -489,7 +497,10 @@ a.song-video-link:is(:hover, :focus-visible, :active, .is-active)
   height: var(--playlist-cassette-height);
   margin: 0;
   padding: 0.15em 0.1em;
+  overflow: hidden;
+  border-radius: 4px;
   color: black;
+  font-family: var(--vc-page-font);
   font-size: 82%;
   font-weight: 700;
   text-align: center;
@@ -517,12 +528,13 @@ a.song-video-link:is(:hover, :focus-visible, :active, .is-active)
   inset: 0;
   z-index: -1;
   pointer-events: none;
+  border-radius: inherit;
   background-color: var(--playlist-cassette-tint);
   background-image: url("sys/playlist-cassette/passive.webp");
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100% 100%;
-  background-blend-mode: multiply;
+  background-blend-mode: soft-light;
   -webkit-mask-image: url("sys/playlist-cassette/passive.webp");
   mask-image: url("sys/playlist-cassette/passive.webp");
   -webkit-mask-repeat: no-repeat;
@@ -532,7 +544,6 @@ a.song-video-link:is(:hover, :focus-visible, :active, .is-active)
   -webkit-mask-size: 100% 100%;
   mask-size: 100% 100%;
   transform: rotate(180deg);
-  filter: brightness(1.35);
   transition: filter 180ms ease;
 }
 
@@ -540,25 +551,18 @@ a.song-video-link:is(:hover, :focus-visible, :active, .is-active)
   top: 10px;
   z-index: 2;
   --playlist-cassette-tint: var(--vc-acc);
-}
-
-html:is([data-color-preset="duo"], [data-color-preset="mono"]) .tabs__item {
-  --playlist-cassette-tint: var(
-    --playlist-cassette-session-page,
-    var(--vc-page)
-  );
-  --playlist-cassette-glow: var(--playlist-cassette-session-accent, var(--vc-acc));
+  --playlist-cassette-glow: var(--vc-acc);
 }
 
 .tabs-block--bottom .tabs__item.is-active {
   top: -10px;
 }
 
-.tabs__item.is-active::before {
-  filter:
-    brightness(1.45)
-    drop-shadow(0 0 3px var(--playlist-cassette-glow, var(--playlist-cassette-tint)))
-    drop-shadow(0 0 9px color-mix(in srgb, var(--playlist-cassette-glow, var(--playlist-cassette-tint)) 82%, transparent));
+:root:not([data-vis-bri="0"]) .tabs__item.is-active {
+  box-shadow:
+    0 0 3px 1px color-mix(in srgb, var(--playlist-cassette-glow) 88%, transparent),
+    0 0 9px 3px color-mix(in srgb, var(--playlist-cassette-glow) 58%, transparent),
+    0 0 18px 5px color-mix(in srgb, var(--playlist-cassette-glow) 30%, transparent);
 }
 
 .list {
@@ -1213,7 +1217,6 @@ body::after {
   color: black;
   background-color: transparent;
   -webkit-text-stroke: 0 transparent;
-  filter: brightness(1.08);
   outline: none;
 }
 
@@ -3399,85 +3402,10 @@ html.vcard-settings-dialog-open {
   pointer-events: none;
 }
 
-/* Advanced player surface wear. One mask spans the complete two-storey dock
-   instead of restarting independently inside each control row. */
-.vcard-player-dock:not(.is-simplified) {
-  isolation: isolate;
-}
-
-.vcard-player-dock:not(.is-simplified) .vcard-player-topline,
-.vcard-player-dock:not(.is-simplified) .vcard-player-secondline,
-.vcard-player-dock:not(.is-simplified) > .plyr,
-.vcard-player-dock:not(.is-simplified) .plyr--audio .plyr__controls {
-  background: transparent !important;
-}
-
-.vcard-player-dock:not(.is-simplified) .plyr__progress__container,
-.vcard-player-dock:not(.is-simplified) .plyr__volume {
-  background: var(--vc-player-clean-control-background, black);
-}
-
-.vcard-player-dock:not(.is-simplified) > * {
-  position: relative;
-  z-index: 1;
-}
-
+/* Player title edge shading is CSS-only and applies in both player modes. */
 .vcard-player-dock .vcard-player-title {
   position: relative;
   isolation: isolate;
-}
-
-.vcard-player-dock:not(.is-simplified)::before,
-.vcard-player-dock:not(.is-simplified)::after {
-  content: "";
-  position: absolute;
-  z-index: 0;
-  inset: 0;
-  pointer-events: none;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-}
-
-.vcard-player-dock:not(.is-simplified)::before {
-  background-image:
-    linear-gradient(var(--vc-player-color), var(--vc-player-color)),
-    var(--vc-player-material-image, none);
-  background-blend-mode: multiply;
-  opacity: 0.82;
-}
-
-.vcard-player-dock:not(.is-simplified)::after {
-  background: var(--vc-player-color);
-  opacity: 0.14;
-  -webkit-mask-image: var(--vc-player-texture-image, none);
-  mask-image: var(--vc-player-texture-image, none);
-  -webkit-mask-position: center;
-  mask-position: center;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-size: 100% 100%;
-  mask-size: 100% 100%;
-}
-
-:root[data-color-preset="newspaper"]
-  .vcard-player-dock:not(.is-simplified)::before {
-  background-color: transparent;
-  background-image: var(--vc-player-material-image, none);
-  background-blend-mode: normal;
-  filter: invert(1);
-  opacity: 0.34;
-}
-
-:root[data-color-preset="newspaper"]
-  .vcard-player-dock:not(.is-simplified)::after {
-  background: black;
-  opacity: 0.16;
-}
-
-:root[data-color-preset="newspaper"]
-  .vcard-player-dock:not(.is-simplified) {
-  --vc-player-clean-control-background: white;
 }
 
 .vcard-player-dock .vcard-player-title::before {
@@ -3488,15 +3416,19 @@ html.vcard-settings-dialog-open {
   background: linear-gradient(
     90deg,
     rgba(0, 0, 0, 0.88) 0%,
-    rgba(0, 0, 0, 0.72) 7%,
-    rgba(0, 0, 0, 0.2) 11%,
-    transparent 15%,
-    transparent 85%,
-    rgba(0, 0, 0, 0.2) 89%,
-    rgba(0, 0, 0, 0.72) 93%,
+    rgba(0, 0, 0, 0.72) 3%,
+    rgba(0, 0, 0, 0.2) 5.5%,
+    transparent 8%,
+    transparent 92%,
+    rgba(0, 0, 0, 0.2) 94.5%,
+    rgba(0, 0, 0, 0.72) 97%,
     rgba(0, 0, 0, 0.88) 100%
   );
   pointer-events: none;
+}
+
+:root[data-vis-bri="0"] .vcard-player-dock .vcard-player-title::before {
+  display: none;
 }
 
 .vcard-player-dock .vcard-player-title > * {
@@ -3535,6 +3467,52 @@ html.vcard-settings-dialog-open {
 .song__track-verse.is-active::after {
   content: none;
   display: none;
+}
+
+/* Background brightness 0 is the global quiet rendering mode.  Keep tinting,
+   masks, borders and control state intact, but remove decorative light from
+   page content and stop every Portal TV motion layer. */
+:root[data-vis-bri="0"] * {
+  text-shadow: none !important;
+}
+
+:root[data-vis-bri="0"] [ids="sun"] h1::before {
+  display: none;
+}
+
+:root[data-vis-bri="0"] :is(
+  .frame-shadow,
+  .frame-glow,
+  .shadow-mid,
+  .shadow-large,
+  .image-vibeframe,
+  .song-vibeframe,
+  .vcard-player-dock.has-player.is-simplified
+) {
+  box-shadow: none !important;
+}
+
+:root[data-vis-bri="0"] a.song-video-link img {
+  filter:
+    url("#vc-video-logo-tint")
+    brightness(1.3)
+    saturate(1.12);
+}
+
+:root[data-vis-bri="0"]
+  a.song-video-link:is(:hover, :focus-visible, :active, .is-active)
+  img {
+  filter:
+    url("#vc-video-logo-tint")
+    grayscale(1)
+    brightness(0.22)
+    contrast(1.5);
+}
+
+:root[data-vis-bri="0"] :is(.image-vibeframe, .song-vibeframe),
+:root[data-vis-bri="0"] :is(.image-vibeframe, .song-vibeframe) * {
+  animation: none !important;
+  transition-duration: 0s !important;
 }
 
 </style>
@@ -3772,11 +3750,11 @@ body::before {
   
 
   <!-- VCARD_UI_BEG -->
-  <script id="vcard-ui">window.VCardUI={"player":{"volume":"ГРОМКОСТЬ","close":"ЗАКРЫТЬ"},"hints":{"playerNight":"[L]=Переключиться на схему НОЧЬ","playerMono":"[L]=Переключиться на схему МОНО","playerDuo":"[L]=Переключиться на схему ДУО","playerNews":"[L]=Переключиться на схему ГАЗЕТА","playerSettings":"[L]=Настройки","playerPrevious":"[L]=Предыдущая дорожка [R]=Уменьшить яркость фона, 0=всё выкл (%CUR_BRIGHT%)","playerPlay":"[L-Click]=Играть дорожку (%CUR_TRACK_NO%/%TOTAL_TRACKS_IN_LIST%) [R-Click]=Переключить отслеживание куплета","playerTitle":"[L]=Переключить размер картинок [R]=Переключить видимость картинок","playerNext":"[L]=Следующая дорожка [R]=Увеличить яркость фона (%CUR_BRIGHT%)","playerSound":"[L]=Приглушить звук","playerBackgroundWallpaper":"Фон: ОБОИ","playerBackgroundGraph1":"Фон: ГРАФИК1","playerBackgroundGraph2":"Фон: ГРАФИК2","playerBackgroundSmoke":"Фон: ДЫМ","playerPortalSize":"[L]=Размер и видимость картинок","playerFontScale":"[L]=Размер шрифта","playerBrightness":"[L]=Яркость фона: %CUR_BRIGHT%, 0=всё выкл","player0":"Картинки ВЫКЛ","player1":"Картинки МАЛЫЕ","player2":"Картинки СРЕДНИЕ","player3":"Картинки ВЭКРАН"},"vcardDatetime":"2026-09-02T17:45:44.032226","settingsHtml":"<div class=\"vcard-settings\"><span class=\"mp3-block\">Песня\n  %AUTHOR% - %TIT%\n  %SOUND% %MP3INFO%\n  <a href=\"#\" sd-opt=\"get-link\">Копировать ссылку<\/a>&mdash;<a href=\"#\" sd-opt=\"save-mp3\">Сохранить звук<\/a>\n\n<\/span>Размер текста\n  <a href=\"#\" sd-opt=\"fontScale\" sd-val=\"xs\">x1<\/a>&mdash;<a href=\"#\" sd-opt=\"fontScale\" sd-val=\"s\">x2<\/a>&mdash;<a href=\"#\" sd-opt=\"fontScale\" sd-val=\"m\">x3<\/a>&mdash;<a href=\"#\" sd-opt=\"fontScale\" sd-val=\"l\">x4<\/a>&mdash;<a href=\"#\" sd-opt=\"fontScale\" sd-val=\"xl\">x5<\/a>\n\nЦветовая схема\n  <a href=\"#\" dd-preset=\"night\">НОЧЬ<\/a>&mdash;<a href=\"#\" dd-preset=\"mono\">МОНО<\/a>&mdash;<a href=\"#\" dd-preset=\"duo\">ДУО<\/a>&mdash;<a href=\"#\" dd-preset=\"newspaper\">ГАЗЕТА<\/a>\n\nФон страницы\n  <a href=\"#\" sd-opt=\"brightness\" sd-val=\"0\" data-background-off>Выкл<\/a>&mdash;<a href=\"#\" sd-opt=\"background\" sd-val=\"wallpaper\">Обои<\/a>&mdash;<a href=\"#\" sd-opt=\"background\" sd-val=\"graph1\">График1<\/a>&mdash;<a href=\"#\" sd-opt=\"background\" sd-val=\"graph2\">График2<\/a>&mdash;<a href=\"#\" sd-opt=\"background\" sd-val=\"smoke\">Дым<\/a>\n  Яркость фона\n    <a href=\"#\" sd-opt=\"brightness\" sd-val=\"0\">x0<\/a>&mdash;<a href=\"#\" sd-opt=\"brightness\" sd-val=\"1\">x1<\/a>&mdash;<a href=\"#\" sd-opt=\"brightness\" sd-val=\"2\">x2<\/a>&mdash;<a href=\"#\" sd-opt=\"brightness\" sd-val=\"3\">x3<\/a>&mdash;<a href=\"#\" sd-opt=\"brightness\" sd-val=\"4\">x4<\/a>&mdash;<a href=\"#\" sd-opt=\"brightness\" sd-val=\"5\">x5<\/a>\n\nПлеер\n  Вид\n    <a href=\"#\" sd-opt=\"playerSimplified\" sd-val=\"on\">Упрощенный<\/a>&mdash;<a href=\"#\" sd-opt=\"playerSimplified\" sd-val=\"off\">Расширенный<\/a>\n  Показывать картинки\n    <span data-settings-portal-choice=\"off\"><a href=\"#\" sd-opt=\"portalSize\" sd-val=\"off\">ВЫКЛЮЧЕНЫ<\/a><\/span><span data-settings-portal-choice=\"small\">&mdash;<a href=\"#\" sd-opt=\"portalSize\" sd-val=\"small\">МАЛЫЕ<\/a><\/span><span data-settings-portal-choice=\"mid\">&mdash;<a href=\"#\" sd-opt=\"portalSize\" sd-val=\"mid\">СРЕДНИЕ<\/a><\/span><span data-settings-portal-choice=\"full\">&mdash;<a href=\"#\" sd-opt=\"portalSize\" sd-val=\"full\">ПОЛНЫЙЭКРАН<\/a><\/span>\n  Случайные цвета для нового плейлиста\n    <a href=\"#\" sd-opt=\"randomColor\" sd-val=\"on\">Да<\/a>&mdash;<a href=\"#\" sd-opt=\"randomColor\" sd-val=\"off\">Нет<\/a>\n  Автосмена куплета\n    <a href=\"#\" sd-opt=\"trackPlay\" sd-val=\"on\">Да<\/a>&mdash;<a href=\"#\" sd-opt=\"trackPlay\" sd-val=\"off\">Нет<\/a>\n  Усиление громкости\n    <a href=\"#\" sd-opt=\"volumeBoost\" sd-val=\"1\">x1<\/a>&mdash;<a href=\"#\" sd-opt=\"volumeBoost\" sd-val=\"1.5\">x1.5<\/a>&mdash;<a href=\"#\" sd-opt=\"volumeBoost\" sd-val=\"2\">x2<\/a>&mdash;<a href=\"#\" sd-opt=\"volumeBoost\" sd-val=\"3\">x3<\/a>\n  Чередование плейлистов\n    <a href=\"#\" sd-opt=\"playlistAlternation\" sd-val=\"none\">НЕТ<\/a>&mdash;<a href=\"#\" sd-opt=\"playlistAlternation\" sd-val=\"previous\">ВПРОШЛОЕ<\/a>&mdash;<a href=\"#\" sd-opt=\"playlistAlternation\" sd-val=\"next\">ВБУДУЩЕЕ<\/a>&mdash;<a href=\"#\" sd-opt=\"playlistAlternation\" sd-val=\"random\">СЛУЧАЙНО<\/a>\n  Чередование песен\n    <a href=\"#\" sd-opt=\"songAlternation\" sd-val=\"none\">НЕТ<\/a>&mdash;<a href=\"#\" sd-opt=\"songAlternation\" sd-val=\"sequential\">ПОДРЯД<\/a>&mdash;<a href=\"#\" sd-opt=\"songAlternation\" sd-val=\"random\">СЛУЧАЙНО<\/a>\n\nКэш\n  <a href=\"#\" sd-opt=\"mediaCache\" sd-val=\"preload\" data-media-cache-preload>ПРОГРУЗИТЬВСЁ<\/a>&mdash;<a href=\"#\" sd-opt=\"mediaCache\" sd-val=\"clear\">ОЧИСТИТЬ<\/a>&mdash;<a href=\"debug.html\" target=\"_blank\" rel=\"noopener\">ДЕТАЛИ<\/a>\n  На сайте\n    <span data-media-cache-total-files>…<\/span> ФАЙЛОВ = <span data-media-cache-total-size>…<\/span>\n  В Кэше\n    <span data-media-cache-summary>считаем…<\/span>\n  За сеанс\n    <span data-media-stat=\"files-req\">%FILES_REQ%<\/span> файлов запрошено = <span data-media-stat=\"files-cached\">%FILES_CACHED%<\/span> кэшировано + <span data-media-stat=\"files-dl\">%FILES_DL%<\/span> загружено\n\nНастройки браузера\n  <a href=\"#\" sd-opt=\"full-reset\">ПОЛНЫЙСБРОС<\/a>\n<div class=\"vcard-notes\">\n• Добро пожаловать в мою визитку ALIS.LIVE (она же каталог произведений)\n• В этом окне настроек собраны все возможности просмотра сайта\n• Штамп времени в заголовке плеера = версия = момент обновления данной страницы\n• Схема НОЧЬ дает макс яркость, кнопка 0 в лев.цифровом блоке отключает картинки\n• ГАЗЕТА = белый фон, ДУО = два цвета, комбинация цветов всегда начинается с Серый/Желтый\n• Повторные нажатия значка МОНО/ДУО меняют случайные цвета\n• Можно прокрутить воспроизведение к любому куплету по дв.клику по нему\n• Запустить играться только одну раскрытую песню, без учета чередования можно кликом по начальной картинке кассеты. С чередованием - кнопкой плей плеера\n• При яркости фона=0 (в прав.цифровом блоке) или Фон=X (в блоке фона) полностью отключаются фон и анимации\n• Когда Фон=картинка отключается режим плавания изображения\n\n2026-08-29\n<\/div>\n<\/div>","settingsTitleHtml":"VCARD 260902_1745","playerTitleTemplate":"%AUTHOR% - %TIT% * %SOUND% *","playerStartUpTitleTemplate":"VCARD.260902_1745"};</script>
+  <script id="vcard-ui">window.VCardUI={"player":{"volume":"ГРОМКОСТЬ","close":"ЗАКРЫТЬ"},"hints":{"playerNight":"[L]=Переключиться на схему НОЧЬ","playerMono":"[L]=Переключиться на схему МОНО","playerDuo":"[L]=Переключиться на схему ДУО","playerNews":"[L]=Переключиться на схему ГАЗЕТА","playerSettings":"[L]=Настройки","playerPrevious":"[L]=Предыдущая дорожка [R]=Уменьшить яркость фона, 0=всё выкл (%CUR_BRIGHT%)","playerPlay":"[L-Click]=Играть дорожку (%CUR_TRACK_NO%/%TOTAL_TRACKS_IN_LIST%) [R-Click]=Переключить отслеживание куплета","playerTitle":"[L]=Переключить размер картинок [R]=Переключить видимость картинок","playerNext":"[L]=Следующая дорожка [R]=Увеличить яркость фона (%CUR_BRIGHT%)","playerSound":"[L]=Приглушить звук","playerBackgroundWallpaper":"Фон: ОБОИ","playerBackgroundGraph1":"Фон: ГРАФИК1","playerBackgroundGraph2":"Фон: ГРАФИК2","playerBackgroundSmoke":"Фон: ДЫМ","playerPortalSize":"[L]=Размер и видимость картинок","playerFontScale":"[L]=Размер шрифта","playerBrightness":"[L]=Яркость фона: %CUR_BRIGHT%, 0=всё выкл","player0":"Картинки ВЫКЛ","player1":"Картинки МАЛЫЕ","player2":"Картинки СРЕДНИЕ","player3":"Картинки ВЭКРАН"},"vcardDatetime":"2026-09-03T17:54:22.736761","settingsHtml":"<div class=\"vcard-settings\"><span class=\"mp3-block\">Песня\n  %AUTHOR% - %TIT%\n  %SOUND% %MP3INFO%\n  <a href=\"#\" sd-opt=\"get-link\">Копировать ссылку<\/a>&mdash;<a href=\"#\" sd-opt=\"save-mp3\">Сохранить звук<\/a>\n\n<\/span>Размер текста\n  <a href=\"#\" sd-opt=\"fontScale\" sd-val=\"xs\">x1<\/a>&mdash;<a href=\"#\" sd-opt=\"fontScale\" sd-val=\"s\">x2<\/a>&mdash;<a href=\"#\" sd-opt=\"fontScale\" sd-val=\"m\">x3<\/a>&mdash;<a href=\"#\" sd-opt=\"fontScale\" sd-val=\"l\">x4<\/a>&mdash;<a href=\"#\" sd-opt=\"fontScale\" sd-val=\"xl\">x5<\/a>\n\nЦветовая схема\n  <a href=\"#\" dd-preset=\"night\">НОЧЬ<\/a>&mdash;<a href=\"#\" dd-preset=\"mono\">МОНО<\/a>&mdash;<a href=\"#\" dd-preset=\"duo\">ДУО<\/a>&mdash;<a href=\"#\" dd-preset=\"newspaper\">ГАЗЕТА<\/a>\n\nФон страницы\n  <a href=\"#\" sd-opt=\"brightness\" sd-val=\"0\" data-background-off>Выкл<\/a>&mdash;<a href=\"#\" sd-opt=\"background\" sd-val=\"wallpaper\">Обои<\/a>&mdash;<a href=\"#\" sd-opt=\"background\" sd-val=\"graph1\">График1<\/a>&mdash;<a href=\"#\" sd-opt=\"background\" sd-val=\"graph2\">График2<\/a>&mdash;<a href=\"#\" sd-opt=\"background\" sd-val=\"smoke\">Дым<\/a>\n  Яркость фона\n    <a href=\"#\" sd-opt=\"brightness\" sd-val=\"0\">x0<\/a>&mdash;<a href=\"#\" sd-opt=\"brightness\" sd-val=\"1\">x1<\/a>&mdash;<a href=\"#\" sd-opt=\"brightness\" sd-val=\"2\">x2<\/a>&mdash;<a href=\"#\" sd-opt=\"brightness\" sd-val=\"3\">x3<\/a>&mdash;<a href=\"#\" sd-opt=\"brightness\" sd-val=\"4\">x4<\/a>&mdash;<a href=\"#\" sd-opt=\"brightness\" sd-val=\"5\">x5<\/a>\n\nПлеер\n  Вид\n    <a href=\"#\" sd-opt=\"playerSimplified\" sd-val=\"on\">Упрощенный<\/a>&mdash;<a href=\"#\" sd-opt=\"playerSimplified\" sd-val=\"off\">Расширенный<\/a>\n  Показывать картинки\n    <span data-settings-portal-choice=\"off\"><a href=\"#\" sd-opt=\"portalSize\" sd-val=\"off\">ВЫКЛЮЧЕНЫ<\/a><\/span><span data-settings-portal-choice=\"small\">&mdash;<a href=\"#\" sd-opt=\"portalSize\" sd-val=\"small\">МАЛЫЕ<\/a><\/span><span data-settings-portal-choice=\"mid\">&mdash;<a href=\"#\" sd-opt=\"portalSize\" sd-val=\"mid\">СРЕДНИЕ<\/a><\/span><span data-settings-portal-choice=\"full\">&mdash;<a href=\"#\" sd-opt=\"portalSize\" sd-val=\"full\">ПОЛНЫЙЭКРАН<\/a><\/span>\n  Случайные цвета для нового плейлиста\n    <a href=\"#\" sd-opt=\"randomColor\" sd-val=\"on\">Да<\/a>&mdash;<a href=\"#\" sd-opt=\"randomColor\" sd-val=\"off\">Нет<\/a>\n  Автосмена куплета\n    <a href=\"#\" sd-opt=\"trackPlay\" sd-val=\"on\">Да<\/a>&mdash;<a href=\"#\" sd-opt=\"trackPlay\" sd-val=\"off\">Нет<\/a>\n  Усиление громкости\n    <a href=\"#\" sd-opt=\"volumeBoost\" sd-val=\"1\">x1<\/a>&mdash;<a href=\"#\" sd-opt=\"volumeBoost\" sd-val=\"1.5\">x1.5<\/a>&mdash;<a href=\"#\" sd-opt=\"volumeBoost\" sd-val=\"2\">x2<\/a>&mdash;<a href=\"#\" sd-opt=\"volumeBoost\" sd-val=\"3\">x3<\/a>\n  Чередование плейлистов\n    <a href=\"#\" sd-opt=\"playlistAlternation\" sd-val=\"none\">НЕТ<\/a>&mdash;<a href=\"#\" sd-opt=\"playlistAlternation\" sd-val=\"previous\">ВПРОШЛОЕ<\/a>&mdash;<a href=\"#\" sd-opt=\"playlistAlternation\" sd-val=\"next\">ВБУДУЩЕЕ<\/a>&mdash;<a href=\"#\" sd-opt=\"playlistAlternation\" sd-val=\"random\">СЛУЧАЙНО<\/a>\n  Чередование песен\n    <a href=\"#\" sd-opt=\"songAlternation\" sd-val=\"none\">НЕТ<\/a>&mdash;<a href=\"#\" sd-opt=\"songAlternation\" sd-val=\"sequential\">ПОДРЯД<\/a>&mdash;<a href=\"#\" sd-opt=\"songAlternation\" sd-val=\"random\">СЛУЧАЙНО<\/a>\n\nКэш\n  <a href=\"#\" sd-opt=\"mediaCache\" sd-val=\"preload\" data-media-cache-preload>ПРОГРУЗИТЬВСЁ<\/a>&mdash;<a href=\"#\" sd-opt=\"mediaCache\" sd-val=\"clear\">ОЧИСТИТЬ<\/a>&mdash;<a href=\"debug.html\" target=\"_blank\" rel=\"noopener\">ДЕТАЛИ<\/a>\n  На сайте\n    <span data-media-cache-total-files>…<\/span> ФАЙЛОВ = <span data-media-cache-total-size>…<\/span>\n  В Кэше\n    <span data-media-cache-summary>считаем…<\/span>\n  За сеанс\n    <span data-media-stat=\"files-req\">%FILES_REQ%<\/span> файлов запрошено = <span data-media-stat=\"files-cached\">%FILES_CACHED%<\/span> кэшировано + <span data-media-stat=\"files-dl\">%FILES_DL%<\/span> загружено\n\nНастройки браузера\n  <a href=\"#\" sd-opt=\"full-reset\">ПОЛНЫЙСБРОС<\/a>\n<div class=\"vcard-notes\">\n• Добро пожаловать в мою визитку ALIS.LIVE (она же каталог произведений)\n• В этом окне настроек собраны все возможности просмотра сайта\n• Штамп времени в заголовке плеера = версия = момент обновления данной страницы\n• Схема НОЧЬ дает макс яркость, кнопка 0 в лев.цифровом блоке отключает картинки\n• ГАЗЕТА = белый фон, ДУО = два цвета, комбинация цветов всегда начинается с Серый/Желтый\n• Повторные нажатия значка МОНО/ДУО меняют случайные цвета\n• Можно прокрутить воспроизведение к любому куплету по дв.клику по нему\n• Запустить играться только одну раскрытую песню, без учета чередования можно кликом по начальной картинке кассеты. С чередованием - кнопкой плей плеера\n• При яркости фона=0 (в прав.цифровом блоке) или Фон=X (в блоке фона) полностью отключаются фон и анимации\n• Когда Фон=картинка отключается режим плавания изображения\n\n2026-08-29\n<\/div>\n<\/div>","settingsTitleHtml":"VCARD 260903_1754","playerTitleTemplate":"%AUTHOR% - %TIT% * %SOUND% *","playerStartUpTitleTemplate":"VCARD.260903_1754"};</script>
   <!-- VCARD_UI_END -->
 
   <!-- VCARD_MEDIA_MANIFEST_BEG -->
-  <script id="vcard-media-manifest">window.VCardMediaManifest={"generatedAt":"2026-09-02T17:45:44","lists":{"sys/v_bkimg/list.js":"6f330d3dc7b0","sys/v_bkvid/list.js":"b85cbfc28034","sys/v_cass/list.js":"cc1b8620ffde","sys/v_end/list.js":"8ce7e3aa78ea","sys/v_frames/list.js":"0beb7d8d97af","sys/v_hands/list.js":"c5de040911c2","sys/v_hi/list.js":"47049c80530c","usr/v_p/ded/list.js":"1a6165573c1d","usr/v_p/jena/list.js":"a819adc5b4ca","usr/v_p/krok/list.js":"18eea035c0dc","usr/v_p/lift/list.js":"22e16d84ab60","usr/v_p/risunok/list.js":"17d70db2320d","usr/v_p/voprosi/list.js":"fb63b95866ac"},"resources":[{"url":"sys/overlay.rutube.tint.png?v=8fdc82d6f3a6","path":"sys/overlay.rutube.tint.png","kind":"image","scope":"built-in","size":56624},{"url":"sys/overlay.youtube.tint.png?v=d93c47bc6832","path":"sys/overlay.youtube.tint.png","kind":"image","scope":"built-in","size":51417},{"url":"sys/playlist-cassette/passive.webp?v=0642964b91ad","path":"sys/playlist-cassette/passive.webp","kind":"image","scope":"built-in","size":3500},{"url":"sys/plyr.svg?v=de12fcd36f9e","path":"sys/plyr.svg","kind":"image","scope":"built-in","size":5669},{"url":"sys/v/_plyr/player/01-fine-horizontal.png?v=d9f691e413ce","path":"sys/v/_plyr/player/01-fine-horizontal.png","kind":"image","scope":"built-in","size":18139},{"url":"sys/v/_plyr/player/02-crosshatch-offset.png?v=9fe789e62d42","path":"sys/v/_plyr/player/02-crosshatch-offset.png","kind":"image","scope":"built-in","size":5202},{"url":"sys/v/_plyr/player/03-fine-reverse.png?v=eddffc9eef74","path":"sys/v/_plyr/player/03-fine-reverse.png","kind":"image","scope":"built-in","size":18127},{"url":"sys/v/_plyr/player/04-scuff-offset.png?v=b996cfc6a1ea","path":"sys/v/_plyr/player/04-scuff-offset.png","kind":"image","scope":"built-in","size":14999},{"url":"sys/v/_plyr/player/05-micro-scuff-clusters.png?v=8bbdad38d66a","path":"sys/v/_plyr/player/05-micro-scuff-clusters.png","kind":"image","scope":"built-in","size":15004},{"url":"sys/v/_plyr/player/06-edge-crescents.png?v=4310e8ff0030","path":"sys/v/_plyr/player/06-edge-crescents.png","kind":"image","scope":"built-in","size":18206},{"url":"sys/v/_plyr/player/07-vertical-needles.png?v=c67defda7da2","path":"sys/v/_plyr/player/07-vertical-needles.png","kind":"image","scope":"built-in","size":12145},{"url":"sys/v/_plyr/player/08-crosshatch-scuffs.png?v=0bd02d9215ab","path":"sys/v/_plyr/player/08-crosshatch-scuffs.png","kind":"image","scope":"built-in","size":5198},{"url":"sys/v/_plyr/player/09-needle-offset.png?v=06235303f520","path":"sys/v/_plyr/player/09-needle-offset.png","kind":"image","scope":"built-in","size":12271},{"url":"sys/v/_plyr/player/10-edge-mixed.png?v=13373991a0f3","path":"sys/v/_plyr/player/10-edge-mixed.png","kind":"image","scope":"built-in","size":18523},{"url":"sys/v/_plyr/player/material/11-brushed-metal-dark.png?v=ba67eb6b02e6","path":"sys/v/_plyr/player/material/11-brushed-metal-dark.png","kind":"image","scope":"built-in","size":71556},{"url":"sys/v/_plyr/player/material/12-oxidized-metal-dark.png?v=d2d69320db39","path":"sys/v/_plyr/player/material/12-oxidized-metal-dark.png","kind":"image","scope":"built-in","size":76252},{"url":"sys/v/_plyr/player/material/13-matte-abs-dark.png?v=3a94a328e903","path":"sys/v/_plyr/player/material/13-matte-abs-dark.png","kind":"image","scope":"built-in","size":71431},{"url":"sys/v/_plyr/player/material/14-molded-plastic-dark.png?v=3b67283ba249","path":"sys/v/_plyr/player/material/14-molded-plastic-dark.png","kind":"image","scope":"built-in","size":74089},{"url":"sys/v/_plyr/title/01-corner-dust.png?v=7ce47bda0919","path":"sys/v/_plyr/title/01-corner-dust.png","kind":"image","scope":"built-in","size":676083},{"url":"sys/v/_plyr/title/02-edge-wear.png?v=cd4a921cab2f","path":"sys/v/_plyr/title/02-edge-wear.png","kind":"image","scope":"built-in","size":553095},{"url":"sys/v/_plyr/title/03-coarse-sand.png?v=5dc3eaf12767","path":"sys/v/_plyr/title/03-coarse-sand.png","kind":"image","scope":"built-in","size":613564},{"url":"sys/v/_plyr/title/04-ingrained-grime.png?v=ed228b7ada5e","path":"sys/v/_plyr/title/04-ingrained-grime.png","kind":"image","scope":"built-in","size":515427},{"url":"sys/v/_plyr/title/05-surface-scratches.png?v=ca00e943118e","path":"sys/v/_plyr/title/05-surface-scratches.png","kind":"image","scope":"built-in","size":212317},{"url":"sys/v/_plyr/title/06-chipped-coating.png?v=09112f27d5ca","path":"sys/v/_plyr/title/06-chipped-coating.png","kind":"image","scope":"built-in","size":213614},{"url":"sys/v/_plyr/title/07-finger-smudges.png?v=9814bac6969f","path":"sys/v/_plyr/title/07-finger-smudges.png","kind":"image","scope":"built-in","size":1260778},{"url":"sys/v/_plyr/title/08-dusty-rim.png?v=7d330f4013cf","path":"sys/v/_plyr/title/08-dusty-rim.png","kind":"image","scope":"built-in","size":873368},{"url":"sys/v/_plyr/title/09-adhesive-residue.png?v=b0046f94528d","path":"sys/v/_plyr/title/09-adhesive-residue.png","kind":"image","scope":"built-in","size":1603053},{"url":"sys/v/_plyr/title/10-basement-mix.png?v=a2eff817d10d","path":"sys/v/_plyr/title/10-basement-mix.png","kind":"image","scope":"built-in","size":403064},{"url":"sys/v_bkimg/Rough%20laid%20paper.webp?v=25d088596f9e","path":"sys/v_bkimg/Rough laid paper.webp","kind":"image","scope":"built-in","size":314770},{"url":"sys/v_bkvid/smoke-loop.mp4?v=99b48e30a783","path":"sys/v_bkvid/smoke-loop.mp4","kind":"video","scope":"built-in","size":713205},{"url":"sys/v_cass/cass.mp4?v=a4a0a5aea127","path":"sys/v_cass/cass.mp4","kind":"video","scope":"built-in","size":275055},{"url":"sys/v_cass/cass.webp?v=392e848f548c","path":"sys/v_cass/cass.webp","kind":"image","scope":"built-in","size":13964},{"url":"sys/v_end/cans-04.mp4?v=a62dbe275e45","path":"sys/v_end/cans-04.mp4","kind":"video","scope":"built-in","size":253197},{"url":"sys/v_frames/fr5.png?v=b4610a9f6dd9","path":"sys/v_frames/fr5.png","kind":"image","scope":"built-in","size":28469},{"url":"sys/v_hands/cass.mp4?v=1d3e1ad4d707","path":"sys/v_hands/cass.mp4","kind":"video","scope":"built-in","size":275947},{"url":"sys/v_hands/d.mp4?v=8f7cb57d06ba","path":"sys/v_hands/d.mp4","kind":"video","scope":"built-in","size":289986},{"url":"sys/v_hands/i.mp4?v=22767e738799","path":"sys/v_hands/i.mp4","kind":"video","scope":"built-in","size":330296},{"url":"sys/v_hands/m.mp4?v=2cd43776a355","path":"sys/v_hands/m.mp4","kind":"video","scope":"built-in","size":270440},{"url":"sys/v_hands/r.mp4?v=c7ffda251958","path":"sys/v_hands/r.mp4","kind":"video","scope":"built-in","size":271645},{"url":"sys/v_hi/m01.png?v=baa8da8cbe34","path":"sys/v_hi/m01.png","kind":"image","scope":"built-in","size":29389},{"url":"sys/v_hi/p01.jpg?v=3e9bb129c552","path":"sys/v_hi/p01.jpg","kind":"image","scope":"built-in","size":21769},{"url":"usr/list_nv25/ded/ded_251028fx.mp3?v=a0b46728d517","path":"usr/list_nv25/ded/ded_251028fx.mp3","kind":"audio","scope":"song","size":6530487},{"url":"usr/list_nv25/krok/krok_251026war.mp3?v=72effdb445ee","path":"usr/list_nv25/krok/krok_251026war.mp3","kind":"audio","scope":"song","size":9480964},{"url":"usr/list_nv25/lift/lift_251028war.mp3?v=f741a832953f","path":"usr/list_nv25/lift/lift_251028war.mp3","kind":"audio","scope":"song","size":4600701},{"url":"usr/list_nv25/voprosi/voprosi_251026fx.mp3?v=8a6981d9368b","path":"usr/list_nv25/voprosi/voprosi_251026fx.mp3","kind":"audio","scope":"song","size":5462166},{"url":"usr/list_pp24/jena/jena_240628war.mp3?v=7be7556bed9b","path":"usr/list_pp24/jena/jena_240628war.mp3","kind":"audio","scope":"song","size":5762473},{"url":"usr/list_pp24/risunok/risunok_240628cas.mp3?v=1ed769d3c6c4","path":"usr/list_pp24/risunok/risunok_240628cas.mp3","kind":"audio","scope":"song","size":6194473},{"url":"usr/list_ysz26/gorizont/gorizont_240628war.mp3?v=ad9460b2895d","path":"usr/list_ysz26/gorizont/gorizont_240628war.mp3","kind":"audio","scope":"song","size":122975},{"url":"usr/list_ysz26/osen/osen_240628war.mp3?v=8f2407cbe7e4","path":"usr/list_ysz26/osen/osen_240628war.mp3","kind":"audio","scope":"song","size":122975},{"url":"usr/list_ysz26/ostrov/ostrov_240628war.mp3?v=8ed3423abaee","path":"usr/list_ysz26/ostrov/ostrov_240628war.mp3","kind":"audio","scope":"song","size":122983},{"url":"usr/list_ysz26/plyazh/plyazh_260710war.mp3?v=ca01d28f8552","path":"usr/list_ysz26/plyazh/plyazh_260710war.mp3","kind":"audio","scope":"song","size":857391},{"url":"usr/list_ysz26/polyusa/polyusa_260710war.mp3?v=0b28b2d9f940","path":"usr/list_ysz26/polyusa/polyusa_260710war.mp3","kind":"audio","scope":"song","size":921343},{"url":"usr/list_ysz26/sadovnik/sadovnik_240628war.mp3?v=7b9c72e6fca4","path":"usr/list_ysz26/sadovnik/sadovnik_240628war.mp3","kind":"audio","scope":"song","size":122962},{"url":"usr/list_ysz26/sneg/sneg_240628war.mp3?v=744bfb470ecc","path":"usr/list_ysz26/sneg/sneg_240628war.mp3","kind":"audio","scope":"song","size":122974},{"url":"usr/list_ysz26/sneg2/sneg2_240628cas.mp3?v=912a6da5b375","path":"usr/list_ysz26/sneg2/sneg2_240628cas.mp3","kind":"audio","scope":"song","size":122967},{"url":"usr/list_ysz26/udivit/udivit_260710war.mp3?v=8bf725a6b20c","path":"usr/list_ysz26/udivit/udivit_260710war.mp3","kind":"audio","scope":"song","size":751349},{"url":"usr/list_ysz26/voprosi/voprosi_260710war.mp3?v=9aca6786602c","path":"usr/list_ysz26/voprosi/voprosi_260710war.mp3","kind":"audio","scope":"song","size":889372},{"url":"usr/list_ysz26/yaspal/1.jpg?v=9dfa736cc3df","path":"usr/list_ysz26/yaspal/1.jpg","kind":"image","scope":"song","size":89624},{"url":"usr/list_ysz26/yaspal/yaspal_260710war.mp3?v=77a41c78e56f","path":"usr/list_ysz26/yaspal/yaspal_260710war.mp3","kind":"audio","scope":"song","size":1507396},{"url":"usr/list_ysz26/zvezda/zvezda_240628cas.mp3?v=c5ea695109c5","path":"usr/list_ysz26/zvezda/zvezda_240628cas.mp3","kind":"audio","scope":"song","size":8828990},{"url":"usr/v_p/ded/m01.png?v=08dde2d255ce","path":"usr/v_p/ded/m01.png","kind":"image","scope":"song","size":37243},{"url":"usr/v_p/ded/m02.png?v=ade3618b03dd","path":"usr/v_p/ded/m02.png","kind":"image","scope":"song","size":4126},{"url":"usr/v_p/ded/m03.png?v=b21ee5cb48b6","path":"usr/v_p/ded/m03.png","kind":"image","scope":"song","size":8161},{"url":"usr/v_p/ded/m04.png?v=558a53fa9556","path":"usr/v_p/ded/m04.png","kind":"image","scope":"song","size":7948},{"url":"usr/v_p/ded/m05.png?v=dfaf62c2fab6","path":"usr/v_p/ded/m05.png","kind":"image","scope":"song","size":24628},{"url":"usr/v_p/ded/m06.png?v=73559dbd49b1","path":"usr/v_p/ded/m06.png","kind":"image","scope":"song","size":40437},{"url":"usr/v_p/ded/m07.png?v=56c920542779","path":"usr/v_p/ded/m07.png","kind":"image","scope":"song","size":34991},{"url":"usr/v_p/ded/p01.jpg?v=c32172ca9e97","path":"usr/v_p/ded/p01.jpg","kind":"image","scope":"song","size":126533},{"url":"usr/v_p/ded/p02.jpg?v=925daec41fba","path":"usr/v_p/ded/p02.jpg","kind":"image","scope":"song","size":128921},{"url":"usr/v_p/ded/p03.jpg?v=10ff6f21bb1c","path":"usr/v_p/ded/p03.jpg","kind":"image","scope":"song","size":173468},{"url":"usr/v_p/ded/p04.jpg?v=e3561aa63310","path":"usr/v_p/ded/p04.jpg","kind":"image","scope":"song","size":117020},{"url":"usr/v_p/ded/p05.jpg?v=4bda54204f66","path":"usr/v_p/ded/p05.jpg","kind":"image","scope":"song","size":138129},{"url":"usr/v_p/ded/p06.jpg?v=03fb8f7eae30","path":"usr/v_p/ded/p06.jpg","kind":"image","scope":"song","size":152081},{"url":"usr/v_p/ded/p07.jpg?v=984860e16cd0","path":"usr/v_p/ded/p07.jpg","kind":"image","scope":"song","size":38697},{"url":"usr/v_p/jena/m01.png?v=23cbd443e03b","path":"usr/v_p/jena/m01.png","kind":"image","scope":"song","size":7538},{"url":"usr/v_p/jena/m02.png?v=0d6e44951892","path":"usr/v_p/jena/m02.png","kind":"image","scope":"song","size":10757},{"url":"usr/v_p/jena/m03.png?v=63b0236c177c","path":"usr/v_p/jena/m03.png","kind":"image","scope":"song","size":210001},{"url":"usr/v_p/jena/m04.png?v=85fb86cc8876","path":"usr/v_p/jena/m04.png","kind":"image","scope":"song","size":11818},{"url":"usr/v_p/jena/m05.png?v=a7711df0f286","path":"usr/v_p/jena/m05.png","kind":"image","scope":"song","size":12907},{"url":"usr/v_p/jena/m06.png?v=2a0b0514db44","path":"usr/v_p/jena/m06.png","kind":"image","scope":"song","size":24421},{"url":"usr/v_p/jena/m07.png?v=f16faa22e6f8","path":"usr/v_p/jena/m07.png","kind":"image","scope":"song","size":71267},{"url":"usr/v_p/jena/p01.jpg?v=3495158300a9","path":"usr/v_p/jena/p01.jpg","kind":"image","scope":"song","size":65905},{"url":"usr/v_p/jena/p02.jpg?v=159175ee32f8","path":"usr/v_p/jena/p02.jpg","kind":"image","scope":"song","size":61958},{"url":"usr/v_p/jena/p03.jpg?v=5d9feee5eb38","path":"usr/v_p/jena/p03.jpg","kind":"image","scope":"song","size":163911},{"url":"usr/v_p/jena/p04.jpg?v=337c202585f2","path":"usr/v_p/jena/p04.jpg","kind":"image","scope":"song","size":103704},{"url":"usr/v_p/jena/p05.jpg?v=769f4975241a","path":"usr/v_p/jena/p05.jpg","kind":"image","scope":"song","size":76455},{"url":"usr/v_p/jena/p06.jpg?v=14ae48be47f2","path":"usr/v_p/jena/p06.jpg","kind":"image","scope":"song","size":50136},{"url":"usr/v_p/jena/p07.jpg?v=4530f7debd09","path":"usr/v_p/jena/p07.jpg","kind":"image","scope":"song","size":135735},{"url":"usr/v_p/krok/m01.png?v=f64802443c1f","path":"usr/v_p/krok/m01.png","kind":"image","scope":"song","size":20791},{"url":"usr/v_p/krok/m02.png?v=63d7c0b22ba8","path":"usr/v_p/krok/m02.png","kind":"image","scope":"song","size":105990},{"url":"usr/v_p/krok/m03.png?v=ab792bc38335","path":"usr/v_p/krok/m03.png","kind":"image","scope":"song","size":21063},{"url":"usr/v_p/krok/m04.png?v=02963ddead63","path":"usr/v_p/krok/m04.png","kind":"image","scope":"song","size":71264},{"url":"usr/v_p/krok/m05.png?v=93c19516ba6c","path":"usr/v_p/krok/m05.png","kind":"image","scope":"song","size":30682},{"url":"usr/v_p/krok/m06.png?v=8d7620811c72","path":"usr/v_p/krok/m06.png","kind":"image","scope":"song","size":26758},{"url":"usr/v_p/krok/m07.png?v=afc0cae129e6","path":"usr/v_p/krok/m07.png","kind":"image","scope":"song","size":8443},{"url":"usr/v_p/krok/p01.jpg?v=f8f3e6327f36","path":"usr/v_p/krok/p01.jpg","kind":"image","scope":"song","size":62515},{"url":"usr/v_p/krok/p02.jpg?v=e6b5430d0e80","path":"usr/v_p/krok/p02.jpg","kind":"image","scope":"song","size":60157},{"url":"usr/v_p/krok/p03.jpg?v=8b8f87c923c9","path":"usr/v_p/krok/p03.jpg","kind":"image","scope":"song","size":40571},{"url":"usr/v_p/krok/p04.jpg?v=f6d60a121b91","path":"usr/v_p/krok/p04.jpg","kind":"image","scope":"song","size":118356},{"url":"usr/v_p/krok/p05.jpg?v=8e4b889fe759","path":"usr/v_p/krok/p05.jpg","kind":"image","scope":"song","size":81118},{"url":"usr/v_p/krok/p06.jpg?v=aba8b175c9af","path":"usr/v_p/krok/p06.jpg","kind":"image","scope":"song","size":92657},{"url":"usr/v_p/krok/p07.jpg?v=d84ec59e91e8","path":"usr/v_p/krok/p07.jpg","kind":"image","scope":"song","size":92077},{"url":"usr/v_p/lift/m01.png?v=116c05a8b28c","path":"usr/v_p/lift/m01.png","kind":"image","scope":"song","size":5063},{"url":"usr/v_p/lift/m02.png?v=606477f27882","path":"usr/v_p/lift/m02.png","kind":"image","scope":"song","size":31851},{"url":"usr/v_p/lift/m03.png?v=1fcaef072522","path":"usr/v_p/lift/m03.png","kind":"image","scope":"song","size":34719},{"url":"usr/v_p/lift/m04.png?v=200ec56e0a4f","path":"usr/v_p/lift/m04.png","kind":"image","scope":"song","size":21212},{"url":"usr/v_p/lift/m05.png?v=1b425ebaeea0","path":"usr/v_p/lift/m05.png","kind":"image","scope":"song","size":18530},{"url":"usr/v_p/lift/m06.png?v=bb890408b114","path":"usr/v_p/lift/m06.png","kind":"image","scope":"song","size":4334},{"url":"usr/v_p/lift/m07.png?v=8ebc17034214","path":"usr/v_p/lift/m07.png","kind":"image","scope":"song","size":37216},{"url":"usr/v_p/lift/p01.jpg?v=b12515e9cc71","path":"usr/v_p/lift/p01.jpg","kind":"image","scope":"song","size":77075},{"url":"usr/v_p/lift/p02.jpg?v=f0884b026f51","path":"usr/v_p/lift/p02.jpg","kind":"image","scope":"song","size":46792},{"url":"usr/v_p/lift/p03.jpg?v=2d8ba2b12561","path":"usr/v_p/lift/p03.jpg","kind":"image","scope":"song","size":123819},{"url":"usr/v_p/lift/p04.jpg?v=6db1431a08d6","path":"usr/v_p/lift/p04.jpg","kind":"image","scope":"song","size":44214},{"url":"usr/v_p/lift/p05.jpg?v=c596a3fe12bd","path":"usr/v_p/lift/p05.jpg","kind":"image","scope":"song","size":56641},{"url":"usr/v_p/lift/p06.jpg?v=2bd5810577ad","path":"usr/v_p/lift/p06.jpg","kind":"image","scope":"song","size":70925},{"url":"usr/v_p/lift/p07.jpg?v=27ddb5453df4","path":"usr/v_p/lift/p07.jpg","kind":"image","scope":"song","size":106031},{"url":"usr/v_p/risunok/m01.png?v=da7b95f72b3e","path":"usr/v_p/risunok/m01.png","kind":"image","scope":"song","size":70031},{"url":"usr/v_p/risunok/m02.png?v=c562a5b0e360","path":"usr/v_p/risunok/m02.png","kind":"image","scope":"song","size":4691},{"url":"usr/v_p/risunok/m03.png?v=a4436b6428a4","path":"usr/v_p/risunok/m03.png","kind":"image","scope":"song","size":14155},{"url":"usr/v_p/risunok/m04.png?v=bf137da01d95","path":"usr/v_p/risunok/m04.png","kind":"image","scope":"song","size":39428},{"url":"usr/v_p/risunok/m05.png?v=de036fce8c2a","path":"usr/v_p/risunok/m05.png","kind":"image","scope":"song","size":9982},{"url":"usr/v_p/risunok/m06.png?v=560bb172e6f7","path":"usr/v_p/risunok/m06.png","kind":"image","scope":"song","size":3135},{"url":"usr/v_p/risunok/m07.png?v=df2d18e133ae","path":"usr/v_p/risunok/m07.png","kind":"image","scope":"song","size":10201},{"url":"usr/v_p/risunok/p01.jpg?v=d8bad32e6df6","path":"usr/v_p/risunok/p01.jpg","kind":"image","scope":"song","size":52285},{"url":"usr/v_p/risunok/p02.jpg?v=f6f4d44bc015","path":"usr/v_p/risunok/p02.jpg","kind":"image","scope":"song","size":44758},{"url":"usr/v_p/risunok/p03.jpg?v=c5b34c1e9698","path":"usr/v_p/risunok/p03.jpg","kind":"image","scope":"song","size":147911},{"url":"usr/v_p/risunok/p04.jpg?v=f9c207a64766","path":"usr/v_p/risunok/p04.jpg","kind":"image","scope":"song","size":40796},{"url":"usr/v_p/risunok/p05.jpg?v=f885c98dd116","path":"usr/v_p/risunok/p05.jpg","kind":"image","scope":"song","size":60081},{"url":"usr/v_p/risunok/p06.jpg?v=925510bb9be0","path":"usr/v_p/risunok/p06.jpg","kind":"image","scope":"song","size":43959},{"url":"usr/v_p/risunok/p07.jpg?v=fd4c9049a174","path":"usr/v_p/risunok/p07.jpg","kind":"image","scope":"song","size":77400},{"url":"usr/v_p/voprosi/m01.png?v=63bb1f359b66","path":"usr/v_p/voprosi/m01.png","kind":"image","scope":"song","size":39581},{"url":"usr/v_p/voprosi/m02.png?v=da1eebc4f4dd","path":"usr/v_p/voprosi/m02.png","kind":"image","scope":"song","size":19164},{"url":"usr/v_p/voprosi/m03.png?v=f04dc7fb92da","path":"usr/v_p/voprosi/m03.png","kind":"image","scope":"song","size":17918},{"url":"usr/v_p/voprosi/m04.png?v=39d194797748","path":"usr/v_p/voprosi/m04.png","kind":"image","scope":"song","size":16405},{"url":"usr/v_p/voprosi/m05.png?v=f8972f2bdbfe","path":"usr/v_p/voprosi/m05.png","kind":"image","scope":"song","size":4267},{"url":"usr/v_p/voprosi/m06.png?v=b103d2b85b9a","path":"usr/v_p/voprosi/m06.png","kind":"image","scope":"song","size":31197},{"url":"usr/v_p/voprosi/m07.png?v=e5e041938770","path":"usr/v_p/voprosi/m07.png","kind":"image","scope":"song","size":41812},{"url":"usr/v_p/voprosi/p01.jpg?v=7dd5dde85203","path":"usr/v_p/voprosi/p01.jpg","kind":"image","scope":"song","size":75741},{"url":"usr/v_p/voprosi/p02.jpg?v=0ab639e5026a","path":"usr/v_p/voprosi/p02.jpg","kind":"image","scope":"song","size":92331},{"url":"usr/v_p/voprosi/p03.jpg?v=4d8f4d8e6ab3","path":"usr/v_p/voprosi/p03.jpg","kind":"image","scope":"song","size":54635},{"url":"usr/v_p/voprosi/p04.jpg?v=d75d23b43a23","path":"usr/v_p/voprosi/p04.jpg","kind":"image","scope":"song","size":39199},{"url":"usr/v_p/voprosi/p05.jpg?v=fca3aa5fa241","path":"usr/v_p/voprosi/p05.jpg","kind":"image","scope":"song","size":48055},{"url":"usr/v_p/voprosi/p06.jpg?v=9e8f6dbb9ffb","path":"usr/v_p/voprosi/p06.jpg","kind":"image","scope":"song","size":41188},{"url":"usr/v_p/voprosi/p07.jpg?v=c2fa2f7b5558","path":"usr/v_p/voprosi/p07.jpg","kind":"image","scope":"song","size":56413},{"url":"usr/ysz/1.jpg?v=ad4d2dc7aa74","path":"usr/ysz/1.jpg","kind":"image","scope":"built-in","size":257366}]};</script>
+  <script id="vcard-media-manifest">window.VCardMediaManifest={"generatedAt":"2026-09-03T17:54:22","lists":{"sys/v_bkimg/list.js":"64154edf2826","sys/v_bkvid/list.js":"b85cbfc28034","sys/v_cass/list.js":"cc1b8620ffde","sys/v_end/list.js":"8ce7e3aa78ea","sys/v_frames/list.js":"a095ba998fa9","sys/v_hands/list.js":"c5de040911c2","sys/v_hi/list.js":"1de6849d2766","usr/v_p/ded/list.js":"1a6165573c1d","usr/v_p/jena/list.js":"a819adc5b4ca","usr/v_p/krok/list.js":"18eea035c0dc","usr/v_p/lift/list.js":"22e16d84ab60","usr/v_p/risunok/list.js":"17d70db2320d","usr/v_p/voprosi/list.js":"fb63b95866ac"},"resources":[{"url":"sys/overlay.rutube.tint.png?v=8fdc82d6f3a6","path":"sys/overlay.rutube.tint.png","kind":"image","scope":"built-in","size":56624},{"url":"sys/overlay.youtube.tint.png?v=d93c47bc6832","path":"sys/overlay.youtube.tint.png","kind":"image","scope":"built-in","size":51417},{"url":"sys/playlist-cassette/passive.webp?v=0642964b91ad","path":"sys/playlist-cassette/passive.webp","kind":"image","scope":"built-in","size":3500},{"url":"sys/playlist-cassette/shelf-five.webp?v=dc4cac0c133b","path":"sys/playlist-cassette/shelf-five.webp","kind":"image","scope":"built-in","size":48488},{"url":"sys/plyr.svg?v=de12fcd36f9e","path":"sys/plyr.svg","kind":"image","scope":"built-in","size":5669},{"url":"sys/v_bkimg/Rosewood%20BW.webp?v=fbb0a780e1be","path":"sys/v_bkimg/Rosewood BW.webp","kind":"image","scope":"built-in","size":75838},{"url":"sys/v_bkvid/smoke-loop.mp4?v=99b48e30a783","path":"sys/v_bkvid/smoke-loop.mp4","kind":"video","scope":"built-in","size":713205},{"url":"sys/v_cass/cass.mp4?v=a4a0a5aea127","path":"sys/v_cass/cass.mp4","kind":"video","scope":"built-in","size":275055},{"url":"sys/v_cass/cass.webp?v=392e848f548c","path":"sys/v_cass/cass.webp","kind":"image","scope":"built-in","size":13964},{"url":"sys/v_end/cans-04.mp4?v=a62dbe275e45","path":"sys/v_end/cans-04.mp4","kind":"video","scope":"built-in","size":253197},{"url":"sys/v_frames/fr7.png?v=a4680896da46","path":"sys/v_frames/fr7.png","kind":"image","scope":"built-in","size":65592},{"url":"sys/v_hands/cass.mp4?v=1d3e1ad4d707","path":"sys/v_hands/cass.mp4","kind":"video","scope":"built-in","size":275947},{"url":"sys/v_hands/d.mp4?v=8f7cb57d06ba","path":"sys/v_hands/d.mp4","kind":"video","scope":"built-in","size":289986},{"url":"sys/v_hands/i.mp4?v=22767e738799","path":"sys/v_hands/i.mp4","kind":"video","scope":"built-in","size":330296},{"url":"sys/v_hands/m.mp4?v=2cd43776a355","path":"sys/v_hands/m.mp4","kind":"video","scope":"built-in","size":270440},{"url":"sys/v_hands/r.mp4?v=c7ffda251958","path":"sys/v_hands/r.mp4","kind":"video","scope":"built-in","size":271645},{"url":"sys/v_hi/m03.png?v=b0cc5ffd2eed","path":"sys/v_hi/m03.png","kind":"image","scope":"built-in","size":59652},{"url":"sys/v_hi/p03.jpg?v=fa7a7f783f72","path":"sys/v_hi/p03.jpg","kind":"image","scope":"built-in","size":25653},{"url":"usr/list_nv25/ded/ded_251028fx.mp3?v=a0b46728d517","path":"usr/list_nv25/ded/ded_251028fx.mp3","kind":"audio","scope":"song","size":6530487},{"url":"usr/list_nv25/krok/krok_251026war.mp3?v=72effdb445ee","path":"usr/list_nv25/krok/krok_251026war.mp3","kind":"audio","scope":"song","size":9480964},{"url":"usr/list_nv25/lift/lift_251028war.mp3?v=f741a832953f","path":"usr/list_nv25/lift/lift_251028war.mp3","kind":"audio","scope":"song","size":4600701},{"url":"usr/list_nv25/voprosi/voprosi_251026fx.mp3?v=8a6981d9368b","path":"usr/list_nv25/voprosi/voprosi_251026fx.mp3","kind":"audio","scope":"song","size":5462166},{"url":"usr/list_pp24/jena/jena_240628war.mp3?v=7be7556bed9b","path":"usr/list_pp24/jena/jena_240628war.mp3","kind":"audio","scope":"song","size":5762473},{"url":"usr/list_pp24/risunok/risunok_240628cas.mp3?v=1ed769d3c6c4","path":"usr/list_pp24/risunok/risunok_240628cas.mp3","kind":"audio","scope":"song","size":6194473},{"url":"usr/list_ysz26/gorizont/gorizont_240628war.mp3?v=ad9460b2895d","path":"usr/list_ysz26/gorizont/gorizont_240628war.mp3","kind":"audio","scope":"song","size":122975},{"url":"usr/list_ysz26/osen/osen_240628war.mp3?v=8f2407cbe7e4","path":"usr/list_ysz26/osen/osen_240628war.mp3","kind":"audio","scope":"song","size":122975},{"url":"usr/list_ysz26/ostrov/ostrov_240628war.mp3?v=8ed3423abaee","path":"usr/list_ysz26/ostrov/ostrov_240628war.mp3","kind":"audio","scope":"song","size":122983},{"url":"usr/list_ysz26/plyazh/plyazh_260710war.mp3?v=ca01d28f8552","path":"usr/list_ysz26/plyazh/plyazh_260710war.mp3","kind":"audio","scope":"song","size":857391},{"url":"usr/list_ysz26/polyusa/polyusa_260710war.mp3?v=0b28b2d9f940","path":"usr/list_ysz26/polyusa/polyusa_260710war.mp3","kind":"audio","scope":"song","size":921343},{"url":"usr/list_ysz26/sadovnik/sadovnik_240628war.mp3?v=7b9c72e6fca4","path":"usr/list_ysz26/sadovnik/sadovnik_240628war.mp3","kind":"audio","scope":"song","size":122962},{"url":"usr/list_ysz26/sneg/sneg_240628war.mp3?v=744bfb470ecc","path":"usr/list_ysz26/sneg/sneg_240628war.mp3","kind":"audio","scope":"song","size":122974},{"url":"usr/list_ysz26/sneg2/sneg2_240628cas.mp3?v=912a6da5b375","path":"usr/list_ysz26/sneg2/sneg2_240628cas.mp3","kind":"audio","scope":"song","size":122967},{"url":"usr/list_ysz26/udivit/udivit_260710war.mp3?v=8bf725a6b20c","path":"usr/list_ysz26/udivit/udivit_260710war.mp3","kind":"audio","scope":"song","size":751349},{"url":"usr/list_ysz26/voprosi/voprosi_260710war.mp3?v=9aca6786602c","path":"usr/list_ysz26/voprosi/voprosi_260710war.mp3","kind":"audio","scope":"song","size":889372},{"url":"usr/list_ysz26/yaspal/1.jpg?v=9dfa736cc3df","path":"usr/list_ysz26/yaspal/1.jpg","kind":"image","scope":"song","size":89624},{"url":"usr/list_ysz26/yaspal/yaspal_260710war.mp3?v=77a41c78e56f","path":"usr/list_ysz26/yaspal/yaspal_260710war.mp3","kind":"audio","scope":"song","size":1507396},{"url":"usr/list_ysz26/zvezda/zvezda_240628cas.mp3?v=c5ea695109c5","path":"usr/list_ysz26/zvezda/zvezda_240628cas.mp3","kind":"audio","scope":"song","size":8828990},{"url":"usr/v_p/ded/m01.png?v=08dde2d255ce","path":"usr/v_p/ded/m01.png","kind":"image","scope":"song","size":37243},{"url":"usr/v_p/ded/m02.png?v=ade3618b03dd","path":"usr/v_p/ded/m02.png","kind":"image","scope":"song","size":4126},{"url":"usr/v_p/ded/m03.png?v=b21ee5cb48b6","path":"usr/v_p/ded/m03.png","kind":"image","scope":"song","size":8161},{"url":"usr/v_p/ded/m04.png?v=558a53fa9556","path":"usr/v_p/ded/m04.png","kind":"image","scope":"song","size":7948},{"url":"usr/v_p/ded/m05.png?v=dfaf62c2fab6","path":"usr/v_p/ded/m05.png","kind":"image","scope":"song","size":24628},{"url":"usr/v_p/ded/m06.png?v=73559dbd49b1","path":"usr/v_p/ded/m06.png","kind":"image","scope":"song","size":40437},{"url":"usr/v_p/ded/m07.png?v=56c920542779","path":"usr/v_p/ded/m07.png","kind":"image","scope":"song","size":34991},{"url":"usr/v_p/ded/p01.jpg?v=c32172ca9e97","path":"usr/v_p/ded/p01.jpg","kind":"image","scope":"song","size":126533},{"url":"usr/v_p/ded/p02.jpg?v=925daec41fba","path":"usr/v_p/ded/p02.jpg","kind":"image","scope":"song","size":128921},{"url":"usr/v_p/ded/p03.jpg?v=10ff6f21bb1c","path":"usr/v_p/ded/p03.jpg","kind":"image","scope":"song","size":173468},{"url":"usr/v_p/ded/p04.jpg?v=e3561aa63310","path":"usr/v_p/ded/p04.jpg","kind":"image","scope":"song","size":117020},{"url":"usr/v_p/ded/p05.jpg?v=4bda54204f66","path":"usr/v_p/ded/p05.jpg","kind":"image","scope":"song","size":138129},{"url":"usr/v_p/ded/p06.jpg?v=03fb8f7eae30","path":"usr/v_p/ded/p06.jpg","kind":"image","scope":"song","size":152081},{"url":"usr/v_p/ded/p07.jpg?v=984860e16cd0","path":"usr/v_p/ded/p07.jpg","kind":"image","scope":"song","size":38697},{"url":"usr/v_p/jena/m01.png?v=23cbd443e03b","path":"usr/v_p/jena/m01.png","kind":"image","scope":"song","size":7538},{"url":"usr/v_p/jena/m02.png?v=0d6e44951892","path":"usr/v_p/jena/m02.png","kind":"image","scope":"song","size":10757},{"url":"usr/v_p/jena/m03.png?v=63b0236c177c","path":"usr/v_p/jena/m03.png","kind":"image","scope":"song","size":210001},{"url":"usr/v_p/jena/m04.png?v=85fb86cc8876","path":"usr/v_p/jena/m04.png","kind":"image","scope":"song","size":11818},{"url":"usr/v_p/jena/m05.png?v=a7711df0f286","path":"usr/v_p/jena/m05.png","kind":"image","scope":"song","size":12907},{"url":"usr/v_p/jena/m06.png?v=2a0b0514db44","path":"usr/v_p/jena/m06.png","kind":"image","scope":"song","size":24421},{"url":"usr/v_p/jena/m07.png?v=f16faa22e6f8","path":"usr/v_p/jena/m07.png","kind":"image","scope":"song","size":71267},{"url":"usr/v_p/jena/p01.jpg?v=3495158300a9","path":"usr/v_p/jena/p01.jpg","kind":"image","scope":"song","size":65905},{"url":"usr/v_p/jena/p02.jpg?v=159175ee32f8","path":"usr/v_p/jena/p02.jpg","kind":"image","scope":"song","size":61958},{"url":"usr/v_p/jena/p03.jpg?v=5d9feee5eb38","path":"usr/v_p/jena/p03.jpg","kind":"image","scope":"song","size":163911},{"url":"usr/v_p/jena/p04.jpg?v=337c202585f2","path":"usr/v_p/jena/p04.jpg","kind":"image","scope":"song","size":103704},{"url":"usr/v_p/jena/p05.jpg?v=769f4975241a","path":"usr/v_p/jena/p05.jpg","kind":"image","scope":"song","size":76455},{"url":"usr/v_p/jena/p06.jpg?v=14ae48be47f2","path":"usr/v_p/jena/p06.jpg","kind":"image","scope":"song","size":50136},{"url":"usr/v_p/jena/p07.jpg?v=4530f7debd09","path":"usr/v_p/jena/p07.jpg","kind":"image","scope":"song","size":135735},{"url":"usr/v_p/krok/m01.png?v=f64802443c1f","path":"usr/v_p/krok/m01.png","kind":"image","scope":"song","size":20791},{"url":"usr/v_p/krok/m02.png?v=63d7c0b22ba8","path":"usr/v_p/krok/m02.png","kind":"image","scope":"song","size":105990},{"url":"usr/v_p/krok/m03.png?v=ab792bc38335","path":"usr/v_p/krok/m03.png","kind":"image","scope":"song","size":21063},{"url":"usr/v_p/krok/m04.png?v=02963ddead63","path":"usr/v_p/krok/m04.png","kind":"image","scope":"song","size":71264},{"url":"usr/v_p/krok/m05.png?v=93c19516ba6c","path":"usr/v_p/krok/m05.png","kind":"image","scope":"song","size":30682},{"url":"usr/v_p/krok/m06.png?v=8d7620811c72","path":"usr/v_p/krok/m06.png","kind":"image","scope":"song","size":26758},{"url":"usr/v_p/krok/m07.png?v=afc0cae129e6","path":"usr/v_p/krok/m07.png","kind":"image","scope":"song","size":8443},{"url":"usr/v_p/krok/p01.jpg?v=f8f3e6327f36","path":"usr/v_p/krok/p01.jpg","kind":"image","scope":"song","size":62515},{"url":"usr/v_p/krok/p02.jpg?v=e6b5430d0e80","path":"usr/v_p/krok/p02.jpg","kind":"image","scope":"song","size":60157},{"url":"usr/v_p/krok/p03.jpg?v=8b8f87c923c9","path":"usr/v_p/krok/p03.jpg","kind":"image","scope":"song","size":40571},{"url":"usr/v_p/krok/p04.jpg?v=f6d60a121b91","path":"usr/v_p/krok/p04.jpg","kind":"image","scope":"song","size":118356},{"url":"usr/v_p/krok/p05.jpg?v=8e4b889fe759","path":"usr/v_p/krok/p05.jpg","kind":"image","scope":"song","size":81118},{"url":"usr/v_p/krok/p06.jpg?v=aba8b175c9af","path":"usr/v_p/krok/p06.jpg","kind":"image","scope":"song","size":92657},{"url":"usr/v_p/krok/p07.jpg?v=d84ec59e91e8","path":"usr/v_p/krok/p07.jpg","kind":"image","scope":"song","size":92077},{"url":"usr/v_p/lift/m01.png?v=116c05a8b28c","path":"usr/v_p/lift/m01.png","kind":"image","scope":"song","size":5063},{"url":"usr/v_p/lift/m02.png?v=606477f27882","path":"usr/v_p/lift/m02.png","kind":"image","scope":"song","size":31851},{"url":"usr/v_p/lift/m03.png?v=1fcaef072522","path":"usr/v_p/lift/m03.png","kind":"image","scope":"song","size":34719},{"url":"usr/v_p/lift/m04.png?v=200ec56e0a4f","path":"usr/v_p/lift/m04.png","kind":"image","scope":"song","size":21212},{"url":"usr/v_p/lift/m05.png?v=1b425ebaeea0","path":"usr/v_p/lift/m05.png","kind":"image","scope":"song","size":18530},{"url":"usr/v_p/lift/m06.png?v=bb890408b114","path":"usr/v_p/lift/m06.png","kind":"image","scope":"song","size":4334},{"url":"usr/v_p/lift/m07.png?v=8ebc17034214","path":"usr/v_p/lift/m07.png","kind":"image","scope":"song","size":37216},{"url":"usr/v_p/lift/p01.jpg?v=b12515e9cc71","path":"usr/v_p/lift/p01.jpg","kind":"image","scope":"song","size":77075},{"url":"usr/v_p/lift/p02.jpg?v=f0884b026f51","path":"usr/v_p/lift/p02.jpg","kind":"image","scope":"song","size":46792},{"url":"usr/v_p/lift/p03.jpg?v=2d8ba2b12561","path":"usr/v_p/lift/p03.jpg","kind":"image","scope":"song","size":123819},{"url":"usr/v_p/lift/p04.jpg?v=6db1431a08d6","path":"usr/v_p/lift/p04.jpg","kind":"image","scope":"song","size":44214},{"url":"usr/v_p/lift/p05.jpg?v=c596a3fe12bd","path":"usr/v_p/lift/p05.jpg","kind":"image","scope":"song","size":56641},{"url":"usr/v_p/lift/p06.jpg?v=2bd5810577ad","path":"usr/v_p/lift/p06.jpg","kind":"image","scope":"song","size":70925},{"url":"usr/v_p/lift/p07.jpg?v=27ddb5453df4","path":"usr/v_p/lift/p07.jpg","kind":"image","scope":"song","size":106031},{"url":"usr/v_p/risunok/m01.png?v=da7b95f72b3e","path":"usr/v_p/risunok/m01.png","kind":"image","scope":"song","size":70031},{"url":"usr/v_p/risunok/m02.png?v=c562a5b0e360","path":"usr/v_p/risunok/m02.png","kind":"image","scope":"song","size":4691},{"url":"usr/v_p/risunok/m03.png?v=a4436b6428a4","path":"usr/v_p/risunok/m03.png","kind":"image","scope":"song","size":14155},{"url":"usr/v_p/risunok/m04.png?v=bf137da01d95","path":"usr/v_p/risunok/m04.png","kind":"image","scope":"song","size":39428},{"url":"usr/v_p/risunok/m05.png?v=de036fce8c2a","path":"usr/v_p/risunok/m05.png","kind":"image","scope":"song","size":9982},{"url":"usr/v_p/risunok/m06.png?v=560bb172e6f7","path":"usr/v_p/risunok/m06.png","kind":"image","scope":"song","size":3135},{"url":"usr/v_p/risunok/m07.png?v=df2d18e133ae","path":"usr/v_p/risunok/m07.png","kind":"image","scope":"song","size":10201},{"url":"usr/v_p/risunok/p01.jpg?v=d8bad32e6df6","path":"usr/v_p/risunok/p01.jpg","kind":"image","scope":"song","size":52285},{"url":"usr/v_p/risunok/p02.jpg?v=f6f4d44bc015","path":"usr/v_p/risunok/p02.jpg","kind":"image","scope":"song","size":44758},{"url":"usr/v_p/risunok/p03.jpg?v=c5b34c1e9698","path":"usr/v_p/risunok/p03.jpg","kind":"image","scope":"song","size":147911},{"url":"usr/v_p/risunok/p04.jpg?v=f9c207a64766","path":"usr/v_p/risunok/p04.jpg","kind":"image","scope":"song","size":40796},{"url":"usr/v_p/risunok/p05.jpg?v=f885c98dd116","path":"usr/v_p/risunok/p05.jpg","kind":"image","scope":"song","size":60081},{"url":"usr/v_p/risunok/p06.jpg?v=925510bb9be0","path":"usr/v_p/risunok/p06.jpg","kind":"image","scope":"song","size":43959},{"url":"usr/v_p/risunok/p07.jpg?v=fd4c9049a174","path":"usr/v_p/risunok/p07.jpg","kind":"image","scope":"song","size":77400},{"url":"usr/v_p/voprosi/m01.png?v=63bb1f359b66","path":"usr/v_p/voprosi/m01.png","kind":"image","scope":"song","size":39581},{"url":"usr/v_p/voprosi/m02.png?v=da1eebc4f4dd","path":"usr/v_p/voprosi/m02.png","kind":"image","scope":"song","size":19164},{"url":"usr/v_p/voprosi/m03.png?v=f04dc7fb92da","path":"usr/v_p/voprosi/m03.png","kind":"image","scope":"song","size":17918},{"url":"usr/v_p/voprosi/m04.png?v=39d194797748","path":"usr/v_p/voprosi/m04.png","kind":"image","scope":"song","size":16405},{"url":"usr/v_p/voprosi/m05.png?v=f8972f2bdbfe","path":"usr/v_p/voprosi/m05.png","kind":"image","scope":"song","size":4267},{"url":"usr/v_p/voprosi/m06.png?v=b103d2b85b9a","path":"usr/v_p/voprosi/m06.png","kind":"image","scope":"song","size":31197},{"url":"usr/v_p/voprosi/m07.png?v=e5e041938770","path":"usr/v_p/voprosi/m07.png","kind":"image","scope":"song","size":41812},{"url":"usr/v_p/voprosi/p01.jpg?v=7dd5dde85203","path":"usr/v_p/voprosi/p01.jpg","kind":"image","scope":"song","size":75741},{"url":"usr/v_p/voprosi/p02.jpg?v=0ab639e5026a","path":"usr/v_p/voprosi/p02.jpg","kind":"image","scope":"song","size":92331},{"url":"usr/v_p/voprosi/p03.jpg?v=4d8f4d8e6ab3","path":"usr/v_p/voprosi/p03.jpg","kind":"image","scope":"song","size":54635},{"url":"usr/v_p/voprosi/p04.jpg?v=d75d23b43a23","path":"usr/v_p/voprosi/p04.jpg","kind":"image","scope":"song","size":39199},{"url":"usr/v_p/voprosi/p05.jpg?v=fca3aa5fa241","path":"usr/v_p/voprosi/p05.jpg","kind":"image","scope":"song","size":48055},{"url":"usr/v_p/voprosi/p06.jpg?v=9e8f6dbb9ffb","path":"usr/v_p/voprosi/p06.jpg","kind":"image","scope":"song","size":41188},{"url":"usr/v_p/voprosi/p07.jpg?v=c2fa2f7b5558","path":"usr/v_p/voprosi/p07.jpg","kind":"image","scope":"song","size":56413},{"url":"usr/ysz/1.jpg?v=ad4d2dc7aa74","path":"usr/ysz/1.jpg","kind":"image","scope":"built-in","size":257366}]};</script>
   <!-- VCARD_MEDIA_MANIFEST_END -->
 
   
@@ -3809,21 +3787,18 @@ body::before {
 </section>
 
 <section class="block-small2 x1 b2 iod-frame image-vibeframe frame-glow frame-border frame-breathe">
-  <img src="sys/v_hi/p01.jpg?v=3e9bb129c552" data-iod-list="sys/v_hi/list.js"
+  <img src="sys/v_hi/p03.jpg?v=fa7a7f783f72" data-iod-list="sys/v_hi/list.js"
     class="iod-image" image-day image-color="auto" alt="">
 </section>
 <!--SEC_END:TopTempl-->
 
-  <section class="x1 b2 block-full tabs-block" id="tabs-block">
-    <!-- TABS_BEG -->
-<a class="tabs__item is-active" href="#ysz26" list="ysz26"><span class="tabs__caption"><span class="tabs__label">ЯСПАЛ.ЯЗНАЛ.2026</span><sup>24</sup></span></a><a class="tabs__item" href="#nv25" list="nv25"><span class="tabs__caption"><span class="tabs__label">НА.ВЗЛЕТ.2025</span><sup>4</sup></span></a><a class="tabs__item" href="#pp24" list="pp24"><span class="tabs__caption"><span class="tabs__label">ПАРА.ПРИТЧ.2024</span><sup>2</sup></span></a>
-<!-- TABS_END -->
-  </section>
-  <!--SEC_BEG:TabsFootTempl-->
+  <!--SEC_BEG:TopTabsTempl-->
+<section class="x1 b2 block-full tabs-block" id="tabs-block">
+<a class="tabs__item is-active" href="#test00" list="test00"><span class="tabs__caption"><span class="tabs__label">Test00</span><sup>0</sup></span></a><a class="tabs__item" href="#test01" list="test01"><span class="tabs__caption"><span class="tabs__label">Test01</span><sup>0</sup></span></a><a class="tabs__item" href="#ysz26" list="ysz26"><span class="tabs__caption"><span class="tabs__label">ЯСПАЛ.ЯЗНАЛ.2026</span><sup>24</sup></span></a><a class="tabs__item" href="#test02" list="test02"><span class="tabs__caption"><span class="tabs__label">Test02</span><sup>0</sup></span></a><a class="tabs__item" href="#test03" list="test03"><span class="tabs__caption"><span class="tabs__label">Test03</span><sup>0</sup></span></a><a class="tabs__item" href="#test04" list="test04"><span class="tabs__caption"><span class="tabs__label">Test04</span><sup>0</sup></span></a><a class="tabs__item" href="#nv25" list="nv25"><span class="tabs__caption"><span class="tabs__label">НА.ВЗЛЕТ.2025</span><sup>4</sup></span></a><a class="tabs__item" href="#test05" list="test05"><span class="tabs__caption"><span class="tabs__label">Test05</span><sup>0</sup></span></a><a class="tabs__item" href="#test06" list="test06"><span class="tabs__caption"><span class="tabs__label">Test06</span><sup>0</sup></span></a><a class="tabs__item" href="#test07" list="test07"><span class="tabs__caption"><span class="tabs__label">Test07</span><sup>0</sup></span></a><a class="tabs__item" href="#test08" list="test08"><span class="tabs__caption"><span class="tabs__label">Test08</span><sup>0</sup></span></a><a class="tabs__item" href="#pp24" list="pp24"><span class="tabs__caption"><span class="tabs__label">ПАРА.ПРИТЧ.2024</span><sup>2</sup></span></a><a class="tabs__item" href="#test09" list="test09"><span class="tabs__caption"><span class="tabs__label">Test09</span><sup>0</sup></span></a><a class="tabs__item" href="#test10" list="test10"><span class="tabs__caption"><span class="tabs__label">Test10</span><sup>0</sup></span></a>
+</section>
+<!--SEC_END:TopTabsTempl-->
 
-<!--SEC_END:TabsFootTempl-->
-  <!-- LISTS_BEG -->
-<section ids="list-ysz26" class="list block-mid" id="ysz26"><!-- SONG yaspal BEGIN -->
+  <section ids="list-test00" class="list block-mid" id="test00"></section><section ids="list-test01" class="list block-mid" id="test01"></section><section ids="list-ysz26" class="list block-mid" id="ysz26"><!-- SONG yaspal BEGIN -->
 
 <div class="song__title block-full x1">
 
@@ -4170,7 +4145,7 @@ body::before {
 <span class="song__player-title" hidden>#14 Рисунок Завершить <span class="record-braces">(YSZ26 WAR)</span></span>
 <span class="song__item-text"><span class="song__emoji song__emoji--before" aria-hidden="true">🎨</span>#14 Рисунок Завершить</span></span>
 
-<span class="author-com block-full">О том, что было с мамой, когда выяснилось, что её дочка рисует портрет Бога.</span>
+<span class="author-com block-full">Когда ребёнок решил нарисовать портрет Бога с той стороны звёзд задумались... Хмм.</span>
 </div>
 
 <div ids="song-preview" class="song__preview x2 block-full" data-download-name="" data-download-title=" " data-mp3-author="" hidden>
@@ -4226,7 +4201,7 @@ body::before {
 <span class="song__player-title" hidden>#16 Жена Соседа <span class="record-braces">(YSZ26 CAS)</span></span>
 <span class="song__item-text"><span class="song__emoji song__emoji--before" aria-hidden="true">💍</span>#16 Жена Соседа</span></span>
 
-<span class="author-com block-full">История, где раскрывается тайна, почему соседская жена слаще.</span>
+<span class="author-com block-full">Что будет, если перемешать 10 Ев в райском саду?</span>
 </div>
 
 <div ids="song-preview" class="song__preview x2 block-full" data-download-name="" data-download-title=" " data-mp3-author="" hidden>
@@ -4455,7 +4430,7 @@ body::before {
 
 </div>
 
-<!-- SONG volk END --></section><section ids="list-nv25" class="list block-mid" id="nv25"><!-- SONG voprosi BEGIN -->
+<!-- SONG volk END --></section><section ids="list-test02" class="list block-mid" id="test02"></section><section ids="list-test03" class="list block-mid" id="test03"></section><section ids="list-test04" class="list block-mid" id="test04"></section><section ids="list-nv25" class="list block-mid" id="nv25"><!-- SONG voprosi BEGIN -->
 
 <div class="song__title block-full x1">
 
@@ -4584,7 +4559,7 @@ body::before {
 
 </div>
 
-<!-- SONG lift END --></section><section ids="list-pp24" class="list block-mid" id="pp24"><!-- SONG risunok BEGIN -->
+<!-- SONG lift END --></section><section ids="list-test05" class="list block-mid" id="test05"></section><section ids="list-test06" class="list block-mid" id="test06"></section><section ids="list-test07" class="list block-mid" id="test07"></section><section ids="list-test08" class="list block-mid" id="test08"></section><section ids="list-pp24" class="list block-mid" id="pp24"><!-- SONG risunok BEGIN -->
 
 <div class="song__title block-full x1">
 
@@ -4592,7 +4567,7 @@ body::before {
 <span class="song__player-title" hidden>Рисунок Завершить <span class="record-braces">(ПП24 CAS)</span></span>
 <span class="song__item-text"><span class="song__emoji song__emoji--before" aria-hidden="true">🎨</span>Рисунок Завершить</span></span>
 
-<span class="author-com block-full">О том, что было с мамой, когда выяснилось, что её дочка рисует портрет Бога.</span>
+<span class="author-com block-full">Когда ребёнок решил нарисовать портрет Бога с той стороны звёзд задумались... Хмм.</span>
 </div>
 
 <div ids="song-preview" class="song__preview x2 block-full" data-download-name="risunok_240628cas.mp3" data-download-title="risunok_240628cas.mp3 6M 192 Kbps 44100 Hz STEREO" data-mp3-author="ALIS" hidden>
@@ -4625,7 +4600,7 @@ body::before {
 <span class="song__player-title" hidden>Жена Соседа <span class="record-braces">(ПП24 WAR)</span></span>
 <span class="song__item-text"><span class="song__emoji song__emoji--before" aria-hidden="true">💍</span>Жена Соседа</span></span>
 
-<span class="author-com block-full">История, где раскрывается тайна, почему соседская жена слаще.</span>
+<span class="author-com block-full">Что будет, если перемешать 10 Ев в райском саду?</span>
 </div>
 
 <div ids="song-preview" class="song__preview x2 block-full" data-download-name="jena_240628war.mp3" data-download-title="jena_240628war.mp3 5.5M 192 Kbps 44100 Hz STEREO" data-mp3-author="ALIS" hidden>
@@ -4651,8 +4626,13 @@ body::before {
 
 </div>
 
-<!-- SONG jena END --></section>
-<!-- LISTS_END -->
+<!-- SONG jena END --></section><section ids="list-test09" class="list block-mid" id="test09"></section><section ids="list-test10" class="list block-mid" id="test10"></section>
+
+  <!--SEC_BEG:BottomTabsTempl-->
+<section class="x1 b2 block-full tabs-block tabs-block--bottom" id="tabs-block--bottom">
+<a class="tabs__item is-active" href="#test00" list="test00"><span class="tabs__caption"><span class="tabs__label">Test00</span><sup>0</sup></span></a><a class="tabs__item" href="#test01" list="test01"><span class="tabs__caption"><span class="tabs__label">Test01</span><sup>0</sup></span></a><a class="tabs__item" href="#ysz26" list="ysz26"><span class="tabs__caption"><span class="tabs__label">ЯСПАЛ.ЯЗНАЛ.2026</span><sup>24</sup></span></a><a class="tabs__item" href="#test02" list="test02"><span class="tabs__caption"><span class="tabs__label">Test02</span><sup>0</sup></span></a><a class="tabs__item" href="#test03" list="test03"><span class="tabs__caption"><span class="tabs__label">Test03</span><sup>0</sup></span></a><a class="tabs__item" href="#test04" list="test04"><span class="tabs__caption"><span class="tabs__label">Test04</span><sup>0</sup></span></a><a class="tabs__item" href="#nv25" list="nv25"><span class="tabs__caption"><span class="tabs__label">НА.ВЗЛЕТ.2025</span><sup>4</sup></span></a><a class="tabs__item" href="#test05" list="test05"><span class="tabs__caption"><span class="tabs__label">Test05</span><sup>0</sup></span></a><a class="tabs__item" href="#test06" list="test06"><span class="tabs__caption"><span class="tabs__label">Test06</span><sup>0</sup></span></a><a class="tabs__item" href="#test07" list="test07"><span class="tabs__caption"><span class="tabs__label">Test07</span><sup>0</sup></span></a><a class="tabs__item" href="#test08" list="test08"><span class="tabs__caption"><span class="tabs__label">Test08</span><sup>0</sup></span></a><a class="tabs__item" href="#pp24" list="pp24"><span class="tabs__caption"><span class="tabs__label">ПАРА.ПРИТЧ.2024</span><sup>2</sup></span></a><a class="tabs__item" href="#test09" list="test09"><span class="tabs__caption"><span class="tabs__label">Test09</span><sup>0</sup></span></a><a class="tabs__item" href="#test10" list="test10"><span class="tabs__caption"><span class="tabs__label">Test10</span><sup>0</sup></span></a>
+</section>
+<!--SEC_END:BottomTabsTempl-->
 
   <!--SEC_BEG:BottomTempl-->
 <section ids="about" class="footer x2 block-full">
@@ -12334,50 +12314,6 @@ const vcardMedia = (() => {
     let accColorValue = "white";
     let monoColorEnabled = vcardSettingEnabled(MONO_COLOR_STORAGE_KEY, 'mono-color', 'off');
     let accentEnabled = vcardSettingEnabled(ACCENT_STORAGE_KEY, 'accent');
-    const PLAYER_TEXTURE_SOURCES = Object.freeze([
-      'sys/v/_plyr/player/01-fine-horizontal.png',
-      'sys/v/_plyr/player/02-crosshatch-offset.png',
-      'sys/v/_plyr/player/03-fine-reverse.png',
-      'sys/v/_plyr/player/04-scuff-offset.png',
-      'sys/v/_plyr/player/05-micro-scuff-clusters.png',
-      'sys/v/_plyr/player/06-edge-crescents.png',
-      'sys/v/_plyr/player/07-vertical-needles.png',
-      'sys/v/_plyr/player/08-crosshatch-scuffs.png',
-      'sys/v/_plyr/player/09-needle-offset.png',
-      'sys/v/_plyr/player/10-edge-mixed.png',
-    ]);
-    const PLAYER_MATERIAL_SOURCES = Object.freeze([
-      'sys/v/_plyr/player/material/11-brushed-metal-dark.png',
-      'sys/v/_plyr/player/material/12-oxidized-metal-dark.png',
-      'sys/v/_plyr/player/material/13-matte-abs-dark.png',
-      'sys/v/_plyr/player/material/14-molded-plastic-dark.png',
-    ]);
-    let playerTextureSource = '';
-    let playerMaterialSource = '';
-
-    const randomDifferentSource = (sources, current) => {
-      const choices = sources.filter((source) => sources.length < 2 || source !== current);
-      return choices[Math.floor(Math.random() * choices.length)] || '';
-    };
-
-    const randomizePlayerTextures = () => {
-      playerTextureSource = randomDifferentSource(
-        PLAYER_TEXTURE_SOURCES,
-        playerTextureSource
-      );
-      playerMaterialSource = randomDifferentSource(
-        PLAYER_MATERIAL_SOURCES,
-        playerMaterialSource
-      );
-      root.style.setProperty(
-        '--vc-player-texture-image',
-        `url("${playerTextureSource}")`
-      );
-      root.style.setProperty(
-        '--vc-player-material-image',
-        `url("${playerMaterialSource}")`
-      );
-    };
     // Manual accent saturation adjustment: 100 keeps the palette unchanged,
     // lower values mute it, and values above 100 intensify it up to HSL 100%.
     const ACCENT_SATURATION_PERCENT = 100;
@@ -12426,10 +12362,6 @@ const vcardMedia = (() => {
       ...INTERMEDIATE_COLOR_PALETTE,
     ]);
     const ACCENT_VARIANTS_PER_COLOR = 3;
-    let pageColorBag = [];
-    let duoThemeBag = [];
-    let pagePaletteCycle = 0;
-    let duoPaletteCycle = 0;
     const svgNamespace = "http://www.w3.org/2000/svg";
     const tintSvg = document.createElementNS(svgNamespace, "svg");
     const tintFilter = document.createElementNS(svgNamespace, "filter");
@@ -12696,96 +12628,28 @@ const vcardMedia = (() => {
       return spectralDistance * 4 + luminanceDistance;
     };
 
-    const accentForPage = (page, paletteCycle) => {
+    const accentForPage = (page, variantIndex) => {
       const candidates = COLOR_PALETTE
         .filter((color) => color !== page)
         .sort((left, right) => (
           accentContrastScore(page, right) - accentContrastScore(page, left)
         ));
       const variantCount = Math.min(ACCENT_VARIANTS_PER_COLOR, candidates.length);
-      return candidates[paletteCycle % variantCount];
+      return candidates[variantIndex % variantCount];
     };
 
-    const pageForAccent = (accent) => COLOR_PALETTE
-      .filter((color) => color !== accent)
-      .sort((left, right) => (
-        accentContrastScore(right, accent) - accentContrastScore(left, accent)
-      ))[0];
+    const randomPaletteIndex = (length) => Math.floor(Math.random() * length);
 
-    const shuffledPalette = () => {
-      const colors = [...COLOR_PALETTE];
-      for (let index = colors.length - 1; index > 0; index -= 1) {
-        const swapIndex = Math.floor(Math.random() * (index + 1));
-        [colors[index], colors[swapIndex]] = [colors[swapIndex], colors[index]];
-      }
-      return colors;
-    };
-
-    const playlistCassettePairs = new Map();
-
-    const assignPlaylistCassettePairs = () => {
-      const playlistIds = Array.from(new Set(
-        Array.from(document.querySelectorAll('.tabs__item[list]'))
-          .map((button) => button.getAttribute('list'))
-          .filter(Boolean)
-      ));
-      let accentBag = [];
-      playlistIds.forEach((playlistId) => {
-        if (!accentBag.length) accentBag = shuffledPalette();
-        const accent = accentBag.shift();
-        playlistCassettePairs.set(playlistId, {
-          accent,
-          page: pageForAccent(accent),
-        });
-      });
-      document.querySelectorAll('.tabs__item[list]').forEach((button) => {
-        const pair = playlistCassettePairs.get(button.getAttribute('list'));
-        if (!pair) return;
-        button.style.setProperty(
-          '--playlist-cassette-session-page',
-          pair.page
-        );
-        button.style.setProperty(
-          '--playlist-cassette-session-accent',
-          withAccentAdjustments(pair.accent)
-        );
-      });
-    };
-
-    const activePlaylistCassettePair = () => {
-      const activeCassette = document.querySelector('.tabs__item.is-active[list]');
-      if (!activeCassette) return null;
-      return playlistCassettePairs.get(activeCassette.getAttribute('list')) || null;
-    };
-
-    const applyPlaylistCassettePair = (playlistId, preset) => {
-      const pair = playlistCassettePairs.get(playlistId);
-      if (!pair) return false;
-      setPalettePair(pair.page, preset === 'mono' ? pair.page : pair.accent);
-      return true;
-    };
-
-    const palettePairsForCycle = (paletteCycle) => (
-      COLOR_PALETTE.map((page) => ({
-        page,
-        accent: accentForPage(page, paletteCycle),
-      }))
+    const randomPageColor = () => (
+      COLOR_PALETTE[randomPaletteIndex(COLOR_PALETTE.length)]
     );
 
-    const nextPalettePair = () => {
-      if (!pageColorBag.length) {
-        pageColorBag = palettePairsForCycle(pagePaletteCycle);
-        pagePaletteCycle += 1;
-      }
-      return pageColorBag.shift();
-    };
-
-    const nextDuoPair = () => {
-      if (!duoThemeBag.length) {
-        duoThemeBag = palettePairsForCycle(duoPaletteCycle);
-        duoPaletteCycle += 1;
-      }
-      return duoThemeBag.shift();
+    const randomPalettePair = () => {
+      const page = randomPageColor();
+      return {
+        page,
+        accent: accentForPage(page, randomPaletteIndex(ACCENT_VARIANTS_PER_COLOR)),
+      };
     };
 
     function syncAccColor() {
@@ -12834,7 +12698,6 @@ const vcardMedia = (() => {
       textColorValue = color;
       const effectiveColor = effectiveTextColor();
       root.style.setProperty("--vc-page", effectiveColor);
-      randomizePlayerTextures();
       root.dataset.authorCommentMuted = isBlackScheme() ? 'on' : 'off';
       tintFlood.setAttribute("flood-color", effectiveColor);
       const mutedColor = getComputedStyle(document.body).color || effectiveColor;
@@ -12863,7 +12726,7 @@ const vcardMedia = (() => {
       if (!isBlackScheme()) {
         setPalettePair("black", "black");
       } else {
-        const pair = nextPalettePair();
+        const pair = randomPalettePair();
         setPalettePair(pair.page, pair.accent);
       }
     }
@@ -12906,7 +12769,7 @@ const vcardMedia = (() => {
         setPalettePair("black", "black");
         setAccent(false);
       } else if (key === 'mono') {
-        const tone = activePlaylistCassettePair()?.page || nextPalettePair().page;
+        const tone = randomPageColor();
         document.dispatchEvent(new CustomEvent("vcard:set-color-scheme", {
           detail: { key: "black" }
         }));
@@ -12914,7 +12777,7 @@ const vcardMedia = (() => {
         setPalettePair(tone, tone);
         setAccent(false);
       } else if (key === 'duo') {
-        const pair = activePlaylistCassettePair() || nextDuoPair();
+        const pair = randomPalettePair();
         document.dispatchEvent(new CustomEvent("vcard:set-color-scheme", {
           detail: { key: "black" }
         }));
@@ -12973,7 +12836,7 @@ const vcardMedia = (() => {
       const cassette = event.target.closest('.tabs__item[list]');
       const cassettePreset = root.dataset.colorPreset;
       if (cassette && ['mono', 'duo'].includes(cassettePreset)) {
-        applyPlaylistCassettePair(cassette.getAttribute('list'), cassettePreset);
+        applyPreset(cassettePreset);
         return;
       }
 
@@ -12981,13 +12844,13 @@ const vcardMedia = (() => {
     });
 
     document.addEventListener('vcard:apply-preset', (event) => {
-      applyPreset(event.detail && event.detail.preset);
+      const detail = event.detail || {};
+      applyPreset(detail.preset);
     });
 
     localStorage.removeItem("vcard-auto-color");
     localStorage.removeItem("vcard-win-color");
     vcardMedia.refresh();
-    assignPlaylistCassettePairs();
     const storedPreset = localStorage.getItem(PRESET_STORAGE_KEY);
     const initialPreset = ['night', 'mono', 'duo', 'newspaper'].includes(storedPreset)
       ? storedPreset

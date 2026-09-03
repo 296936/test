@@ -7666,50 +7666,6 @@ const vcardMedia = (() => {
     let accColorValue = "white";
     let monoColorEnabled = vcardSettingEnabled(MONO_COLOR_STORAGE_KEY, 'mono-color', 'off');
     let accentEnabled = vcardSettingEnabled(ACCENT_STORAGE_KEY, 'accent');
-    const PLAYER_TEXTURE_SOURCES = Object.freeze([
-      'sys/v/_plyr/player/01-fine-horizontal.png',
-      'sys/v/_plyr/player/02-crosshatch-offset.png',
-      'sys/v/_plyr/player/03-fine-reverse.png',
-      'sys/v/_plyr/player/04-scuff-offset.png',
-      'sys/v/_plyr/player/05-micro-scuff-clusters.png',
-      'sys/v/_plyr/player/06-edge-crescents.png',
-      'sys/v/_plyr/player/07-vertical-needles.png',
-      'sys/v/_plyr/player/08-crosshatch-scuffs.png',
-      'sys/v/_plyr/player/09-needle-offset.png',
-      'sys/v/_plyr/player/10-edge-mixed.png',
-    ]);
-    const PLAYER_MATERIAL_SOURCES = Object.freeze([
-      'sys/v/_plyr/player/material/11-brushed-metal-dark.png',
-      'sys/v/_plyr/player/material/12-oxidized-metal-dark.png',
-      'sys/v/_plyr/player/material/13-matte-abs-dark.png',
-      'sys/v/_plyr/player/material/14-molded-plastic-dark.png',
-    ]);
-    let playerTextureSource = '';
-    let playerMaterialSource = '';
-
-    const randomDifferentSource = (sources, current) => {
-      const choices = sources.filter((source) => sources.length < 2 || source !== current);
-      return choices[Math.floor(Math.random() * choices.length)] || '';
-    };
-
-    const randomizePlayerTextures = () => {
-      playerTextureSource = randomDifferentSource(
-        PLAYER_TEXTURE_SOURCES,
-        playerTextureSource
-      );
-      playerMaterialSource = randomDifferentSource(
-        PLAYER_MATERIAL_SOURCES,
-        playerMaterialSource
-      );
-      root.style.setProperty(
-        '--vc-player-texture-image',
-        `url("${playerTextureSource}")`
-      );
-      root.style.setProperty(
-        '--vc-player-material-image',
-        `url("${playerMaterialSource}")`
-      );
-    };
     // Manual accent saturation adjustment: 100 keeps the palette unchanged,
     // lower values mute it, and values above 100 intensify it up to HSL 100%.
     const ACCENT_SATURATION_PERCENT = 100;
@@ -7758,10 +7714,6 @@ const vcardMedia = (() => {
       ...INTERMEDIATE_COLOR_PALETTE,
     ]);
     const ACCENT_VARIANTS_PER_COLOR = 3;
-    let pageColorBag = [];
-    let duoThemeBag = [];
-    let pagePaletteCycle = 0;
-    let duoPaletteCycle = 0;
     const svgNamespace = "http://www.w3.org/2000/svg";
     const tintSvg = document.createElementNS(svgNamespace, "svg");
     const tintFilter = document.createElementNS(svgNamespace, "filter");
@@ -8028,96 +7980,28 @@ const vcardMedia = (() => {
       return spectralDistance * 4 + luminanceDistance;
     };
 
-    const accentForPage = (page, paletteCycle) => {
+    const accentForPage = (page, variantIndex) => {
       const candidates = COLOR_PALETTE
         .filter((color) => color !== page)
         .sort((left, right) => (
           accentContrastScore(page, right) - accentContrastScore(page, left)
         ));
       const variantCount = Math.min(ACCENT_VARIANTS_PER_COLOR, candidates.length);
-      return candidates[paletteCycle % variantCount];
+      return candidates[variantIndex % variantCount];
     };
 
-    const pageForAccent = (accent) => COLOR_PALETTE
-      .filter((color) => color !== accent)
-      .sort((left, right) => (
-        accentContrastScore(right, accent) - accentContrastScore(left, accent)
-      ))[0];
+    const randomPaletteIndex = (length) => Math.floor(Math.random() * length);
 
-    const shuffledPalette = () => {
-      const colors = [...COLOR_PALETTE];
-      for (let index = colors.length - 1; index > 0; index -= 1) {
-        const swapIndex = Math.floor(Math.random() * (index + 1));
-        [colors[index], colors[swapIndex]] = [colors[swapIndex], colors[index]];
-      }
-      return colors;
-    };
-
-    const playlistCassettePairs = new Map();
-
-    const assignPlaylistCassettePairs = () => {
-      const playlistIds = Array.from(new Set(
-        Array.from(document.querySelectorAll('.tabs__item[list]'))
-          .map((button) => button.getAttribute('list'))
-          .filter(Boolean)
-      ));
-      let accentBag = [];
-      playlistIds.forEach((playlistId) => {
-        if (!accentBag.length) accentBag = shuffledPalette();
-        const accent = accentBag.shift();
-        playlistCassettePairs.set(playlistId, {
-          accent,
-          page: pageForAccent(accent),
-        });
-      });
-      document.querySelectorAll('.tabs__item[list]').forEach((button) => {
-        const pair = playlistCassettePairs.get(button.getAttribute('list'));
-        if (!pair) return;
-        button.style.setProperty(
-          '--playlist-cassette-session-page',
-          pair.page
-        );
-        button.style.setProperty(
-          '--playlist-cassette-session-accent',
-          withAccentAdjustments(pair.accent)
-        );
-      });
-    };
-
-    const activePlaylistCassettePair = () => {
-      const activeCassette = document.querySelector('.tabs__item.is-active[list]');
-      if (!activeCassette) return null;
-      return playlistCassettePairs.get(activeCassette.getAttribute('list')) || null;
-    };
-
-    const applyPlaylistCassettePair = (playlistId, preset) => {
-      const pair = playlistCassettePairs.get(playlistId);
-      if (!pair) return false;
-      setPalettePair(pair.page, preset === 'mono' ? pair.page : pair.accent);
-      return true;
-    };
-
-    const palettePairsForCycle = (paletteCycle) => (
-      COLOR_PALETTE.map((page) => ({
-        page,
-        accent: accentForPage(page, paletteCycle),
-      }))
+    const randomPageColor = () => (
+      COLOR_PALETTE[randomPaletteIndex(COLOR_PALETTE.length)]
     );
 
-    const nextPalettePair = () => {
-      if (!pageColorBag.length) {
-        pageColorBag = palettePairsForCycle(pagePaletteCycle);
-        pagePaletteCycle += 1;
-      }
-      return pageColorBag.shift();
-    };
-
-    const nextDuoPair = () => {
-      if (!duoThemeBag.length) {
-        duoThemeBag = palettePairsForCycle(duoPaletteCycle);
-        duoPaletteCycle += 1;
-      }
-      return duoThemeBag.shift();
+    const randomPalettePair = () => {
+      const page = randomPageColor();
+      return {
+        page,
+        accent: accentForPage(page, randomPaletteIndex(ACCENT_VARIANTS_PER_COLOR)),
+      };
     };
 
     function syncAccColor() {
@@ -8166,7 +8050,6 @@ const vcardMedia = (() => {
       textColorValue = color;
       const effectiveColor = effectiveTextColor();
       root.style.setProperty("--vc-page", effectiveColor);
-      randomizePlayerTextures();
       root.dataset.authorCommentMuted = isBlackScheme() ? 'on' : 'off';
       tintFlood.setAttribute("flood-color", effectiveColor);
       const mutedColor = getComputedStyle(document.body).color || effectiveColor;
@@ -8195,7 +8078,7 @@ const vcardMedia = (() => {
       if (!isBlackScheme()) {
         setPalettePair("black", "black");
       } else {
-        const pair = nextPalettePair();
+        const pair = randomPalettePair();
         setPalettePair(pair.page, pair.accent);
       }
     }
@@ -8238,7 +8121,7 @@ const vcardMedia = (() => {
         setPalettePair("black", "black");
         setAccent(false);
       } else if (key === 'mono') {
-        const tone = activePlaylistCassettePair()?.page || nextPalettePair().page;
+        const tone = randomPageColor();
         document.dispatchEvent(new CustomEvent("vcard:set-color-scheme", {
           detail: { key: "black" }
         }));
@@ -8246,7 +8129,7 @@ const vcardMedia = (() => {
         setPalettePair(tone, tone);
         setAccent(false);
       } else if (key === 'duo') {
-        const pair = activePlaylistCassettePair() || nextDuoPair();
+        const pair = randomPalettePair();
         document.dispatchEvent(new CustomEvent("vcard:set-color-scheme", {
           detail: { key: "black" }
         }));
@@ -8305,7 +8188,7 @@ const vcardMedia = (() => {
       const cassette = event.target.closest('.tabs__item[list]');
       const cassettePreset = root.dataset.colorPreset;
       if (cassette && ['mono', 'duo'].includes(cassettePreset)) {
-        applyPlaylistCassettePair(cassette.getAttribute('list'), cassettePreset);
+        applyPreset(cassettePreset);
         return;
       }
 
@@ -8313,13 +8196,13 @@ const vcardMedia = (() => {
     });
 
     document.addEventListener('vcard:apply-preset', (event) => {
-      applyPreset(event.detail && event.detail.preset);
+      const detail = event.detail || {};
+      applyPreset(detail.preset);
     });
 
     localStorage.removeItem("vcard-auto-color");
     localStorage.removeItem("vcard-win-color");
     vcardMedia.refresh();
-    assignPlaylistCassettePairs();
     const storedPreset = localStorage.getItem(PRESET_STORAGE_KEY);
     const initialPreset = ['night', 'mono', 'duo', 'newspaper'].includes(storedPreset)
       ? storedPreset
