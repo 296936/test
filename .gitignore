@@ -1,0 +1,10 @@
+/slot.cfg
+/vc_core/
+
+*.tmp
+*.bak
+*.orig
+*.rej
+*~
+.DS_Store
+Thumbs.db
