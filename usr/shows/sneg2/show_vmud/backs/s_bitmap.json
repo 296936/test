@@ -1,0 +1,29 @@
+{
+  "format": "aliswb-style-params-1",
+  "style": "s_bitmap",
+  "profile_sha256": "480ab06fdbb09ebae6c837e3eb679dd5be99e129809b972d1f72cca4e485f81a",
+  "files": {
+    "038": {
+      "sha256": "a62a95e7586a22c9d6165d946e6e5c5db4a16cc04581fcf87e4d0f815791d40b",
+      "input_mode": "color",
+      "parameters": {
+        "threshold": 82,
+        "invert": 0,
+        "radius": 0,
+        "strength": 0,
+        "bias": 0,
+        "quality": "selected",
+        "reason": "Автоматически вычислено из выбранного s_alarm.",
+        "black": 55,
+        "white": 108,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255,
+        "apply_bitmap": 1,
+        "use_bitmap": 1,
+        "review_policy": "bitmap-from-alarm-v1"
+      },
+      "deploy_sha256": "d1f8ddb36a97e1f432127c1943a42e1abdd595aa9436728c4c4f420e20613ae0"
+    }
+  }
+}

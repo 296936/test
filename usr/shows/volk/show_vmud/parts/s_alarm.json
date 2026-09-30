@@ -1,0 +1,67 @@
+{
+  "format": "aliswb-style-params-1",
+  "style": "s_alarm",
+  "profile_sha256": "480ab06fdbb09ebae6c837e3eb679dd5be99e129809b972d1f72cca4e485f81a",
+  "files": {
+    "001": {
+      "sha256": "1e9e34e2cfb349d740ced40b343506cf2fdfdcb13725d164cb096a29f9cbbe3b",
+      "input_mode": "color",
+      "parameters": {
+        "black": 15,
+        "white": 107,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "2b57aeebc655edf708b799d2eb1b30f20c2690e3680c81c92515191f146c5124"
+    },
+    "004": {
+      "sha256": "d1b3bb8331f865ef6063e6c5982629f2ce880710814df837f03e55749903a571",
+      "input_mode": "color",
+      "parameters": {
+        "black": 50,
+        "white": 85,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "f803d14c19e658d21869c55604b10c0855dbb2f261854cb8af9ef4699ef11a06"
+    },
+    "007": {
+      "sha256": "c02be4f35faf20f4d779dbfe7c4dc2caa0e468144f79a2a062da8bb0ed4900d1",
+      "input_mode": "color",
+      "parameters": {
+        "black": 69,
+        "white": 111,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "0af77453818e44a8e0bd9c554bf1545b87d800b3e2dbd8840d68aa55ca384951"
+    },
+    "008": {
+      "sha256": "09a4c89cb447e96054743a9b3306d2cf1bbd5e77287782e04942dcae9ffaf5dd",
+      "input_mode": "color",
+      "parameters": {
+        "black": 34,
+        "white": 51,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "b6cc28b82c4c1ed1ce0a46c1a1ecfb780a1de4b11c6d88da48de4e711ae31570"
+    },
+    "016": {
+      "sha256": "70c9a4354886db9d58790c97c93192c62d30b8a2b991196c3a3284a396a07256",
+      "input_mode": "color",
+      "parameters": {
+        "black": 43,
+        "white": 99,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "cdfb539db795f12edf2d8a03285ba2d0aa5ead67990247e6c9ea21d30bf5b171"
+    }
+  }
+}

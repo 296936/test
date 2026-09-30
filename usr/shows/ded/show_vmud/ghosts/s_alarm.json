@@ -1,0 +1,67 @@
+{
+  "format": "aliswb-style-params-1",
+  "style": "s_alarm",
+  "profile_sha256": "480ab06fdbb09ebae6c837e3eb679dd5be99e129809b972d1f72cca4e485f81a",
+  "files": {
+    "006": {
+      "sha256": "fb70b67818b119ad3d666222b1abdd3eb9253dfd6e3dbc1e4a624bcde593dbba",
+      "input_mode": "color",
+      "parameters": {
+        "black": 17,
+        "white": 37,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "7f6841fabbb73d9b5b79e39f4f271a337088c5cffc62c155ea1a7017f4e9d93f"
+    },
+    "012": {
+      "sha256": "5d903245bd099af379bd768fd031c97ddc35bed97730ad4c05d280a97fa2c6bb",
+      "input_mode": "color",
+      "parameters": {
+        "black": 19,
+        "white": 80,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "9ca14d304c5982327a7bb97bcfd2b9f6c56fadb1ea6b494daae0f5083e84731a"
+    },
+    "015": {
+      "sha256": "bb22a53b9b30001c8ed574ee99f67bae81f1ea8a2e8dc69e59884305b68ee3d6",
+      "input_mode": "color",
+      "parameters": {
+        "black": 32,
+        "white": 78,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "eca48ad9f2a88fb10847615811f67803c789c9999a671e094173f777b185a39b"
+    },
+    "017": {
+      "sha256": "e6e74cab3d694e26ce21ed441cb58b9678b558dd0acbef7e377913c317750862",
+      "input_mode": "color",
+      "parameters": {
+        "black": 30,
+        "white": 100,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "c91a00335156bf8a4a3e59f2466bdf998889cf277a1bd106f76ec59e19738126"
+    },
+    "020": {
+      "sha256": "e53b1f7b5f3792d356fd9003666ccf49c06645512c6f8caec7869f6a1b0f5174",
+      "input_mode": "color",
+      "parameters": {
+        "black": 49,
+        "white": 109,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "55ed5ce4a902dbe5197b6a06a794e6441a282d0c1dd7d175af455cf9ea3a3d3d"
+    }
+  }
+}
