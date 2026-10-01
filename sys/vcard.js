@@ -566,6 +566,8 @@ const portalController = (() => {
     image: null,
     tapeStill: null,
     tapeVideo: null,
+    cassetteCountdown: null,
+    cassetteCountdownTimer: 0,
     surfaceFade: null,
     crossVideo: null,
     action: null,
@@ -720,6 +722,39 @@ const portalController = (() => {
     fade.getAnimations().forEach((animation) => animation.cancel());
     fade.remove();
     state.surfaceFade = null;
+  };
+
+  const releaseCassetteCountdown = () => {
+    if (state.cassetteCountdownTimer) {
+      window.clearInterval(state.cassetteCountdownTimer);
+      state.cassetteCountdownTimer = 0;
+    }
+    state.cassetteCountdown?.remove();
+    state.cassetteCountdown = null;
+  };
+
+  const startCassetteCountdown = () => {
+    releaseCassetteCountdown();
+    if (!state.frame) return;
+    let value = 5;
+    const countdown = document.createElement('div');
+    countdown.className = 'song-portal-cassette-countdown';
+    countdown.setAttribute('aria-hidden', 'true');
+    countdown.textContent = String(value);
+    state.frame.insertBefore(countdown, state.controls || null);
+    state.cassetteCountdown = countdown;
+    state.cassetteCountdownTimer = window.setInterval(() => {
+      if (countdown !== state.cassetteCountdown || !countdown.isConnected) {
+        releaseCassetteCountdown();
+        return;
+      }
+      value -= 1;
+      if (value < 1) {
+        releaseCassetteCountdown();
+        return;
+      }
+      countdown.textContent = String(value);
+    }, 1000);
   };
 
   const capturePhotoSurface = () => {
@@ -1020,6 +1055,7 @@ const portalController = (() => {
   };
 
   const showPhoto = () => {
+    releaseCassetteCountdown();
     state.generation += 1;
     state.pendingPhotoGeneration = 0;
     const generation = state.generation;
@@ -1079,6 +1115,7 @@ const portalController = (() => {
     allowPausedPlayback = false,
   } = {}) => {
     if (!state.preview || !ensurePortal(state.preview)) return;
+    releaseCassetteCountdown();
     releaseSurfaceFade();
     state.generation += 1;
     state.verseRunGeneration += 1;
@@ -1181,9 +1218,6 @@ const portalController = (() => {
       || !preview.classList.contains('is-visible')
     ) return;
     state.action?.blur();
-    document.dispatchEvent(new CustomEvent('vcard:portal-playback-control', {
-      detail: { preview }
-    }));
     if (sharedSongAudio.vcardPlayingPreview !== preview) {
       document.dispatchEvent(new CustomEvent('vcard:portal-idle-play', {
         detail: { preview },
@@ -1711,6 +1745,12 @@ const portalController = (() => {
 
   const showCassette = ({ phase = 'start', motion = 'static' } = {}) => {
     if (!state.preview) return;
+    if (motion === 'countdown') {
+      showTape({ phase, reset: true, allowEndedPlayback: true });
+      startCassetteCountdown();
+      return;
+    }
+    releaseCassetteCountdown();
     if (phase === 'finish') {
       if (motion === 'animated') finishAnimated(portalNumber('FinishFade', 0));
       else if (state.surface === 'tape-video' || state.surface === 'tape-still') finishStatic();
@@ -1746,6 +1786,12 @@ const portalController = (() => {
   const applyVerse = async (plan = {}, signal = null) => {
     const preview = plan.preview || null;
     if (!preview || preview !== state.preview || !ensurePortal(preview)) return false;
+    if (
+      !plan.portalFrame
+      && !(plan.effects || []).length
+      && !(plan.bindings || []).length
+    ) return true;
+    releaseCassetteCountdown();
     const runGeneration = ++state.verseRunGeneration;
     vcardPortalPlan.setVersePlan(plan);
     state.firstVerseActivated = Number.isInteger(plan.index) && plan.index >= 0;
@@ -1916,6 +1962,7 @@ const portalController = (() => {
     state.crossVideo = null;
     state.overlay = 'none';
     releaseSurfaceFade();
+    releaseCassetteCountdown();
     parkPhotoSurface();
     state.tapeStill?.remove();
     state.tapeVideo?.remove();
@@ -6319,7 +6366,6 @@ const vcardMedia = (() => {
     setPlayerSimplified(playerSimplified, false);
 
     let autoPlayFromEnded = false;
-    let playbackMode = 'list';
     let activePreview = null;
     let playingPreview = null;
     let activeTrackBandVerse = null;
@@ -6415,22 +6461,12 @@ const vcardMedia = (() => {
     );
     const randomSongBags = new Map();
 
-    const setPlaybackMode = (mode) => {
-      playbackMode = mode === 'composition' ? 'composition' : 'list';
-      playerDock.dataset.playbackMode = playbackMode;
-      document.dispatchEvent(new CustomEvent('vcard:playback-mode', {
-        detail: { mode: playbackMode }
-      }));
-    };
-
     const stopSilentPhase = ({ restore = true } = {}) => {
       delete playerDock.dataset.silentPhase;
       if (restore && sharedSongAudio) {
         sharedSongAudio.dispatchEvent(new Event('timeupdate'));
       }
     };
-
-    setPlaybackMode('list');
 
     const cancelAutoAdvance = () => {
       stopSilentPhase();
@@ -7376,7 +7412,6 @@ const vcardMedia = (() => {
             return;
           }
           document.dispatchEvent(new CustomEvent('vcard:prepare-audio-context'));
-          setPlaybackMode('list');
           // Resuming an already started track remains immediate. The silent
           // five-second lead-in belongs only to an automatic list transition.
           if (
@@ -8321,7 +8356,6 @@ const vcardMedia = (() => {
     const playSong = (preview, button, reason = 'click') => {
       const audioEl = sharedSongAudio;
       if (!preview || !button || !audioEl) return;
-      setPlaybackMode('list');
       if (preview === playingPreview && audioEl.ended) {
         restartFinishedSong(preview);
         return;
@@ -8415,7 +8449,6 @@ const vcardMedia = (() => {
       const startTime = thresholds[index];
       if (!preview || !button || !Number.isFinite(startTime)) return;
       initialTrackLayoutPreview = null;
-      setPlaybackMode('list');
       cancelAutoAdvance();
       if (!prepareSongPlayer(preview, button)) return;
 
@@ -8575,38 +8608,6 @@ const vcardMedia = (() => {
       });
     }
 
-    document.addEventListener('vcard:play-single-song', (event) => {
-      const detail = event.detail || {};
-      const preview = detail.preview;
-      if (!preview || preview !== playingPreview) return;
-      cancelAutoAdvance();
-      setPlaybackMode('composition');
-      detail.deferStart = true;
-      if (sharedSongAudio.ended) {
-        restartFinishedSong(preview);
-        return;
-      }
-      const audioSrc = ensureAudioSource(preview, sharedSongAudio);
-      if (!audioSrc) return;
-      document.dispatchEvent(new CustomEvent('vcard:prepare-audio-context'));
-      if (playingPreview !== preview || sharedSongAudio.getAttribute('src') !== audioSrc) return;
-      try {
-        sharedSongAudio.currentTime = 0;
-      } catch (error) {
-        console.warn('VCard audio: cannot rewind composition', error);
-      }
-      document.dispatchEvent(new CustomEvent('vcard:prepare-audio-context'));
-      const startRequest = window.VCPlayer?.start?.(preview);
-      updateTrackBandHighlight({ scroll: false, force: true });
-      startRequest?.then?.(() => updateTrackBandHighlight({ scroll: false, force: true }));
-    });
-
-    document.addEventListener('vcard:portal-playback-control', (event) => {
-      const preview = event.detail && event.detail.preview;
-      if (!preview || preview !== playingPreview) return;
-      setPlaybackMode('composition');
-    });
-
     window.addEventListener('pagehide', () => rememberSongPosition(undefined, true));
 
     const visiblePreviewVideoLinks = (preview) => {
@@ -8754,7 +8755,6 @@ const vcardMedia = (() => {
       const preview = buttonPreview(button);
       if (!preview || !preview.classList.contains('song__preview')) return;
       if (!options.fromEnded) {
-        setPlaybackMode('list');
         cancelAutoAdvance();
         if (songAlternation === 'random') {
           resetRandomSongBag(String(button.dataset.list || ''), button);
@@ -9123,6 +9123,7 @@ const vcardMedia = (() => {
               )
           );
         return {
+          autopilot: localStorage.getItem('vcard-autopilot') === 'off' ? 'off' : 'on',
           background: normalizeBackground(
             localStorage.getItem('vcard-background-mode')
             || localStorage.getItem('vcard-visualization')
@@ -9159,7 +9160,16 @@ const vcardMedia = (() => {
         };
       };
 
+      window.VCardWheelSettings = Object.freeze({
+        current: () => Object.freeze({ ...readState() }),
+      });
+
       const renderState = () => {
+        const manualSettingsEnabled = Boolean(state) && state.autopilot === 'off';
+        dialog.querySelectorAll('[data-settings-autopilot-options]').forEach((block) => {
+          block.classList.toggle('is-disabled', !manualSettingsEnabled);
+          block.setAttribute('aria-disabled', manualSettingsEnabled ? 'false' : 'true');
+        });
         dialog.querySelectorAll('[sd-opt]').forEach((link) => {
           const key = link.getAttribute('sd-opt');
           if (key === 'get-link' || key === 'save-mp3') {
@@ -9215,6 +9225,7 @@ const vcardMedia = (() => {
             || randomColorUnavailable
             || fileVisualizationUnavailable
             || fileVolumeBoostUnavailable
+            || (!manualSettingsEnabled && Boolean(link.closest('[data-settings-autopilot-options]')))
           );
           link.classList.toggle('is-selected', selected);
           link.classList.toggle('is-disabled', disabled);
@@ -9223,7 +9234,7 @@ const vcardMedia = (() => {
         });
         dialog.querySelectorAll('[dd-preset]').forEach((link) => {
           const selected = Boolean(state) && state.preset === link.getAttribute('dd-preset');
-          const disabled = vcardPlaylistStyleLocked();
+          const disabled = vcardPlaylistStyleLocked() || !manualSettingsEnabled;
           link.classList.toggle('is-selected', selected);
           link.classList.toggle('is-disabled', disabled);
           link.setAttribute('aria-current', selected ? 'true' : 'false');
@@ -9394,7 +9405,9 @@ const vcardMedia = (() => {
           }));
         }
         state[key] = value;
-        if (key === 'background') {
+        if (key === 'autopilot') {
+          localStorage.setItem('vcard-autopilot', value === 'off' ? 'off' : 'on');
+        } else if (key === 'background') {
           if (state.brightness === '0') {
             state.brightness = '3';
             localStorage.setItem('vcard-visualization-brightness', '3');
@@ -10557,6 +10570,7 @@ const vcardMedia = (() => {
       const preset = event.target.closest("[dd-preset]");
       if (preset) {
         event.preventDefault();
+        if (preset.getAttribute('aria-disabled') === 'true') return;
         applyPreset(preset.getAttribute("dd-preset"));
         return;
       }

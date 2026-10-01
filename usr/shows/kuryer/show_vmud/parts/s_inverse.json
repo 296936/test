@@ -3,6 +3,24 @@
   "style": "s_inverse",
   "profile_sha256": "480ab06fdbb09ebae6c837e3eb679dd5be99e129809b972d1f72cca4e485f81a",
   "files": {
+    "008": {
+      "sha256": "5c6051c26fe4b184942851aeda88e3aea414eeedc39d2ea3ff7e0cada9405e37",
+      "input_mode": "color",
+      "parameters": {
+        "threshold": 86,
+        "invert": 1,
+        "radius": 0,
+        "strength": 0,
+        "bias": 0,
+        "black": 54,
+        "white": 119,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255,
+        "apply_bitmap": 1
+      },
+      "deploy_sha256": "0f2459106bc9d1932dd5b5b5720c7f9e1770c6cec06eaac477b4220986bab33a"
+    },
     "014": {
       "sha256": "29cf8993bc55edcc217d3918e40d0da940021a9bf890d6a8a70d73aff48b3c56",
       "input_mode": "color",
@@ -20,24 +38,6 @@
         "apply_bitmap": 1
       },
       "deploy_sha256": "363540f8ce6ed405ef64ca1e4ae8220c8e212431ea0886af12c8a8361e239909"
-    },
-    "019": {
-      "sha256": "c3f3496c4f18396461c99ca39f94f9bbef0eda3997b05cd49a0bc38d15c0ee87",
-      "input_mode": "color",
-      "parameters": {
-        "threshold": 92,
-        "invert": 1,
-        "radius": 0,
-        "strength": 0,
-        "bias": 0,
-        "black": 62,
-        "white": 121,
-        "gamma": 1,
-        "out_black": 0,
-        "out_white": 255,
-        "apply_bitmap": 1
-      },
-      "deploy_sha256": "dbc62ff04915445e4c081ae87260bc67fa7b6498ae74962d091e59eec271767d"
     }
   }
 }

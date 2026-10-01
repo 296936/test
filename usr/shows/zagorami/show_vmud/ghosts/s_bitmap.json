@@ -47,19 +47,19 @@
       },
       "deploy_sha256": "8617e51c6beb8a821aa769a3cd5060a2a53146f085c02226a32816a411962d07"
     },
-    "006": {
-      "sha256": "490433dfafbaa42c1ad7101c7fda8ba649045649f9491c38ff3c4ce81bd44d2d",
+    "007": {
+      "sha256": "723a0162686c753dcb9045a6bc3f94c0291225880dfcf0ebe027ba7df44cc80c",
       "input_mode": "color",
       "parameters": {
-        "threshold": 69,
+        "threshold": 85,
         "invert": 0,
         "radius": 0,
         "strength": 0,
         "bias": 0,
         "quality": "selected",
         "reason": "Автоматически вычислено из выбранного s_alarm.",
-        "black": 38,
-        "white": 100,
+        "black": 45,
+        "white": 125,
         "gamma": 1,
         "out_black": 0,
         "out_white": 255,
@@ -67,7 +67,7 @@
         "use_bitmap": 1,
         "review_policy": "bitmap-from-alarm-v1"
       },
-      "deploy_sha256": "605cec8ee9d200410ede5df7e5ec0292a2500a99c6b49117a3e0df9d767ab229"
+      "deploy_sha256": "1609cab38cb93f10767119f1e249993b9ae964b4e6d65eb4bdcf7ba38f796b4b"
     }
   }
 }

@@ -3,17 +3,17 @@
   "style": "s_alarm",
   "profile_sha256": "480ab06fdbb09ebae6c837e3eb679dd5be99e129809b972d1f72cca4e485f81a",
   "files": {
-    "001": {
-      "sha256": "a329421b0af99bc89221b1d2dfcdd81b7f6cb5aecf17edb3db128f02a98e8074",
+    "002": {
+      "sha256": "7d86061421924b1faf88b1bd1bad6c61b72ce2409f11e98987f8f5822e8ccc74",
       "input_mode": "color",
       "parameters": {
-        "black": 15,
-        "white": 29,
+        "black": 32,
+        "white": 105,
         "gamma": 1,
         "out_black": 0,
         "out_white": 255
       },
-      "deploy_sha256": "cefb05f11bc406ca133c552642039ea4c715b7b38cb5e9b8af02f7b7ed794b67"
+      "deploy_sha256": "3757552279cf7f5506caa1d1181803fa4204b60df5ff55d0d8fa4999d9fda748"
     },
     "004": {
       "sha256": "82a636f4b9592db8ba00dfc964213c1458436db253aa50fcceac214566b35d44",
@@ -27,6 +27,18 @@
       },
       "deploy_sha256": "40d7f760d531343944c52d17d3d3c267703e84a2842b361e71fcabee73eccdba"
     },
+    "006": {
+      "sha256": "c4c4d18f623f818c7ce5e22e816380bf5efa359ba2c741dee9501a6c6211fe78",
+      "input_mode": "color",
+      "parameters": {
+        "black": 47,
+        "white": 68,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "8a9051ab7f69afba0f509113214ea48e960e89d4fb9b2a0997d49caf93ac68c0"
+    },
     "007": {
       "sha256": "872d76d8cf020000abc16b8a12d644919922be4f8dc9b25282702b11fb50702e",
       "input_mode": "color",
@@ -38,6 +50,18 @@
         "out_white": 255
       },
       "deploy_sha256": "351941de0aaca2bc93af46cf4e9373177e865136fcc814176e59bb863f974741"
+    },
+    "008": {
+      "sha256": "287a68b7a66445171eb3e07d090c4bd4443d004510e1ffe93aa2a4e1c274dcd3",
+      "input_mode": "color",
+      "parameters": {
+        "black": 29,
+        "white": 71,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "18a6a94e71c67e8a18ecc3508ee72cf59a103b7fcc61be56cdac8eec5362cdd4"
     },
     "009": {
       "sha256": "b925132a99c8e49edb6ce7367c2a699943c3fdbbc51f5028a0a2caaf398ac0ad",

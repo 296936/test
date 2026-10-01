@@ -21,23 +21,23 @@
       },
       "deploy_sha256": "19d726087e6f77e477c42000e4101436700514afaf3553a0fc2b15ae6da7d6b3"
     },
-    "020": {
-      "sha256": "33495d7824614c20a310c795c3f8de5acb93585af362f5803a7d3b208b8682eb",
+    "017": {
+      "sha256": "6e10e4263963202a7107325da10f203c7513e67d182b7abfe473f003f662ebba",
       "input_mode": "color",
       "parameters": {
-        "threshold": 44,
+        "threshold": 116,
         "invert": 1,
         "radius": 0,
         "strength": 0,
         "bias": 0,
-        "black": 32,
-        "white": 56,
+        "black": 62,
+        "white": 171,
         "gamma": 1,
         "out_black": 0,
         "out_white": 255,
         "apply_bitmap": 1
       },
-      "deploy_sha256": "b7049fa6eb31a40221a7b893dad5e866ad28aada6e936a133ad07ed664fc8c1b"
+      "deploy_sha256": "95c436d2ed3422df5917d9a0bdd46e797a66b875c350877348b5f6f535397220"
     }
   }
 }

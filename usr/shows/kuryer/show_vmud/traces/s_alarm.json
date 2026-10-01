@@ -27,17 +27,17 @@
       },
       "deploy_sha256": "9d1ab5f85badaffd3e66318e0671d9060424f4fcce5acd121313d10b56782f03"
     },
-    "016": {
-      "sha256": "0c111aef310dd49dc3064fa96d98383ae44e33c0f36846737077a98af6baaba6",
+    "024": {
+      "sha256": "c8036bbb20338c15b592355c89a709aa62e73f197cac17c323322f1ee92f359a",
       "input_mode": "color",
       "parameters": {
-        "black": 101,
-        "white": 125,
+        "black": 94,
+        "white": 148,
         "gamma": 1,
         "out_black": 0,
         "out_white": 255
       },
-      "deploy_sha256": "f1e97a22ea92bd1b0b45181239e5b27111f1fe5ed84d27cbc909a1e770d1424f"
+      "deploy_sha256": "f5879336c30777edb51accb76675217ae5b735a4eb799fab580307673f422db2"
     }
   }
 }

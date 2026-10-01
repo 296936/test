@@ -76,9 +76,18 @@
     conditionValue(condition, verseNumber, context = {}) {
       const functionName = String(condition?.function || '');
       if (functionName === 'Variable') {
-        const actual = String(condition.name || '').startsWith('Settings.')
-          ? this.settings.settings?.[String(condition.name).slice(9)]
-          : context[condition.name];
+        const name = String(condition.name || '');
+        const valueByName = (values, requested) => {
+          const key = Object.keys(values || {}).find(
+            (candidate) => candidate.toLowerCase() === requested.toLowerCase()
+          );
+          return key === undefined ? undefined : values[key];
+        };
+        const actual = name.startsWith('VCPlayer.')
+          ? valueByName(this.settings.settings, name.slice(9))
+          : name.startsWith('Settings.')
+            ? valueByName(window.VCardWheelSettings?.current?.(), name.slice(9))
+            : context[name];
         if (condition.operator === 'not') return !actual;
         if (condition.operator === 'truthy') return Boolean(actual);
         if (condition.operator === '==') return actual === condition.value;

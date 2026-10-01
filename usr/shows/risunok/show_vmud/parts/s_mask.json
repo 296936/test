@@ -3,6 +3,20 @@
   "style": "s_mask",
   "profile_sha256": "ea2c9a426444adef152cf3106ee8357f1c762ce53913617a5a4d6ad04c5f0e34",
   "files": {
+    "003": {
+      "sha256": "90d7fe6918684839ef896da83b8fdb2f7723ac82dc06f7eec817aca1097aa86c",
+      "input_mode": "color",
+      "parameters": {
+        "width": 1280,
+        "height": 720,
+        "file": "003.png",
+        "source": "cobj",
+        "cobj_sha256": "c28e96e5e2e50252fb111d898d6ed4c95f6ec225adb7f046fc15a4ae40c1af12",
+        "mask_sha256": "eff32d09373812fa7fb37f8e1c3b080f2bdf5b8bf105ef4a9f3316b6b86ab250"
+      },
+      "deploy_sha256": "7fe08af0ed05a927038510dbb8403d2b0e07b457deb678a25218e4e3aa900768",
+      "deploy_output_sha256": "eff32d09373812fa7fb37f8e1c3b080f2bdf5b8bf105ef4a9f3316b6b86ab250"
+    },
     "004": {
       "sha256": "a7034dc02402367f5f68a7eea41d1cc20710ab3acfb760e0d5b66750d8bd6592",
       "input_mode": "color",

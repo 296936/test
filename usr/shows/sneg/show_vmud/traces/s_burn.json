@@ -3,17 +3,29 @@
   "style": "s_burn",
   "profile_sha256": "480ab06fdbb09ebae6c837e3eb679dd5be99e129809b972d1f72cca4e485f81a",
   "files": {
-    "003": {
-      "sha256": "77516fcaf7d15a01e7a8981a78baf1820c05a9575ab6adb91f933fa10e64b58b",
+    "005": {
+      "sha256": "896501b68898e6c077bdac48a8b6f3f4635063614d0b44b0ba4987e3d01cdbac",
       "input_mode": "color",
       "parameters": {
-        "black": 21,
-        "white": 83,
+        "black": 74,
+        "white": 147,
         "gamma": 1,
         "out_black": 0,
         "out_white": 255
       },
-      "deploy_sha256": "4bfc3d0c665e290c8a7a28d7351311f2d3e2d962ffab86e6c21624031b307fc6"
+      "deploy_sha256": "8b705bf24d6ecde98aa2afc59b1d0ee05473b68e9427cfca2bcf1bd850a7a3f9"
+    },
+    "006": {
+      "sha256": "893a651ddbbf38ae570b2dcaf8bb4339415e529bbaba77b06d64aca7e808c296",
+      "input_mode": "color",
+      "parameters": {
+        "black": 74,
+        "white": 112,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "54fedc0ef6660288ba805c771a8d1c9b98259f4ef041dece8b561228f7f63e00"
     },
     "007": {
       "sha256": "f2a1bdb1f2e245b1dd84fc4cc6f99ddceac4f6a5840d0de799160c418b530f49",
@@ -27,29 +39,17 @@
       },
       "deploy_sha256": "711f50b1d4036a82849023971e253d779680f27e1aaf456e69d3e894fe91884d"
     },
-    "008": {
-      "sha256": "5c012a2e954c57a0723ab29c7af66692703535298bee2f64a3b1fe3115a64a6c",
+    "010": {
+      "sha256": "f8d5c7a3086fb1206839c6557d29a06e8e7028ea52d61f8244bb28a1d469feae",
       "input_mode": "color",
       "parameters": {
-        "black": 41,
-        "white": 73,
+        "black": 30,
+        "white": 111,
         "gamma": 1,
         "out_black": 0,
         "out_white": 255
       },
-      "deploy_sha256": "ac6ba8ffcaadd0dbe4888f8831c2bc8f252ad2ba9eb093fd131ba3f87d46c806"
-    },
-    "012": {
-      "sha256": "900e532d2c823d284df133a97d693096cb85ba092c33391ee935649915233e73",
-      "input_mode": "color",
-      "parameters": {
-        "black": 18,
-        "white": 40,
-        "gamma": 1,
-        "out_black": 0,
-        "out_white": 255
-      },
-      "deploy_sha256": "6bf99cbff641f5abc9a2b9eafe00d7b05d699dd41e3185c9b1408b1ac052ea83"
+      "deploy_sha256": "48fbbdbd238f62b4e5d871fe27660b1430c85bb5c17ad4dff0b83fcbff74b788"
     },
     "020": {
       "sha256": "4b9ce5d85dbd8e1d7faee4fb847d1ab969e3cb1760c0e0a9da9b0bb8614526df",

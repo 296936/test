@@ -3,19 +3,33 @@
   "style": "s_mask",
   "profile_sha256": "ea2c9a426444adef152cf3106ee8357f1c762ce53913617a5a4d6ad04c5f0e34",
   "files": {
-    "003": {
-      "sha256": "77516fcaf7d15a01e7a8981a78baf1820c05a9575ab6adb91f933fa10e64b58b",
+    "005": {
+      "sha256": "896501b68898e6c077bdac48a8b6f3f4635063614d0b44b0ba4987e3d01cdbac",
       "input_mode": "color",
       "parameters": {
         "width": 1280,
         "height": 720,
-        "file": "003.png",
+        "file": "005.png",
         "source": "cobj",
-        "cobj_sha256": "0cf1d1cb075e9d3c1acf311e804e1832464d191607545bf1fc45046bec094c93",
-        "mask_sha256": "fda7b96a1708652c17a3fe64d8bed22dae6706a433ded823a8a9fb82bb71f224"
+        "cobj_sha256": "e708e4183b59176a8150e076ea81046981323197c1a8ad00587ca26fcd82ca2f",
+        "mask_sha256": "4f241cf25212cdfe8c248756783fc221ceab116d0d61eef3f340d394e32c5ae1"
       },
-      "deploy_sha256": "4bfc3d0c665e290c8a7a28d7351311f2d3e2d962ffab86e6c21624031b307fc6",
-      "deploy_output_sha256": "fda7b96a1708652c17a3fe64d8bed22dae6706a433ded823a8a9fb82bb71f224"
+      "deploy_sha256": "8b705bf24d6ecde98aa2afc59b1d0ee05473b68e9427cfca2bcf1bd850a7a3f9",
+      "deploy_output_sha256": "4f241cf25212cdfe8c248756783fc221ceab116d0d61eef3f340d394e32c5ae1"
+    },
+    "006": {
+      "sha256": "893a651ddbbf38ae570b2dcaf8bb4339415e529bbaba77b06d64aca7e808c296",
+      "input_mode": "color",
+      "parameters": {
+        "width": 1280,
+        "height": 720,
+        "file": "006.png",
+        "source": "cobj",
+        "cobj_sha256": "12bb5b49a7cd80481bd85d07dcad4e3c7c8228a14add9b084500e38f5a593616",
+        "mask_sha256": "3a76b45eb72adc1c8992bb7440c862ccf287b3facf3109fb146d92b6b00f2cdb"
+      },
+      "deploy_sha256": "54fedc0ef6660288ba805c771a8d1c9b98259f4ef041dece8b561228f7f63e00",
+      "deploy_output_sha256": "3a76b45eb72adc1c8992bb7440c862ccf287b3facf3109fb146d92b6b00f2cdb"
     },
     "007": {
       "sha256": "f2a1bdb1f2e245b1dd84fc4cc6f99ddceac4f6a5840d0de799160c418b530f49",
@@ -31,33 +45,19 @@
       "deploy_sha256": "711f50b1d4036a82849023971e253d779680f27e1aaf456e69d3e894fe91884d",
       "deploy_output_sha256": "9bd5a85044279b93ae2e37f1bbb58b06e9665695521908068780d9efcbc8e8e6"
     },
-    "008": {
-      "sha256": "5c012a2e954c57a0723ab29c7af66692703535298bee2f64a3b1fe3115a64a6c",
+    "010": {
+      "sha256": "f8d5c7a3086fb1206839c6557d29a06e8e7028ea52d61f8244bb28a1d469feae",
       "input_mode": "color",
       "parameters": {
         "width": 1280,
         "height": 720,
-        "file": "008.png",
+        "file": "010.png",
         "source": "cobj",
-        "cobj_sha256": "68bdef8e2453bf145323a7d490204a2d32f243d0e7e3fbbd2bc72258460b8794",
-        "mask_sha256": "6a41ab808c7436a90b38e13b9171eaba12b37d3f52558ca0b4ffcfb2df27b038"
+        "cobj_sha256": "f3ab259470fcb7b7450aa4a066dcb4b3465bb488ada62e3bbd0656f468ee45ed",
+        "mask_sha256": "464cab09a1f22015affb703479ba3d6fac10fd58460054e94be49d384d60cda3"
       },
-      "deploy_sha256": "ac6ba8ffcaadd0dbe4888f8831c2bc8f252ad2ba9eb093fd131ba3f87d46c806",
-      "deploy_output_sha256": "6a41ab808c7436a90b38e13b9171eaba12b37d3f52558ca0b4ffcfb2df27b038"
-    },
-    "012": {
-      "sha256": "900e532d2c823d284df133a97d693096cb85ba092c33391ee935649915233e73",
-      "input_mode": "color",
-      "parameters": {
-        "width": 1280,
-        "height": 720,
-        "file": "012.png",
-        "source": "cobj",
-        "cobj_sha256": "35cb2b48fbe213ba47a2b67522697e4a4ce1a234b45f16acea70790a1090bc02",
-        "mask_sha256": "00ed6f4f7b0e51af1dd2ddc80da4d64534cae79519a5e356d085e2e58c6eb2d6"
-      },
-      "deploy_sha256": "6bf99cbff641f5abc9a2b9eafe00d7b05d699dd41e3185c9b1408b1ac052ea83",
-      "deploy_output_sha256": "00ed6f4f7b0e51af1dd2ddc80da4d64534cae79519a5e356d085e2e58c6eb2d6"
+      "deploy_sha256": "48fbbdbd238f62b4e5d871fe27660b1430c85bb5c17ad4dff0b83fcbff74b788",
+      "deploy_output_sha256": "464cab09a1f22015affb703479ba3d6fac10fd58460054e94be49d384d60cda3"
     },
     "020": {
       "sha256": "4b9ce5d85dbd8e1d7faee4fb847d1ab969e3cb1760c0e0a9da9b0bb8614526df",

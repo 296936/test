@@ -3,17 +3,17 @@
   "style": "s_alarm",
   "profile_sha256": "480ab06fdbb09ebae6c837e3eb679dd5be99e129809b972d1f72cca4e485f81a",
   "files": {
-    "012": {
-      "sha256": "d13ff0d878905a8cc6651852a0fd23a5154d3f34735320694f227b5cdb68d19d",
+    "010": {
+      "sha256": "99d4b372404b602e6bf37c9f40ef37179ba09c2361d65625e04891e6bdc24b9e",
       "input_mode": "color",
       "parameters": {
-        "black": 32,
-        "white": 95,
+        "black": 55,
+        "white": 117,
         "gamma": 1,
         "out_black": 0,
         "out_white": 255
       },
-      "deploy_sha256": "03d3bfe80c71c792c7266a697399ce621d7d425ad832a7a10f39a46d6f6b9133"
+      "deploy_sha256": "9cbca29607a28eb58b7d0d69f6e38a0635bbfa37e74e52aec5f52b3986046e5f"
     }
   }
 }

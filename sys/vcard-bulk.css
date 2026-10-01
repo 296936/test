@@ -1289,6 +1289,29 @@ img:is(
   opacity: 0;
 }
 
+.song-portal-cassette-countdown {
+  position: absolute;
+  z-index: 4;
+  left: 50%;
+  top: 50%;
+  display: grid;
+  place-items: center;
+  box-sizing: border-box;
+  width: 3.2em;
+  height: 3.2em;
+  border: 0.12em solid currentColor;
+  border-radius: 50%;
+  background: color-mix(in srgb, #000 68%, transparent);
+  box-shadow:
+    0 0 0 0.08em color-mix(in srgb, #000 70%, transparent),
+    0 0 0.45em color-mix(in srgb, currentColor 70%, transparent);
+  color: var(--vc-acc);
+  font: 700 2.2em/1 monospace;
+  text-shadow: 0 0 0.18em currentColor;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
 .song-portal-video--crossani {
   position: absolute;
   inset: 0;
@@ -1395,7 +1418,8 @@ img:is(
 }
 
 .song-vibeframe.has-fullscreen-image > .song-portal-video--tape,
-.song-vibeframe.has-fullscreen-image > .song-portal-tape-still {
+.song-vibeframe.has-fullscreen-image > .song-portal-tape-still,
+.song-vibeframe.has-fullscreen-image > .song-portal-cassette-countdown {
   display: none !important;
 }
 
@@ -2159,6 +2183,20 @@ html.vcard-settings-dialog-open {
 .vcard-settings-dialog__content a[sd-opt].is-disabled {
   opacity: 0.35;
   pointer-events: none;
+}
+
+.vcard-settings-dialog__content [data-settings-autopilot-options] {
+  color: var(--vc-acc);
+}
+
+.vcard-settings-dialog__content [data-settings-autopilot-options].is-disabled {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.vcard-settings-dialog__content [data-settings-autopilot-options] a[sd-opt]:not(:is(:hover, :focus-visible, :active, .is-selected)),
+.vcard-settings-dialog__content [data-settings-autopilot-options] a[dd-preset]:not(:is(:hover, :focus-visible, :active, .is-selected)) {
+  color: inherit;
 }
 
 @keyframes vcard-media-cache-preload-run {

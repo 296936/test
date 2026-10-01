@@ -1010,6 +1010,15 @@ button {
   word-break: normal;
 }
 
+.vcard-notes details > summary {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.vcard-notes-details {
+  color: var(--vc-acc);
+}
+
 .vcard-settings {
   overflow-x: auto;
   white-space: pre-wrap;

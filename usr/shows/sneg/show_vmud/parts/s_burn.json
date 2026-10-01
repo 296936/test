@@ -3,29 +3,29 @@
   "style": "s_burn",
   "profile_sha256": "480ab06fdbb09ebae6c837e3eb679dd5be99e129809b972d1f72cca4e485f81a",
   "files": {
-    "001": {
-      "sha256": "129190754f54c2fb8505079098dd5cf53b6a546bdfe3a680e81facbbbe560730",
+    "006": {
+      "sha256": "5969a5c5575d98b23ad11ff6a1520d9b8e2c98f54dddf4f6bbc1fc19fb2dfa50",
       "input_mode": "color",
       "parameters": {
-        "black": 11,
-        "white": 29,
+        "black": 37,
+        "white": 97,
         "gamma": 1,
         "out_black": 0,
         "out_white": 255
       },
-      "deploy_sha256": "b047d10fe19905dca795e123df73c285169b2fd48cfe7e8ce93ea78efb827aeb"
+      "deploy_sha256": "ecb11a87b65f9ca70811cef14464c58a8f32920f68c10e1c805214d45647534a"
     },
-    "003": {
-      "sha256": "bed98285e792d397dc95ce182a44e3e973d2ff7730c4aa0fd68c6c121d896d4c",
+    "008": {
+      "sha256": "dc02091e34701f5dbcef395998d0ce122eb3949036eab6b2ad079658e78b7ccb",
       "input_mode": "color",
       "parameters": {
-        "black": 28,
-        "white": 61,
+        "black": 15,
+        "white": 40,
         "gamma": 1,
         "out_black": 0,
         "out_white": 255
       },
-      "deploy_sha256": "bf3842e5a7260af877eec45e41bce2149413550a43f35b0df0c5edd626c4e970"
+      "deploy_sha256": "4f45b3e94951007c59ef5c2fb420c97d8b833df089748e34feb6b27ba89da0b1"
     }
   }
 }
