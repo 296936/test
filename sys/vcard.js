@@ -1743,7 +1743,7 @@ const portalController = (() => {
     if (layer) layer.style.removeProperty('display');
   };
 
-  const showCassette = ({ phase = 'start', motion = 'static' } = {}) => {
+  const showCassette = ({ phase = 'start', motion = 'static', fade = null } = {}) => {
     if (!state.preview) return;
     if (motion === 'countdown') {
       showTape({ phase, reset: true, allowEndedPlayback: true });
@@ -1752,7 +1752,10 @@ const portalController = (() => {
     }
     releaseCassetteCountdown();
     if (phase === 'finish') {
-      if (motion === 'animated') finishAnimated(portalNumber('FinishFade', 0));
+      if (motion === 'animated') {
+        const requestedFade = Number(fade);
+        finishAnimated(Number.isFinite(requestedFade) ? Math.max(0, requestedFade) : portalNumber('FinishFade', 0));
+      }
       else if (state.surface === 'tape-video' || state.surface === 'tape-still') finishStatic();
       else showTape({ phase: 'finish', reset: true, allowEndedPlayback: true });
       return;
