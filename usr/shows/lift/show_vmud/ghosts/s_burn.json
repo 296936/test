@@ -1,0 +1,67 @@
+{
+  "format": "aliswb-style-params-1",
+  "style": "s_burn",
+  "profile_sha256": "480ab06fdbb09ebae6c837e3eb679dd5be99e129809b972d1f72cca4e485f81a",
+  "files": {
+    "003": {
+      "sha256": "4c76b9116bf87bc2b6ffe1268027defd3a6f643c02fc946745074de68538c831",
+      "input_mode": "color",
+      "parameters": {
+        "black": 29,
+        "white": 69,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "c449565f7727b575ea506e62b04776c1e657dccf79e6cf94383a49a542d1450a"
+    },
+    "008": {
+      "sha256": "c125485527f9f4d46394697529c7be0650d4d148284896d2a85c49ca2efd6b34",
+      "input_mode": "color",
+      "parameters": {
+        "black": 42,
+        "white": 83,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "15e4ad2951eb79fcdebf7ce96dea6b1310a65f7864d4557369ef28318dc25e73"
+    },
+    "016": {
+      "sha256": "c25cdcfeed76c626429553ac8cc26106a0f2034cac93f3296059d4e78eeaf8a9",
+      "input_mode": "color",
+      "parameters": {
+        "black": 60,
+        "white": 98,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "aa1f510094fce348dd9b0f82d4f4412b7bddeac26b43373feaa3943e3025ec55"
+    },
+    "017": {
+      "sha256": "83ddd9f3c72f89b1f3644e80183657ef6d1b7a4988cbabd4d3566e28f0622950",
+      "input_mode": "color",
+      "parameters": {
+        "black": 6,
+        "white": 18,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "09f748111814708828b3f966ce7ee34d040bfd963b393932995a5539b64bab75"
+    },
+    "018": {
+      "sha256": "cbd9e7e442fa8281d59370b1f31930f8e18d74f6251d0f4d7692df7c398da305",
+      "input_mode": "color",
+      "parameters": {
+        "black": 25,
+        "white": 104,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "a6aafe99fa8f0b587880a6dafd01eb88df167e17ebc131e0a98f4609ee560dbb"
+    }
+  }
+}

@@ -1,0 +1,139 @@
+{
+  "format": "aliswb-style-params-1",
+  "style": "s_burn",
+  "profile_sha256": "480ab06fdbb09ebae6c837e3eb679dd5be99e129809b972d1f72cca4e485f81a",
+  "files": {
+    "001": {
+      "sha256": "50ec53857a367baf28c51c14bf002d46b73d4a826cc3e0425c7b4693815dbf1d",
+      "input_mode": "color",
+      "parameters": {
+        "black": 32,
+        "white": 68,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "b0569d8a49daf77e8e83cc316271513a6f09820c4cf6b16ea230bfe1a76272f1"
+    },
+    "002": {
+      "sha256": "4d47eddcd732a78d144a658a63b77b04791662a5498f96bb67a00c72ba6fa3a7",
+      "input_mode": "color",
+      "parameters": {
+        "black": 19,
+        "white": 49,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "f3dd6a679704b28ad6b4af0998aaab30dc8215b81312344b7b9cdc56ba872764"
+    },
+    "003": {
+      "sha256": "8808f6ddc2f865711579853eb605220a5d965ba804188f0032430e310329e295",
+      "input_mode": "color",
+      "parameters": {
+        "black": 21,
+        "white": 58,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "2c76aa9bd3a4c18a042c6f412bcdbf0cced8c7a942257b0984664fd8954f984e"
+    },
+    "004": {
+      "sha256": "b310854a0d9739c0cc9522a455198ff412981ad8eb8828abfb9d33a09995f682",
+      "input_mode": "color",
+      "parameters": {
+        "black": 29,
+        "white": 78,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "8d5a3b5411424d051fac7131a805d3c4fab960dc9324b63f79a5ff3f36944335"
+    },
+    "007": {
+      "sha256": "529e757e639cec0ddacf2b93e94a19a0b66994834c9a9455c14a287560bdf235",
+      "input_mode": "color",
+      "parameters": {
+        "black": 21,
+        "white": 70,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "879b2efcfc6aa10814c8dd55f4f5adc5def50f731998136c1bfb35c24a6728e6"
+    },
+    "010": {
+      "sha256": "72ddf27d074ea5906dedea35a30976fd10b10ec99c648c4498e98c3a12eeea2e",
+      "input_mode": "color",
+      "parameters": {
+        "black": 32,
+        "white": 51,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "3b8a7f844a27d673543c19c40ace707863cded74f4cef9e200298742b382f60d"
+    },
+    "011": {
+      "sha256": "58c84c32a2e16e88ef4de46297ab82fdd5b9f82eb2542d45153877bb7821fc7c",
+      "input_mode": "color",
+      "parameters": {
+        "black": 20,
+        "white": 57,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "487b5eb1a56dbe931a59e44ef55ddf0fee549fa8c0c4f2233c05480fe17885c0"
+    },
+    "012": {
+      "sha256": "5d903245bd099af379bd768fd031c97ddc35bed97730ad4c05d280a97fa2c6bb",
+      "input_mode": "color",
+      "parameters": {
+        "black": 19,
+        "white": 80,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "9ca14d304c5982327a7bb97bcfd2b9f6c56fadb1ea6b494daae0f5083e84731a"
+    },
+    "013": {
+      "sha256": "5ebd51fd6b6e2622d5381197b7a4adc193f2a834b2ec055da80800addab5c92e",
+      "input_mode": "color",
+      "parameters": {
+        "black": 27,
+        "white": 64,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "8b26255e32eabf00b76ba013ed600957ba506bdfe6b74557a1ae4bf874855a5f"
+    },
+    "014": {
+      "sha256": "238de647743fbda23000e44ff90f187086426d31164a52bda324519a10549571",
+      "input_mode": "color",
+      "parameters": {
+        "black": 22,
+        "white": 57,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "c10a90b8dc1afa881b6d27efeadc4edfa81ae24115dad2dcaa86d22fc0c24f4a"
+    },
+    "018": {
+      "sha256": "4e9abcd99113b4143cd46a3716ba63442227b74b8c76bcfc2de60ed8c6b189fe",
+      "input_mode": "color",
+      "parameters": {
+        "black": 16,
+        "white": 45,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "28656ed498d6c1a11d6dfc107123af2bc185c4987374f38d8b7f8210806adfcd"
+    }
+  }
+}

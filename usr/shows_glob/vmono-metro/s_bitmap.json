@@ -1,0 +1,217 @@
+{
+  "format": "aliswb-style-params-1",
+  "style": "s_bitmap",
+  "profile_sha256": "480ab06fdbb09ebae6c837e3eb679dd5be99e129809b972d1f72cca4e485f81a",
+  "files": {
+    "001": {
+      "sha256": "9032d92ca68a42121c8d72487aa54ca00ac542d40c8167f516ba5018fc064aa9",
+      "input_mode": "color",
+      "parameters": {
+        "threshold": 54,
+        "invert": 0,
+        "radius": 0,
+        "strength": 0,
+        "bias": 0,
+        "quality": "selected",
+        "reason": "Автоматически вычислено из выбранного s_alarm.",
+        "black": 38,
+        "white": 69,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255,
+        "apply_bitmap": 1,
+        "use_bitmap": 1,
+        "review_policy": "bitmap-from-alarm-v1"
+      }
+    },
+    "002": {
+      "sha256": "2f47cc8d484ed991e234b8460e122a1d9e25cc184ecd499af4bc041d2474aac7",
+      "input_mode": "color",
+      "parameters": {
+        "threshold": 44,
+        "invert": 0,
+        "radius": 0,
+        "strength": 0,
+        "bias": 0,
+        "quality": "selected",
+        "reason": "Автоматически вычислено из выбранного s_alarm.",
+        "black": 31,
+        "white": 57,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255,
+        "apply_bitmap": 1,
+        "use_bitmap": 1,
+        "review_policy": "bitmap-from-alarm-v1"
+      }
+    },
+    "003": {
+      "sha256": "427970d54abf09cd0a1333f306e80478dbb2af1178dba427572752fd4aeb52dd",
+      "input_mode": "color",
+      "parameters": {
+        "threshold": 72,
+        "invert": 0,
+        "radius": 0,
+        "strength": 0,
+        "bias": 0,
+        "quality": "selected",
+        "reason": "Автоматически вычислено из выбранного s_alarm.",
+        "black": 50,
+        "white": 95,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255,
+        "apply_bitmap": 1,
+        "use_bitmap": 1,
+        "review_policy": "bitmap-from-alarm-v1"
+      }
+    },
+    "004": {
+      "sha256": "505b2b77ba148492ac63ed4c90e5d4d6615a4a4a540df679a633a1ec09018ce6",
+      "input_mode": "color",
+      "parameters": {
+        "threshold": 33,
+        "invert": 0,
+        "radius": 0,
+        "strength": 0,
+        "bias": 0,
+        "quality": "selected",
+        "reason": "Автоматически вычислено из выбранного s_alarm.",
+        "black": 25,
+        "white": 41,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255,
+        "apply_bitmap": 1,
+        "use_bitmap": 1,
+        "review_policy": "bitmap-from-alarm-v1"
+      }
+    },
+    "005": {
+      "sha256": "7c174e0286f1610360723b85cb13f4d362d93ef4afe599722dd86bb057668ca4",
+      "input_mode": "color",
+      "parameters": {
+        "threshold": 94,
+        "invert": 0,
+        "radius": 0,
+        "strength": 0,
+        "bias": 0,
+        "quality": "selected",
+        "reason": "Автоматически вычислено из выбранного s_alarm.",
+        "black": 57,
+        "white": 131,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255,
+        "apply_bitmap": 1,
+        "use_bitmap": 1,
+        "review_policy": "bitmap-from-alarm-v1"
+      }
+    },
+    "006": {
+      "sha256": "aa433eaf144b980200184328e8dd37832921cb7e40224148ae1e840c88100c83",
+      "input_mode": "color",
+      "parameters": {
+        "threshold": 95,
+        "invert": 0,
+        "radius": 0,
+        "strength": 0,
+        "bias": 0,
+        "quality": "selected",
+        "reason": "Автоматически вычислено из выбранного s_alarm.",
+        "black": 66,
+        "white": 124,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255,
+        "apply_bitmap": 1,
+        "use_bitmap": 1,
+        "review_policy": "bitmap-from-alarm-v1"
+      }
+    },
+    "007": {
+      "sha256": "8f2c918297f903e255618a13eef3180dbabc8a718487a52f727dc6c3e312db21",
+      "input_mode": "color",
+      "parameters": {
+        "threshold": 82,
+        "invert": 0,
+        "radius": 0,
+        "strength": 0,
+        "bias": 0,
+        "quality": "selected",
+        "reason": "Автоматически вычислено из выбранного s_alarm.",
+        "black": 38,
+        "white": 126,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255,
+        "apply_bitmap": 1,
+        "use_bitmap": 1,
+        "review_policy": "bitmap-from-alarm-v1"
+      }
+    },
+    "008": {
+      "sha256": "1f9a5fd8f1eb2e379eeded4696729d92289a4f369ea3be43f705b4c2e8c6ed31",
+      "input_mode": "color",
+      "parameters": {
+        "threshold": 25,
+        "invert": 0,
+        "radius": 0,
+        "strength": 0,
+        "bias": 0,
+        "quality": "selected",
+        "reason": "Автоматически вычислено из выбранного s_alarm.",
+        "black": 18,
+        "white": 32,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255,
+        "apply_bitmap": 1,
+        "use_bitmap": 1,
+        "review_policy": "bitmap-from-alarm-v1"
+      }
+    },
+    "009": {
+      "sha256": "7f5f063a0972bd2ea37ef31b23a6261a2d2a3e6a61c76b9ae71f1bf777a25004",
+      "input_mode": "color",
+      "parameters": {
+        "threshold": 60,
+        "invert": 0,
+        "radius": 0,
+        "strength": 0,
+        "bias": 0,
+        "quality": "selected",
+        "reason": "Автоматически вычислено из выбранного s_alarm.",
+        "black": 42,
+        "white": 78,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255,
+        "apply_bitmap": 1,
+        "use_bitmap": 1,
+        "review_policy": "bitmap-from-alarm-v1"
+      }
+    },
+    "010": {
+      "sha256": "6d0576fcbc1acc0bee6940840cad742ccdb5c1bb4d25b4a9690c953a35b2de5b",
+      "input_mode": "color",
+      "parameters": {
+        "threshold": 68,
+        "invert": 0,
+        "radius": 0,
+        "strength": 0,
+        "bias": 0,
+        "quality": "selected",
+        "reason": "Автоматически вычислено из выбранного s_alarm.",
+        "black": 49,
+        "white": 88,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255,
+        "apply_bitmap": 1,
+        "use_bitmap": 1,
+        "review_policy": "bitmap-from-alarm-v1"
+      }
+    }
+  }
+}

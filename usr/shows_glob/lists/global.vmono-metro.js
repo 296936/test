@@ -1,0 +1,2 @@
+window.VCARD_MEDIA_LISTS ||= {};
+window.VCARD_MEDIA_LISTS[document.currentScript.src] = ["../vmono-metro/img/001.jpg?v=9032d92ca68a","../vmono-metro/img/002.jpg?v=2f47cc8d484e","../vmono-metro/img/003.jpg?v=427970d54abf","../vmono-metro/img/004.jpg?v=505b2b77ba14","../vmono-metro/img/005.jpg?v=7c174e0286f1","../vmono-metro/img/006.jpg?v=aa433eaf144b","../vmono-metro/img/007.jpg?v=8f2c918297f9","../vmono-metro/img/008.jpg?v=1f9a5fd8f1eb","../vmono-metro/img/009.jpg?v=7f5f063a0972","../vmono-metro/img/010.jpg?v=6d0576fcbc1a"];

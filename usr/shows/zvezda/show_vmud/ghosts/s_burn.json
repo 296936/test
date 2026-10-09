@@ -1,0 +1,67 @@
+{
+  "format": "aliswb-style-params-1",
+  "style": "s_burn",
+  "profile_sha256": "480ab06fdbb09ebae6c837e3eb679dd5be99e129809b972d1f72cca4e485f81a",
+  "files": {
+    "003": {
+      "sha256": "d1ffcc81021e1b96e760cc2617b4fe6af88fb3a2b4f46e63f73d50227e4307f0",
+      "input_mode": "color",
+      "parameters": {
+        "black": 21,
+        "white": 48,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "a1b76d11149b0364a1b9bb228c6119490f3bec28e0f8c14bb91e63faac6b9501"
+    },
+    "004": {
+      "sha256": "86a8c49da8f3c87eaa7dce7f7eddc78c1ec5fe7f25f5ea66516d670dd75a8673",
+      "input_mode": "color",
+      "parameters": {
+        "black": 49,
+        "white": 109,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "2686c5f7a42492fcfd626282c9162918b043cbbf9815173060c369d5639c8480"
+    },
+    "005": {
+      "sha256": "0f9c24c404a7a8426e8b68312d1a1df2baaaac93b1dbc6e6ba8c7a2b11d292b3",
+      "input_mode": "color",
+      "parameters": {
+        "black": 24,
+        "white": 55,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "3120391af8dcf2d4a20ba29fd329bed23a639f92bc127f9cbcd9dd7295b55b03"
+    },
+    "009": {
+      "sha256": "ea9d4998f3933a0720973ecb79adcbbdef3b23151856dd58681730bf4432d5a5",
+      "input_mode": "color",
+      "parameters": {
+        "black": 35,
+        "white": 83,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "fc108f6cfc839e199f68f7b10e90b9aea36db5a09fd05097b60fee0fe9a90f7d"
+    },
+    "010": {
+      "sha256": "6e125516a817d569012e01abf5eb4b6a4758becf7c9a433171f3a69f45a2b1f0",
+      "input_mode": "color",
+      "parameters": {
+        "black": 28,
+        "white": 91,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "5c7687e4920bb336f4571dbc31377d4d2948cff77f03125f7c54e2d24118a255"
+    }
+  }
+}

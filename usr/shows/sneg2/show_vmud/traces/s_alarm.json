@@ -1,0 +1,199 @@
+{
+  "format": "aliswb-style-params-1",
+  "style": "s_alarm",
+  "profile_sha256": "480ab06fdbb09ebae6c837e3eb679dd5be99e129809b972d1f72cca4e485f81a",
+  "files": {
+    "002": {
+      "sha256": "b1bb0b98178df9f14a016b27948b77f89a94f9e87ba2eebaed3a22d8decf6218",
+      "input_mode": "color",
+      "parameters": {
+        "black": 46,
+        "white": 92,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "01f9e0c7efd765f409c690ca09d26aa4cc17103b0b1817235b8bb6eea197520d"
+    },
+    "003": {
+      "sha256": "8939588e50c83cfbe5d1b4a686d660df4ab01bef13136bbab11ee8987e7cb369",
+      "input_mode": "color",
+      "parameters": {
+        "black": 11,
+        "white": 43,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "9b1baed8686a10723a5bcd46fabe313c31c0014d2bac094ab20555fb9d3996b2"
+    },
+    "004": {
+      "sha256": "f58dd7839a64e1d10a4bb705c7f80989d090d0143fb9547ae3ff5e02011c8208",
+      "input_mode": "color",
+      "parameters": {
+        "black": 37,
+        "white": 77,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "5f22af83a04e8a8ad57b32344c2f9ff4638df6f7bf7e6373c5cdbfca3b9dd58d"
+    },
+    "005": {
+      "sha256": "0fb6278e1192d9a9e83aa90a0519ebd42385cf1ff8526089c828f8afebee6f52",
+      "input_mode": "color",
+      "parameters": {
+        "black": 88,
+        "white": 143,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "31c4f84aefa1eff532bde5cf93092eae5b1279499bf1ffd8b1dd874500baf77a"
+    },
+    "008": {
+      "sha256": "f049873c1c3bafc32ea7169c3260faa61541f448021a0c42b13ea85b302be66e",
+      "input_mode": "color",
+      "parameters": {
+        "black": 60,
+        "white": 104,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "72c7e5eca610078bc6e20afad22b9c429995147b299455975aededd38505745b"
+    },
+    "009": {
+      "sha256": "7046335355753b9fab1d1ddf8c7be954927b36a69b109c15d0e6d6932f1477f0",
+      "input_mode": "color",
+      "parameters": {
+        "black": 28,
+        "white": 54,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "bea6b484042a0fa6f6b16031b55568cf744a4b7c98f7ce62d43d3ac5df0b96fb"
+    },
+    "010": {
+      "sha256": "d7d227d6a16aef3d4229c8f07e6c55a6c0900af80565969cb2fe22d8d004b3ed",
+      "input_mode": "color",
+      "parameters": {
+        "black": 53,
+        "white": 98,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "821d64bc20c54141bfb0296b23a5111575159317ffc620897c1f0e7c6cb5c226"
+    },
+    "012": {
+      "sha256": "49c484705f57f281a38ade5fff205ec78f9add4a0aae1383c6bf28231f7b9c95",
+      "input_mode": "color",
+      "parameters": {
+        "black": 17,
+        "white": 74,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "1fd4aef628ba276e95d8436e6189033f72dd329a1fb9ec11649501b8828bd83d"
+    },
+    "014": {
+      "sha256": "1fc15c1f6613ed0ada9745af747829eed1c094ba47908edd266647219989f857",
+      "input_mode": "color",
+      "parameters": {
+        "black": 14,
+        "white": 39,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "813d53b084bb40a1cf44bd3ebc20a13159428c812c75a80961437bdfeb74c17f"
+    },
+    "015": {
+      "sha256": "863aa2cc45cd44e440b87e8f5ee945b343889608e1aa36264b976e70c9cfce2d",
+      "input_mode": "color",
+      "parameters": {
+        "black": 20,
+        "white": 48,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "b4938fd1a6913b2c147a2b5720526241b7e2e30b4359b46e93313994d943a7cd"
+    },
+    "016": {
+      "sha256": "34f531e7c2184fefe6844ebc873d8432f8c04229d375ffb1b6588dd835e158d5",
+      "input_mode": "color",
+      "parameters": {
+        "black": 63,
+        "white": 102,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "526f65384a1a158e246a053e8f5f34fd2fb9b22803df2d45a2b30e12a9218e36"
+    },
+    "018": {
+      "sha256": "4712f3824bda52707ffca4d7f3ef875178035c8c92bb977baf2fa69a6603201b",
+      "input_mode": "color",
+      "parameters": {
+        "black": 58,
+        "white": 88,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "d75a9f61b8b561f4495d0d60c31d2951e9aa3fa853d7fb73332ff1c915de5b03"
+    },
+    "021": {
+      "sha256": "d6b9c29c7ac4cb2433d38c905f453d4c22dc061ff33b4e349d17eaf2cfc14ee1",
+      "input_mode": "color",
+      "parameters": {
+        "black": 49,
+        "white": 109,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "06eb2ffa1c628a50f307e98488ce8357c6b41e6205016a40cc21b4fcddf05253"
+    },
+    "023": {
+      "sha256": "4f64f068e67819840cfd207943999f6faab1ae34dd6a2b0fdb5bdb7725d5c853",
+      "input_mode": "color",
+      "parameters": {
+        "black": 39,
+        "white": 121,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "a6a12fb3b11bfae987ed2f39e8d9930039527f8ca80540fe37e12f87f705f07f"
+    },
+    "029": {
+      "sha256": "4688db1cd3d710051d57d201663410982d1c72df945af6ea8f43f7093e58a4e8",
+      "input_mode": "color",
+      "parameters": {
+        "black": 62,
+        "white": 109,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "0a54aa18de2bff49560aac6f62ad8db8a7ba42470d573a009b928b4296faa03f"
+    },
+    "030": {
+      "sha256": "0937cc819659e3629cfc20d072c3ab5f43c6abd65ea4aafb4db4ffd5dd9fa2f1",
+      "input_mode": "color",
+      "parameters": {
+        "black": 13,
+        "white": 62,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "5fa9a025e65f35e8d1678a6912ad69ed3a3d14729fa96e2188e9c06a888796e8"
+    }
+  }
+}
