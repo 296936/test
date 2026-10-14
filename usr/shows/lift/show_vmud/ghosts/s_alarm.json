@@ -1,0 +1,67 @@
+{
+  "format": "aliswb-style-params-1",
+  "style": "s_alarm",
+  "profile_sha256": "480ab06fdbb09ebae6c837e3eb679dd5be99e129809b972d1f72cca4e485f81a",
+  "files": {
+    "006": {
+      "sha256": "70e8a85ee63b81348865a263fc40f10d9a5fd8c814f77122230ebf44f05708ce",
+      "input_mode": "color",
+      "parameters": {
+        "black": 40,
+        "white": 76,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "7fa4e09ff4fb11c7e83e3ff8315abc0a39fdeb07b29b8f982531e41233cf1e69"
+    },
+    "007": {
+      "sha256": "95a1afe87b3848d08b94a6a42cb8cccc87c1c8cbf7f5b5dc04c2fbe496a8c1d8",
+      "input_mode": "color",
+      "parameters": {
+        "black": 43,
+        "white": 76,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "44b7f54e1038f3f0ef00c793127440afc131d0519f381e6c963ad64e4ec0f97e"
+    },
+    "012": {
+      "sha256": "c38edc733b4aa2e934dd93289ee53eb9484b9bddf853fb5737982aa7a27a92dc",
+      "input_mode": "color",
+      "parameters": {
+        "black": 24,
+        "white": 62,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "c0cd098a6217252f9c40de1d5eb63d46d085e6e9a09d0cf94c7c6ccbb72c874d"
+    },
+    "013": {
+      "sha256": "748ac7923c3bc39a9cdd7b909b85556a99c33d2e31e058292e095ea8e01574f1",
+      "input_mode": "color",
+      "parameters": {
+        "black": 25,
+        "white": 47,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "fe41af6411ce4dd0fd5b0184a29c9de6669066b25b30d29721217550330ed05c"
+    },
+    "017": {
+      "sha256": "83ddd9f3c72f89b1f3644e80183657ef6d1b7a4988cbabd4d3566e28f0622950",
+      "input_mode": "color",
+      "parameters": {
+        "black": 6,
+        "white": 18,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "09f748111814708828b3f966ce7ee34d040bfd963b393932995a5539b64bab75"
+    }
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "format": "aliswb-style-params-1",
+  "style": "s_burn",
+  "profile_sha256": "480ab06fdbb09ebae6c837e3eb679dd5be99e129809b972d1f72cca4e485f81a",
+  "files": {
+    "001": {
+      "sha256": "bbe308851f165e3551027a6447de6df72a9a259ac61897795aaa714b063744ec",
+      "input_mode": "color",
+      "parameters": {
+        "black": 15,
+        "white": 53,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "3249ddf4965be9bd07477f7bb5e78923ba9450b047ed3036a061d6c33fc0d894"
+    },
+    "002": {
+      "sha256": "4b186c847e716512b650208a57c12f610a2c4acdc25fd66ea8c691deb3867095",
+      "input_mode": "color",
+      "parameters": {
+        "black": 76,
+        "white": 120,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "279553e3c30b1ea880c3e9ba4df821f137d3075fcb82990c91b589076486b977"
+    },
+    "006": {
+      "sha256": "476706a9dbe4934b21c686b2f3c7d050247c979eceb5251ca90880bdca860e04",
+      "input_mode": "color",
+      "parameters": {
+        "black": 30,
+        "white": 106,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "c1bad2b6bdd3078feb3792a6a45a431e32ea617dec0d258bf3154fa61fba4ecf"
+    },
+    "007": {
+      "sha256": "9376f3a84352ffc865ada8fdc19bde4516943a96954d1003e428c6ccfab5ed41",
+      "input_mode": "color",
+      "parameters": {
+        "black": 37,
+        "white": 109,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "fcd95efd8201ea191c918e859b15162012506b7c1088d4b11af24a320914e840"
+    },
+    "008": {
+      "sha256": "04081e4be2536e7c93e9b928aab9aa7a8b22a3041fad9f7ebe880d0972430b4b",
+      "input_mode": "color",
+      "parameters": {
+        "black": 47,
+        "white": 93,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "351c64b9d191327a7f6d5a7672dcb42f0295cc1fe54219f43b05e201c3dbd05d"
+    }
+  }
+}

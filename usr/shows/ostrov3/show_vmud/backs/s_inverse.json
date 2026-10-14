@@ -1,0 +1,25 @@
+{
+  "format": "aliswb-style-params-1",
+  "style": "s_inverse",
+  "profile_sha256": "480ab06fdbb09ebae6c837e3eb679dd5be99e129809b972d1f72cca4e485f81a",
+  "files": {
+    "026": {
+      "sha256": "38b9b1e0310ac19e554f3357af949f9577a227979c054374ed707bf7e79e9916",
+      "input_mode": "color",
+      "parameters": {
+        "threshold": 44,
+        "invert": 1,
+        "radius": 0,
+        "strength": 0,
+        "bias": 0,
+        "black": 21,
+        "white": 67,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255,
+        "apply_bitmap": 1
+      },
+      "deploy_sha256": "1cf9aae838be205dbc75a5aa0c755808784df43c8cdf2e4272c64deb4b5e3adc"
+    }
+  }
+}
