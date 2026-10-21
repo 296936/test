@@ -1,0 +1,67 @@
+{
+  "format": "aliswb-style-params-1",
+  "style": "s_burn",
+  "profile_sha256": "480ab06fdbb09ebae6c837e3eb679dd5be99e129809b972d1f72cca4e485f81a",
+  "files": {
+    "001": {
+      "sha256": "3b7cf655c7fd10a763260c446a7d44fe0b39afdb33e475170cbf6d7df8aaf254",
+      "input_mode": "color",
+      "parameters": {
+        "black": 32,
+        "white": 73,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "35a58509866f8c30711bcc2816d723a5a58342a2478a5736073738cee710c40b"
+    },
+    "003": {
+      "sha256": "c97442c407b79aede4a59abf0cc131063a3162413c05d0bf21ab0b387ef10385",
+      "input_mode": "color",
+      "parameters": {
+        "black": 40,
+        "white": 148,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "625083dd313a5bfcf2636b1a7ee5ae4866d0fa2e9a900fedf4bed9894ba8d175"
+    },
+    "005": {
+      "sha256": "11dfb8d110f4c718b224b4c02898e4d3044c5bbbaeb159f8181871834604e8c5",
+      "input_mode": "color",
+      "parameters": {
+        "black": 48,
+        "white": 134,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "d14a5a50876cc7d8aef61be2f37da9ed7a0a104244dad6e632e8b697de36306c"
+    },
+    "007": {
+      "sha256": "563f28de24c58497b6a9e6c50b85025833e48009c3b81c34b4bf192e210346ee",
+      "input_mode": "color",
+      "parameters": {
+        "black": 41,
+        "white": 102,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "830252086acbb89f2f4f2d321642e7830c17a9787646e584b122160fba7eb7e9"
+    },
+    "009": {
+      "sha256": "3e7881b007ef136352603fb1651df9059c7860c03f960035071dcb740fe74024",
+      "input_mode": "color",
+      "parameters": {
+        "black": 37,
+        "white": 111,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "15f98f78a67ee9263040511e398b2dc11b67faf6f0b830db06185e9b998b16d8"
+    }
+  }
+}

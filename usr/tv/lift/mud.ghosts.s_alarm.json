@@ -1,0 +1,67 @@
+{
+  "format": "aliswb-style-params-1",
+  "style": "s_alarm",
+  "profile_sha256": "480ab06fdbb09ebae6c837e3eb679dd5be99e129809b972d1f72cca4e485f81a",
+  "files": {
+    "002": {
+      "sha256": "4b71cd30df2e531a9d7c58abcd77928346bf76ff9fc7da1acf1c6cf1ac1b5858",
+      "input_mode": "color",
+      "parameters": {
+        "black": 45,
+        "white": 88,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "70e0033f9df047a631ad5c3a65703accc3e31ddb6ab2b90b093db5c4f0dec542"
+    },
+    "004": {
+      "sha256": "088b454358858b1889fa5b37d9849527c9403b92941dca30226d2b8ee2ebb3cb",
+      "input_mode": "color",
+      "parameters": {
+        "black": 26,
+        "white": 60,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "2892de5f7ce9d3bbee33a110964392f05104ee2def60d87d026e210b627ba4dd"
+    },
+    "006": {
+      "sha256": "70e8a85ee63b81348865a263fc40f10d9a5fd8c814f77122230ebf44f05708ce",
+      "input_mode": "color",
+      "parameters": {
+        "black": 40,
+        "white": 76,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "7fa4e09ff4fb11c7e83e3ff8315abc0a39fdeb07b29b8f982531e41233cf1e69"
+    },
+    "010": {
+      "sha256": "a5b50f48983df9f846b97e128e2a5b4e9f11e207d2839e8db94d6d9b86121de3",
+      "input_mode": "color",
+      "parameters": {
+        "black": 55,
+        "white": 110,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "a796e77bc160cfb5f108d19bd2252a1b8c4535eda714d867ba918687a1629c2b"
+    },
+    "015": {
+      "sha256": "05fb9cbd4bd45fbe97be0677cca689820c614267ff76f1fd942dad5d32f2b65e",
+      "input_mode": "color",
+      "parameters": {
+        "black": 22,
+        "white": 37,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "4c03a31a9830c5b29703f13235522249fc99c9533f48e75619ae4988a842005a"
+    }
+  }
+}

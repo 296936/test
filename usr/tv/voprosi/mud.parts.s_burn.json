@@ -1,0 +1,79 @@
+{
+  "format": "aliswb-style-params-1",
+  "style": "s_burn",
+  "profile_sha256": "480ab06fdbb09ebae6c837e3eb679dd5be99e129809b972d1f72cca4e485f81a",
+  "files": {
+    "017": {
+      "sha256": "b19398028452e01850d06a3871213289f23358f7c36ac6e75161290a094010c5",
+      "input_mode": "color",
+      "parameters": {
+        "black": 54,
+        "white": 104,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "32c0faf7389ee8020d011afe6fd345f33b755858965e74991a811fe524ea56f2"
+    },
+    "022": {
+      "sha256": "ace8a290835d27910d2358f1d8be201a11f820e47cce158493c5b540ba7d2838",
+      "input_mode": "color",
+      "parameters": {
+        "black": 27,
+        "white": 65,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "b130348a7f9bebca7a53715db0ed7659c3fd706919a575d625e15008a866b9da"
+    },
+    "024": {
+      "sha256": "fe159a3cc0c98c6fc7858e77e56aac63315cf81c6070ff17ef3d4b69458debb5",
+      "input_mode": "color",
+      "parameters": {
+        "black": 95,
+        "white": 152,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "a2cb230f7b81af837b0bd34c2e5eed04b9d98404b5e596429f4ccd4ea4ebbe0c"
+    },
+    "025": {
+      "sha256": "e7510d87e323c7d1e7df547eb3b10e1d9f48ce248fe7449aa54069097d5faaeb",
+      "input_mode": "color",
+      "parameters": {
+        "black": 16,
+        "white": 27,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "133bd4930ec490e90af8d2b8adffc602b212e1a020cd727347ef72467cd638fc"
+    },
+    "026": {
+      "sha256": "edd71a98158c0cf884699146bf9a54f148923075f0441c121635f7554c1c1cd4",
+      "input_mode": "color",
+      "parameters": {
+        "black": 90,
+        "white": 133,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "dcccc3854160f56486374d779ed779269580f7ff28a580a269bc475c0301e6fb"
+    },
+    "027": {
+      "sha256": "9f5eae630a69e7deb1ae37977152cfe5b81c3b582fa3a2846ea34c10a5c26dbd",
+      "input_mode": "color",
+      "parameters": {
+        "black": 36,
+        "white": 97,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "4d24c76ced75d6cfe0ee57505c2240ecac9502ef6877b0c88c08d5d788a60e7a"
+    }
+  }
+}

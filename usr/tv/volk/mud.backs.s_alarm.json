@@ -1,0 +1,67 @@
+{
+  "format": "aliswb-style-params-1",
+  "style": "s_alarm",
+  "profile_sha256": "480ab06fdbb09ebae6c837e3eb679dd5be99e129809b972d1f72cca4e485f81a",
+  "files": {
+    "002": {
+      "sha256": "bf2163f6c142ca0fdf646a00d119edac823853d6879ca690f9c5db637ae23d3b",
+      "input_mode": "color",
+      "parameters": {
+        "black": 14,
+        "white": 37,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "a54c562529b04ad6ebe00f256ee3f4aec34af3f85c4c02d47b004b912d8b030e"
+    },
+    "006": {
+      "sha256": "bdaf97bdae3dafc97a22881d481a0aa38a886aade2c85b371dcd059db75b1feb",
+      "input_mode": "color",
+      "parameters": {
+        "black": 51,
+        "white": 160,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "cd60c517c889f2522f136c7257aec210226a6e79aa192af6bec4677b59c46937"
+    },
+    "011": {
+      "sha256": "0c052bc8e15ba2aa9dd3c3ba3980025a95d61383927038a355f9ee067d071fca",
+      "input_mode": "color",
+      "parameters": {
+        "black": 12,
+        "white": 32,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "39a07f2bba68f69d5f25c0a6a56841d30633c3ebb74a4fd110e2d528deef14c2"
+    },
+    "016": {
+      "sha256": "de13516f5d72d7ff557918c1253647b7672b1d4480257fcf5d50b2bbbe5301f7",
+      "input_mode": "color",
+      "parameters": {
+        "black": 32,
+        "white": 68,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "487213b24e35196ccd941e23fc5bc81f2cb89a4413df95763596f5540d636f06"
+    },
+    "020": {
+      "sha256": "bf89cc4841b8fedf9b20b4fc870e0d318e1fe26415e7556713a7d1ae571ec3bb",
+      "input_mode": "color",
+      "parameters": {
+        "black": 33,
+        "white": 112,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "994ea6e2b871a1dd3af3206cd980dfcac8177dc61b1eea7882803c0c17d592ff"
+    }
+  }
+}
