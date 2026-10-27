@@ -1,0 +1,323 @@
+html.vcard-settings-dialog-open {
+  overflow: hidden;
+}
+
+.vcard-settings-dialog {
+  font-size: var(--font-size-settings);
+  line-height: var(--line-height-settings);
+  letter-spacing: var(--letter-spacing-settings);
+  position: fixed;
+  z-index: 1200;
+  inset: var(--vcard-settings-top, 0px) 0 0;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  padding: 0 var(--page-inline-padding) var(--page-inline-padding);
+  font-family: var(--vc-tech-font);
+  font-weight: 600;
+  font-stretch: condensed;
+  color: var(--vc-text);
+  background: color-mix(in srgb, var(--vc-win) 78%, transparent);
+  text-align: left;
+  -webkit-text-stroke: var(--vc-readable-stroke-width, 0px) var(--vc-readable-outline, black);
+  paint-order: stroke fill;
+  text-shadow: none;
+  pointer-events: none;
+}
+
+.vcard-settings-dialog :is(button, a, input, select, textarea) {
+  font-family: inherit;
+}
+
+.vcard-settings-dialog__panel {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: calc(var(--block-full-width) * var(--block-mid-ratio));
+  max-width: 100%;
+  height: 100%;
+  max-height: none;
+  overflow: hidden;
+  border: var(--link-line-width) solid var(--vc-text);
+  color: var(--vc-text);
+  background: var(--vc-win);
+  box-shadow: 0 6px 24px color-mix(in srgb, black 55%, transparent);
+  pointer-events: auto;
+}
+
+.vcard-settings-dialog__header {
+  --vc-settings-header-ink: var(--vc-win);
+  position: relative;
+  z-index: 1;
+  display: grid;
+  flex: none;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  padding: 6px 12px;
+  border-bottom: var(--ui-line-width) solid var(--ui-line-color);
+  color: var(--vc-settings-header-ink);
+  background: var(--vc-settings-color);
+  text-align: left;
+  -webkit-text-stroke: 0;
+  text-shadow: none;
+}
+
+:root[data-color-preset="night"] .vcard-settings-dialog__header {
+  --vc-settings-header-ink: white;
+}
+
+.vcard-settings-dialog__title {
+  margin: 0;
+  padding: 0;
+  font-size: var(--font-size-settings-title);
+  line-height: inherit;
+  overflow-wrap: anywhere;
+}
+
+.vcard-settings-dialog__settings-title {
+  align-self: center;
+  justify-self: stretch;
+  display: block;
+  box-sizing: border-box;
+  min-width: 0;
+  width: 100%;
+  line-height: inherit;
+  max-height: 44px;
+  white-space: normal;
+  text-align: left;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  -webkit-text-stroke: 0;
+  text-shadow: none;
+}
+
+.vcard-settings-dialog__header .vcard-settings-dialog__command {
+  box-sizing: border-box;
+  height: 28px;
+  min-height: 28px;
+  padding: 3px 7px;
+  border-color: var(--vc-settings-header-ink);
+  color: var(--vc-settings-header-ink);
+  background: transparent;
+}
+
+.vcard-settings-dialog__header .vcard-settings-dialog__command:is(:hover, :focus-visible) {
+  color: var(--vc-settings-color);
+  background: var(--vc-settings-header-ink);
+}
+
+.vcard-settings-dialog__settings-title[hidden] {
+  display: none;
+}
+
+.vcard-settings-dialog__content {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  scrollbar-color: var(--vc-settings-color) var(--vc-win);
+  padding: 0;
+  line-height: inherit;
+  overflow-wrap: anywhere;
+  padding: 10px;
+}
+
+.vcard-settings-dialog__content > :first-child {
+  margin-top: 0;
+}
+
+.vcard-settings-dialog__content > :last-child {
+  margin-bottom: 0;
+}
+
+.vcard-settings-dialog__content button {
+  appearance: none;
+  border: 0;
+  padding-block: 0;
+  font: inherit;
+  line-height: inherit;
+  cursor: pointer;
+}
+
+.vcard-settings-dialog :is(button, a):focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+.vcard-settings-dialog__content ul {
+  margin-block: 5px;
+  padding-left: 5px;
+}
+
+.vcard-settings-dialog__content li + li {
+  margin-top: 5px;
+}
+
+.vcard-settings-dialog__content :is(a, button)[sd-opt],
+.vcard-settings-dialog__content :is(a, button)[dd-preset],
+.vcard-settings-dialog__content :is(a, button)[dd-action],
+.vcard-settings-dialog__content :is(a, button)[data-dialog-download] {
+  display: inline-block;
+  margin-inline: -0.2em;
+  padding-inline: 0.2em;
+  color: var(--vc-muted);
+  background-color: transparent;
+  text-decoration: none;
+}
+
+.vcard-settings-dialog__content :is(a, button)[sd-opt]:is(:hover, :focus-visible),
+.vcard-settings-dialog__content :is(a, button)[dd-preset]:is(:hover, :focus-visible),
+.vcard-settings-dialog__content :is(a, button)[dd-action]:is(:hover, :focus-visible),
+.vcard-settings-dialog__content :is(a, button)[data-dialog-download]:is(:hover, :focus-visible) {
+  color: var(--vc-win);
+  background-color: var(--vc-settings-color);
+}
+
+.vcard-settings-dialog__content :is(a, button)[sd-opt]:is(:active, .is-selected),
+.vcard-settings-dialog__content :is(a, button)[dd-preset]:is(:active, .is-selected),
+.vcard-settings-dialog__content :is(a, button)[dd-action]:active,
+.vcard-settings-dialog__content :is(a, button)[data-dialog-download]:active {
+  color: var(--vc-win);
+  background-color: transparent;
+  background-image: linear-gradient(
+    var(--vc-acc),
+    var(--vc-acc)
+  );
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% calc(100% - 4px);
+  text-decoration: none;
+}
+
+.vcard-settings-dialog__content :is(a, button)[sd-opt]:is(:hover, :focus-visible),
+.vcard-settings-dialog__content :is(a, button)[dd-preset]:is(:hover, :focus-visible),
+.vcard-settings-dialog__content :is(a, button)[dd-action]:is(:hover, :focus-visible),
+.vcard-settings-dialog__content :is(a, button)[data-dialog-download]:is(:hover, :focus-visible) {
+  text-decoration: none;
+}
+
+.vcard-settings-dialog__content :is(a, button)[sd-opt].is-disabled {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.vcard-settings-dialog__content .vcard-settings-values {
+  color: var(--vc-acc);
+}
+
+.vcard-settings-dialog__content .vcard-settings-values
+  > :is(a, button):not(:is(:hover, :focus-visible, :active, .is-selected)),
+.vcard-settings-dialog__content .vcard-settings-values
+  > span > :is(a, button):not(:is(:hover, :focus-visible, :active, .is-selected)) {
+  color: inherit;
+}
+
+.vcard-settings-dialog__content .vcard-settings-values :is(a, button):is(:hover, :focus-visible) {
+  color: var(--vc-win);
+  background-color: var(--vc-acc);
+  -webkit-text-fill-color: var(--vc-win);
+}
+
+:root[data-color-preset="newspaper"] .vcard-settings-dialog {
+  --vc-settings-color: black;
+}
+
+:root[data-color-preset="newspaper"] .vcard-settings-dialog__content :is(a, button):is([sd-opt], [dd-preset], [dd-action], [data-dialog-download]):is(:hover, :focus-visible, :active, .is-selected) {
+  color: white;
+  -webkit-text-fill-color: white;
+  -webkit-text-stroke: 0 transparent;
+  background: black;
+  text-shadow: none;
+}
+
+.vcard-settings-dialog :is(a, button):focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 0.1em;
+}
+
+@keyframes vcard-media-cache-preload-run {
+  from { transform: translateX(-0.35em); }
+  to { transform: translateX(0.35em); }
+}
+
+.vcard-settings-dialog__content :is(a, button)[data-media-cache-preload].is-loading {
+  opacity: 1;
+  color: var(--vc-settings-color);
+  background-color: transparent;
+  background-image: none;
+}
+
+.vcard-settings-dialog__content :is(a, button)[data-media-cache-preload].is-loading::after {
+  content: " ▰▰▰";
+  display: inline-block;
+  animation: vcard-media-cache-preload-run 0.65s steps(3, end) infinite alternate;
+}
+
+.vcard-settings-dialog__content :is(a, button)[dd-preset] {
+  cursor: pointer;
+}
+
+.vcard-settings-dialog__command {
+  min-height: 34px;
+  border: var(--ui-line-width) solid var(--ui-line-color);
+  border-radius: 0;
+  padding: 5px 5px;
+  color: var(--vc-settings-color);
+  background: var(--vc-win);
+  box-shadow: none;
+  cursor: pointer;
+  font: inherit;
+  line-height: 1;
+  text-shadow: none;
+}
+
+.vcard-settings-dialog__command:is(:hover, :focus-visible) {
+  color: var(--vc-win);
+  background: var(--vc-settings-color);
+}
+
+@media (orientation: landscape) {
+  .vcard-settings-dialog__header {
+    align-items: center;
+  }
+
+  .vcard-settings {
+    overflow-x: auto;
+    white-space: pre-wrap;
+  }
+}
+
+@media (orientation: portrait), (max-width: 700px) {
+  .vcard-settings-dialog {
+    padding: 0 var(--page-inline-padding);
+  }
+
+  .vcard-settings-dialog__header {
+    gap: 7px;
+    padding: 8px 10px;
+  }
+}
+
+@media (orientation: portrait) {
+  .vcard-settings-dialog {
+    align-items: stretch;
+    padding: 0 var(--page-inline-padding);
+  }
+
+  .vcard-settings-dialog__panel {
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    max-height: none;
+  }
+
+  .vcard-settings {
+    max-width: 100%;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+
+  .vcard-settings-dialog__content [data-settings-portal-choice="mid"] {
+    display: none;
+  }
+}

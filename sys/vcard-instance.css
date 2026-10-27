@@ -1,0 +1,12 @@
+@font-face {
+  font-family: "PRINTF";
+  src: url("../usr/fonts/art_font.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+:root {
+  --vc-page-font: "PRINTF", Arial, sans-serif;
+  --vc-song-title-font: "PRINTF", Arial, sans-serif;
+}

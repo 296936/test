@@ -1,0 +1,60 @@
+:root {
+  /* Initial preferences for a clean browser profile or a full reset. */
+  --def-font-size: m;
+  --def-visualization-brightness: 3;
+  --def-volume-boost: 1;
+  --def-preset: auto;
+  --def-last-preset: duo;
+  --def-visualization: h;
+  --def-visualization-choice: h;
+  --def-trackplay: on;
+  --def-auto-next: on;
+  --def-song-alternation: random;
+  --def-playlist-alternation: random;
+  --def-images-visible: on;
+  --def-portal-size: small;
+  --def-background-mode: smoke;
+
+  /* Text scale Z; em sizes below follow their parent text. */
+  --font-size-base: 20px;
+  --font-size-song-title: 1.8em;
+  --font-size-song-text: 1.8em;
+  --line-height-song-text: 0.9;
+  --font-size-h1: 2.5em;
+  --font-size-h2: 1.8em;
+
+  --faq-font-size: 0.82em;
+  --font-size-footer: 0.85em;
+  --font-size-faq-heading: 1.2em;
+  --song-icon-size: 0.7em;
+  --letter-spacing-song-text: 0em;
+  --font-size-tab-caption: 0.82em;
+  --font-size-tab-count: 0.65em;
+  --font-size-notes: 0.8em;
+  --font-size-stars: 2em;
+  --font-size-player: var(--font-size-base);
+  --font-size-player-title: 22px;
+  --font-size-settings: var(--font-size-base);
+  --line-height-settings: 1;
+  --letter-spacing-settings: 0em;
+  --font-size-settings-title: 1.4em;
+  --font-size-timer: 0.5em;
+  --font-size-audio-timer: 18px;
+  --font-size-scale-label-xs: 0.55em;
+  --font-size-scale-label-s: 0.65em;
+  --font-size-scale-label-m: 0.8em;
+  --font-size-scale-label-l: 0.95em;
+  --font-size-scale-label-xl: 1.1em;
+  --font-size-stanza-separator: 1.25em;
+  --vc-tech-font: "DejaVu LGC Sans Mono", "Lucida Console", monospace;
+  --font-body-active-weight: 700;
+  --song-text-stroke: 0;
+  --song-font-synthesis: none;
+  --active-verse-stroke: 0.08em var(--active-verse-outline, black);
+  --active-verse-shadow: none;
+  --about-font-weight: 400;
+  --song-year-weight: 400;
+  --crossani-duo-filter: grayscale(1) url("#vc-accent-tint");
+  --crossani-night-filter: grayscale(1) url("#vc-yellow-tint");
+  --crossani-fallback-opacity: 0.8;
+}

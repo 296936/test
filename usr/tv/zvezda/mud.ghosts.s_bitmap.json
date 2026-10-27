@@ -1,0 +1,51 @@
+{
+  "format": "aliswb-style-params-1",
+  "style": "s_bitmap",
+  "profile_sha256": "480ab06fdbb09ebae6c837e3eb679dd5be99e129809b972d1f72cca4e485f81a",
+  "files": {
+    "002": {
+      "sha256": "ea2792c74a9e4e0d99b425ca3960ecfe0b183ba3dd74c897933abac348e74e3f",
+      "input_mode": "color",
+      "parameters": {
+        "threshold": 30,
+        "invert": 0,
+        "radius": 0,
+        "strength": 0,
+        "bias": 0,
+        "quality": "selected",
+        "reason": "Автоматически вычислено из выбранного s_alarm.",
+        "black": 21,
+        "white": 38,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255,
+        "apply_bitmap": 1,
+        "use_bitmap": 1,
+        "review_policy": "bitmap-from-alarm-v1"
+      },
+      "deploy_sha256": "4b77b52cef001d0fc84048886eb51267f044b5cf817da1b00ea8514312746c32"
+    },
+    "004": {
+      "sha256": "86a8c49da8f3c87eaa7dce7f7eddc78c1ec5fe7f25f5ea66516d670dd75a8673",
+      "input_mode": "color",
+      "parameters": {
+        "threshold": 79,
+        "invert": 0,
+        "radius": 0,
+        "strength": 0,
+        "bias": 0,
+        "quality": "selected",
+        "reason": "Автоматически вычислено из выбранного s_alarm.",
+        "black": 49,
+        "white": 109,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255,
+        "apply_bitmap": 1,
+        "use_bitmap": 1,
+        "review_policy": "bitmap-from-alarm-v1"
+      },
+      "deploy_sha256": "2686c5f7a42492fcfd626282c9162918b043cbbf9815173060c369d5639c8480"
+    }
+  }
+}

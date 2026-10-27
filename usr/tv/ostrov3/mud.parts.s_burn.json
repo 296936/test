@@ -1,0 +1,19 @@
+{
+  "format": "aliswb-style-params-1",
+  "style": "s_burn",
+  "profile_sha256": "480ab06fdbb09ebae6c837e3eb679dd5be99e129809b972d1f72cca4e485f81a",
+  "files": {
+    "003": {
+      "sha256": "ae06efcab4c3327763d3456f9c13f997e8f55eed54ba8637504b2365fabb8a38",
+      "input_mode": "color",
+      "parameters": {
+        "black": 34,
+        "white": 89,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "45a7217524e93fe1211eb4fe2b61efdd69b1475c2d4af79da6719c749b0ab51d"
+    }
+  }
+}
