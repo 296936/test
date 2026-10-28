@@ -1,4 +1,3 @@
-const email0 = '356';
 const vcardFileMode = location.protocol === 'file:';
 // Initial navigation owns the viewport; the browser must not override it
 // with the previous card's scroll position after bootstrap.
@@ -7142,7 +7141,9 @@ const vcardSongTexts = (() => {
     if (!requests.has(url)) {
       const controller = new AbortController();
       const timeout = window.setTimeout(() => controller.abort(), 30000);
-      const request = fetch(url, { cache: 'force-cache', credentials: 'same-origin', signal: controller.signal })
+      const request = (window.VCardCrypt?.protectedUrl(url)
+        ? window.VCardCrypt.json(url).then(texts => new Response(JSON.stringify(texts)))
+        : fetch(url, { cache: 'force-cache', credentials: 'same-origin', signal: controller.signal }))
         .then((response) => {
           if (!response.ok) throw new Error(`Song text HTTP ${response.status}`);
           return response.json();
@@ -7177,6 +7178,9 @@ window.VCardMediaLoader = Object.freeze({
       ...Array.from(preview.querySelectorAll('.song-video-link__logo'), (image) => image.getAttribute('src')),
       ...crossFiles,
     ].filter(Boolean).map(vcardPublishedMediaUrl), null, { signal, required: true, concurrency: 1 });
+    if (!signal.aborted && window.VCardCrypt?.protectedUrl(entry.audioSrc)) {
+      await window.VCardCrypt.audioUrl(entry.audioSrc);
+    }
     if (signal.aborted) return;
     const scopes = window.VCLife?.scenario.profile?.preloadScopes(entry) || [];
     if (scopes.includes('song')) {
@@ -7199,12 +7203,17 @@ window.VCardMediaLoader = Object.freeze({
       }
     }
   }, signal),
-  activateAudio: (audio, preview) => {
+  activateAudio: async (audio, preview) => {
     if (audio.vcardPlayingPreview !== preview) throw new DOMException('Selected song changed', 'AbortError');
     const source = audio.dataset.audioSrc;
     if (!source) throw new Error('Selected audio source is unavailable');
-    if (audio.getAttribute('src') !== source || audio.error) {
-      audio.setAttribute('src', source);
+    const playable = window.VCardCrypt?.protectedUrl(source)
+      ? await window.VCardCrypt.audioUrl(source, {current:true}) : source;
+    if (audio.vcardPlayingPreview !== preview || audio.dataset.audioSrc !== source) throw new DOMException('Selected song changed', 'AbortError');
+    if (audio.getAttribute('src') !== playable || audio.error) {
+      audio.vcardResolvedSource = playable;
+      audio.dataset.cryptOriginal = source;
+      audio.setAttribute('src', playable);
       audio.load();
     }
   },
@@ -11242,7 +11251,7 @@ const createVCardFrameInitializer = () => {
       const current = () => !playerControlsScope.signal.aborted && !request.scope.signal.aborted
         && audioPositionRequest === request && preview.isConnected
         && audioEl.vcardPlayingPreview === preview && audioEl.dataset.audioSrc === source
-        && (!audioEl.hasAttribute('src') || audioEl.getAttribute('src') === source);
+        && (!audioEl.hasAttribute('src') || audioEl.getAttribute('src') === (audioEl.vcardResolvedSource || source));
       const apply = () => {
         if (!current()) return;
         try { audioEl.currentTime = position; }
@@ -11271,12 +11280,24 @@ const createVCardFrameInitializer = () => {
       }
       preview.dataset.src = src;
       audioEl.dataset.audioSrc = src;
-      if (audioEl.hasAttribute('src') && (audioEl.getAttribute('src') !== src || audioEl.error)) {
+      if (audioEl.hasAttribute('src') && ((audioEl.dataset.cryptOriginal !== src && audioEl.getAttribute('src') !== src) || audioEl.error)) {
         cancelAudioPosition();
         clearTrackBandHighlight();
         audioEl.pause();
         audioEl.removeAttribute('src');
+        delete audioEl.vcardResolvedSource;
+        audioEl.dataset.cryptOriginal = src;
         audioEl.load && audioEl.load();
+      }
+      if (window.VCardCrypt?.protectedUrl(src)) {
+        window.VCardCrypt.audioUrl(src, {current:true}).then(playable => {
+          if (audioEl.dataset.audioSrc !== src || audioEl.vcardPlayingPreview !== preview) return;
+          if (audioEl.getAttribute('src') === playable) return;
+          audioEl.vcardResolvedSource = playable;
+          audioEl.dataset.cryptOriginal = src;
+          audioEl.setAttribute('src', playable);
+          audioEl.load();
+        }).catch(error => console.warn('VCard protected audio preparation failed', error));
       }
       const player = players.get(audioEl);
       if (player) publishPlayerMp3Info(preview);
@@ -13514,27 +13535,6 @@ const createVCardFrameInitializer = () => {
       });
   })();
 
-  // Email copy handler
-  (() => {
-    const email1 = '475';
-    const emailLink = document.getElementById('email-link');
-    if (emailLink) {
-      const scope = new AbortController();
-      window.addEventListener('pagehide', (event) => {
-        if (!event.persisted) scope.abort();
-      }, { signal: scope.signal });
-      emailLink.addEventListener('click', (e) => {
-        e.preventDefault();
-        const email2 = '@gmail.com';
-        const email = email0 + email1 + email2;
-        navigator.clipboard.writeText(email).then(() => {
-          if (!scope.signal.aborted) alert('скопирован в буфер обмена');
-        }).catch(() => {
-          if (!scope.signal.aborted) alert('Не удалось скопировать: ' + email);
-        });
-      }, { signal: scope.signal });
-    }
-  })();
   (() => {
     const root = document.documentElement;
     const STORAGE_KEY = 'vcard-background-mode';

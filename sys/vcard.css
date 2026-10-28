@@ -1474,4 +1474,14 @@ button {
     gap: 0.15em;
   }
 }
-.vcard-mobile-link { text-align: center; margin: 0.3em 0 0; }
+.vcard-mobile-link { display: block; text-align: center; margin: 1.3em 0 0; }
+#vcard-mini-link {
+  text-decoration: underline;
+  text-decoration-color: var(--vc-text);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.15em;
+  text-decoration-skip-ink: none;
+}
+#vcard-mini-link:is(:hover, :focus-visible, :active, .is-active) {
+  text-decoration-color: var(--vc-win);
+}

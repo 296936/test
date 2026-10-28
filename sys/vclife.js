@@ -1406,12 +1406,14 @@
       // A manual replacement must not wait for the new visual scene.
       // Its preparation still belongs to this playback and runs in parallel.
       if (immediateAudio) visualReady.catch(() => {});
-      return (immediateAudio ? Promise.resolve() : visualReady).then(() => {
+      return (immediateAudio ? Promise.resolve() : visualReady).then(async () => {
         if (this.dead || this.song.playback !== this || this.life.playingSong !== this.song
           || preparation?.signal.aborted) return false;
         // The browser streams audio; a manual replacement skips visual readiness.
         // Full media caching is background work, not a playback prerequisite.
-        this.life.activateAudio?.(this.audio, this.song.preview);
+        await this.life.activateAudio?.(this.audio, this.song.preview);
+        if (this.dead || this.song.playback !== this || this.life.playingSong !== this.song
+          || preparation?.signal.aborted) return false;
         this.life.audioChannel.acquire(this);
         return this.audio.play();
       }).then(() => !this.dead).catch((error) => {

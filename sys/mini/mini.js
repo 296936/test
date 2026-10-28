@@ -338,7 +338,8 @@
     const key = playlist.text;
     let pending = textCache.get(key);
     if (!pending) {
-      pending = fetch(key).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); });
+      pending = window.VCardCrypt?.protectedUrl(key) ? window.VCardCrypt.json(key)
+        : fetch(key).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); });
       pending.catch(() => { if (textCache.get(key) === pending) textCache.delete(key); });
     }
     textCache.delete(key);
@@ -356,8 +357,15 @@
     nextCandidate = null;
     audio.pause();
     audio.removeAttribute('src');
-    if (song.audio) audio.src = song.audio;
+    if (song.audio && !window.VCardCrypt?.protectedUrl(song.audio)) audio.src = song.audio;
     audio.load();
+    if (window.VCardCrypt?.protectedUrl(song.audio)) {
+      window.VCardCrypt.audioUrl(song.audio, {current:true}).then(source => {
+        if (current?.key !== song.key || audio.hasAttribute('src')) return;
+        audio.src = source;
+        audio.load();
+      }).catch(() => message('Не удалось подготовить защищённый MP3.'));
+    }
     document.getElementById('now').textContent = song.title;
     playButton.disabled = !song.audio;
     seek.disabled = true;
@@ -382,7 +390,7 @@
     const index = keys.indexOf(current?.key);
     return data.songs[keys[index < 0 ? (direction < 0 ? keys.length - 1 : 0) : (index + direction + keys.length) % keys.length]];
   }
-  function start() {
+  async function start() {
     if (!current?.audio) {
       const list = listById(route.list) || data.playlists.find(p => playable(p).length);
       const song = data.songs[playable(list)[0]];
@@ -393,6 +401,13 @@
     // Invoke play in the user gesture; neither cache nor text loading gates it.
     const expected = current.key;
     volumeContext?.resume().catch(() => {});
+    if (window.VCardCrypt?.protectedUrl(current.audio)) {
+      try {
+        const source = await window.VCardCrypt.audioUrl(current.audio, {current:true});
+        if (current?.key !== expected) return;
+        if (audio.getAttribute('src') !== source) { audio.src = source; audio.load(); }
+      } catch (_) { message('Не удалось расшифровать MP3. Откройте песню ещё раз.'); return; }
+    }
     audio.play().catch(error => { if (current?.key === expected && error.name !== 'AbortError') message('Не удалось начать воспроизведение. Нажмите PLAY ещё раз.'); });
   }
   function advance(direction) {
@@ -429,7 +444,11 @@
   audio.addEventListener('timeupdate', () => { syncPlayer(); track(); });
   audio.addEventListener('playing', () => {
     const next = following();
-    if (next?.audio) cacheMedia(next.audio).catch(() => {});
+    if (next?.audio) {
+      const task = window.VCardCrypt?.protectedUrl(next.audio)
+        ? window.VCardCrypt.audioUrl(next.audio) : cacheMedia(next.audio);
+      task.catch(() => {});
+    }
   });
   seek.addEventListener('input', () => {
     if (Number.isFinite(audio.duration)) audio.currentTime = Number(seek.value) / 1000 * audio.duration;
