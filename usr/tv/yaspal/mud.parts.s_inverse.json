@@ -3,8 +3,8 @@
   "style": "s_inverse",
   "profile_sha256": "480ab06fdbb09ebae6c837e3eb679dd5be99e129809b972d1f72cca4e485f81a",
   "files": {
-    "010": {
-      "sha256": "5d5a6a7f68f1521d84bc0dd3fb3bca4b104d262e1afeca4750277e4f978f035d",
+    "005": {
+      "sha256": "f7e0a90ef531461364b31f357571d9417d376cbbdee5d69c91006a76d49ad892",
       "input_mode": "color",
       "parameters": {
         "threshold": 44,
@@ -12,14 +12,14 @@
         "radius": 0,
         "strength": 0,
         "bias": 0,
-        "black": 23,
-        "white": 64,
+        "black": 27,
+        "white": 60,
         "gamma": 1,
         "out_black": 0,
         "out_white": 255,
         "apply_bitmap": 1
       },
-      "deploy_sha256": "0dc6f9cd31827ca8a5d12516efa0c3b1d56cbf266256972fdbeba246cbf0347d"
+      "deploy_sha256": "b86cb019b87cfea9f113ebe77ca6e66ae78a8898d52dc08d0ba87ea805fb0905"
     }
   }
 }
