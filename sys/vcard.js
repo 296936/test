@@ -4723,7 +4723,7 @@ const vcardMedia = (() => {
 
   const listKey = (listUrl) => {
     const resolved = new URL(String(listUrl || ''), document.baseURI);
-    const version = scriptVersion('lists', resolved);
+    const version = scriptVersion(resolved.hash.startsWith('#release=') ? 'tvCatalogs' : 'lists', resolved);
     if (version) resolved.searchParams.set('v', version);
     return resolved.href;
   };
@@ -4771,7 +4771,19 @@ const vcardMedia = (() => {
     await vcardSelectionReady;
     const key = listKey(listUrl);
     if (!listCache.has(key)) {
-      const pending = loadListScript(key);
+      const reference = new URL(key);
+      const release = reference.hash.startsWith('#release=')
+        ? decodeURIComponent(reference.hash.slice('#release='.length)) : null;
+      reference.hash = '';
+      const pending = release === null ? loadListScript(key) : loadShowCatalog(reference.href).then((catalog) => {
+        const selection = Object.entries(catalog.selections || {}).find(
+          ([name]) => name.toLowerCase() === release.toLowerCase())?.[1];
+        const series = new Map((catalog.series || []).map((item) => [item.name, item]));
+        return (selection?.ids || []).map((id) => {
+          const split = id.lastIndexOf(':');
+          return series.get(id.slice(0, split))?.images?.img?.[id.slice(split + 1)];
+        }).filter(Boolean);
+      });
       listCache.set(key, pending);
       pending.catch(() => { if (listCache.get(key) === pending) listCache.delete(key); });
     }
@@ -4780,6 +4792,7 @@ const vcardMedia = (() => {
 
   const loadShowCatalog = (catalogUrl) => {
     const resolved = new URL(String(catalogUrl || ''), document.baseURI);
+    resolved.hash = '';
     const version = scriptVersion('tvCatalogs', resolved);
     if (version) resolved.searchParams.set('v', version);
     const key = resolved.href;
@@ -4801,7 +4814,10 @@ const vcardMedia = (() => {
         }
         const name = 'tv';
         const selections = Object.fromEntries(Object.entries(catalog.selections || {}).map(
-          ([release, selection]) => [release, { ...selection, shows: { [name]: selection } }]
+          ([release, selection]) => {
+            const value = { ...selection, list: `${key}#release=${encodeURIComponent(release)}` };
+            return [release, { ...value, shows: { [name]: value } }];
+          }
         ));
         return { ...catalog, selections, defaultShow: name,
           shows: [{ name, images, styleParams }] };
