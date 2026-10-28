@@ -21,7 +21,17 @@
   const cacheJobs = new Map();
   const historyQueue = [];
   let saved = {};
-  try { saved = JSON.parse(localStorage.getItem(profileKey) || '{}'); } catch (_) { }
+  try {
+    const stored = localStorage.getItem(profileKey);
+    saved = JSON.parse(stored || '{}');
+    if (stored === null) {
+      const legacy = JSON.parse(localStorage.getItem(`${prefix}tvcm-profile-v1`) || '{}');
+      if (legacy && !Array.isArray(legacy) && legacy.version === 1) {
+        saved = legacy;
+        localStorage.setItem(profileKey, JSON.stringify(saved));
+      }
+    }
+  } catch (_) { }
   if (!saved || typeof saved !== 'object' || Array.isArray(saved) || saved.version !== 1) saved = {};
   const preferences = { ...data.defaults, ...(saved.preferences || {}) };
   preferences.theme = ['system', 'light', 'dark'].includes(preferences.theme) ? preferences.theme : 'system';

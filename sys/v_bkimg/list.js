@@ -1,2 +1,2 @@
 window.VCARD_MEDIA_LISTS ||= {};
-window.VCARD_MEDIA_LISTS[document.currentScript.src] = ["rosewood-bw.webp?v=fbb0a780e1be"];
+window.VCARD_MEDIA_LISTS[document.currentScript.src] = ["watercolor-cold-press.webp?v=f1ffbf21ec31"];

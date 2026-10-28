@@ -327,7 +327,8 @@ const vcardStorage = (() => {
         if (!backend) return false;
         try {
           const keys = Array.from({ length: backend.length }, (_, index) => backend.key(index))
-            .filter((key) => key?.startsWith(vcardStoragePrefix));
+            .filter((key) => key?.startsWith(vcardStoragePrefix)
+              && key !== vcardPhysicalKey('tvcm-profile-v1'));
           keys.forEach((key) => backend.removeItem(key));
           cleared = false;
           return true;

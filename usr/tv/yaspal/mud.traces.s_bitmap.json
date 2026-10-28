@@ -3,19 +3,19 @@
   "style": "s_bitmap",
   "profile_sha256": "480ab06fdbb09ebae6c837e3eb679dd5be99e129809b972d1f72cca4e485f81a",
   "files": {
-    "007": {
-      "sha256": "9450cf662d266b731e4b8b8a5cd7dad2ebd1a4761d403e5f69a762160d508d46",
+    "013": {
+      "sha256": "ed269062f8cd7f6447c9252ab33e1a05173ac8d714b9af03131f259c403d4dcd",
       "input_mode": "color",
       "parameters": {
-        "threshold": 22,
+        "threshold": 71,
         "invert": 0,
         "radius": 0,
         "strength": 0,
         "bias": 0,
         "quality": "selected",
         "reason": "Автоматически вычислено из выбранного s_alarm.",
-        "black": 17,
-        "white": 26,
+        "black": 49,
+        "white": 93,
         "gamma": 1,
         "out_black": 0,
         "out_white": 255,
@@ -23,7 +23,7 @@
         "use_bitmap": 1,
         "review_policy": "bitmap-from-alarm-v1"
       },
-      "deploy_sha256": "9793ab48fa9bd2bc4efa26c9a46acbab240eb0c76bc3a2e93c7dbb73be418395"
+      "deploy_sha256": "02dc90334d6eff7533c0d1dfe3603a80f1b6f3dd04f16f76e2a5b14891bca342"
     },
     "017": {
       "sha256": "b50e62c1d13a787141314d2fb58c38ea8c6cd2c95456adcea35f5199abb3c01c",
