@@ -1,0 +1,59 @@
+:root { color-scheme:light; --paper:#fff; --ink:#000; font:20px/1.35 "Lucida Console", monospace; }
+:root[data-theme="dark"] { color-scheme:dark; --paper:#000; --ink:#fff; }
+* { box-sizing:border-box; }
+body { margin:0; height:100vh; height:100dvh; display:flex; flex-direction:column; background:var(--paper); color:var(--ink); overflow:hidden; }
+a { color:inherit; text-underline-offset:.15em; }
+button, input, select, h1, h2, small { font:inherit; }
+input { accent-color:var(--ink); }
+button { color:inherit; background:transparent; border:0; text-decoration:underline; text-underline-offset:.15em; padding:0; cursor:pointer; }
+button:disabled { opacity:.4; cursor:default; }
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible { outline:2px solid currentColor; outline-offset:2px; }
+header { flex:none; padding:max(.4rem,env(safe-area-inset-top)) .5rem 0; }
+.brand { text-align:left; padding-bottom:.2rem; overflow-wrap:anywhere; }
+.brand h1 { display:inline; margin:0; }
+h2 { margin:.4rem 0 .7rem; }
+.player { margin:.2rem 0; }
+.player-row { display:grid; grid-template-areas:"play title media prev next"; grid-template-columns:max-content minmax(0,max-content) max-content max-content max-content; justify-content:start; align-items:start; column-gap:.4ch; }
+.player-play { grid-area:play; white-space:nowrap; }
+.player-next { grid-area:next; white-space:nowrap; }
+.player-prev { grid-area:prev; white-space:nowrap; }
+.player-title { grid-area:title; overflow-wrap:anywhere; }
+.player-media { grid-area:media; display:grid; grid-template-columns:216px max-content 112px max-content; align-items:center; gap:.5ch; }
+.player-next > .pipe { display:none; }
+input[type="range"] { vertical-align:middle; accent-color:var(--ink); margin:0; }
+#seek { width:216px; }
+#volume { width:112px; }
+#time { white-space:nowrap; font-variant-numeric:tabular-nums; }
+#navigation { padding:.2rem 0; overflow-wrap:anywhere; }
+@media (orientation:portrait), (max-width:760px) {
+  .player-row { grid-template-areas:"play next prev title" "media media media media"; grid-template-columns:max-content max-content max-content minmax(0,1fr); justify-content:stretch; row-gap:.25rem; }
+  .player-media { grid-template-columns:minmax(64px,1fr) max-content minmax(56px,112px); width:100%; }
+  .player-media input { width:100% !important; min-width:0; }
+  .player-next > .pipe { display:inline; }
+  #total-time { display:none; }
+  .player-title > .pipe, .player-media > .pipe { display:none; }
+}
+main { flex:1; min-height:0; overflow-y:auto; overscroll-behavior-y:contain; overflow-anchor:none; padding:.5rem max(.5rem,env(safe-area-inset-right)) max(.5rem,env(safe-area-inset-bottom)) max(.5rem,env(safe-area-inset-left)); }
+ul { list-style:none; padding:0; margin:0; }
+.entry { display:flex; align-items:baseline; gap:.6rem; padding:.25rem 0; }
+.entry input { flex:none; width:1em; height:1em; margin:0; accent-color:var(--ink); }
+.entry a { flex:none; }
+.list-actions { display:flex; flex-wrap:wrap; gap:.3rem; margin:.65rem 0; }
+.list-actions button+button::before { content:'|'; display:inline-block; margin-right:.6rem; text-decoration:none; }
+.lyrics { overflow-wrap:anywhere; }
+.verse { margin:0 0 1.3em; scroll-margin-block:1em; }
+.verse.active { font-weight:bold; text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:.16em; }
+.text-note { margin:.6em 0 1.3em; }
+.setting { display:block; margin:.35rem 0; }
+.setting-tail { white-space:nowrap; }
+select { color:inherit; background:var(--paper); }
+.map-group h2 { margin:.8rem 0 .2rem; }
+.map-group p { margin:0 0 .8rem; }
+#status:empty { display:none; }
+#status { position:fixed; bottom:0; left:0; right:0; background:var(--paper); padding:.3rem .5rem; }
+dialog { color:var(--ink); background:var(--paper); width:min(92vw,36rem); max-height:85dvh; border:1px solid currentColor; padding:1rem; }
+dialog::backdrop { background:#0008; }
+#dialog-body { max-height:55dvh; overflow:auto; overflow-wrap:anywhere; }
+#dialog-body input { width:100%; padding:.4rem; }
+.dialog-actions { display:flex; justify-content:flex-end; gap:1.5rem; margin-top:1rem; }
+@media (prefers-reduced-motion:reduce) { * { scroll-behavior:auto !important; } }

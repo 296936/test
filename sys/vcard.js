@@ -721,6 +721,9 @@ const vcardPublishedMediaUrl = (value) => {
 
 const vcardMediaCache = (() => {
   const CACHE_NAME = vcardPhysicalKey('media-v1');
+  const cacheChannel = (() => {
+    try { return new BroadcastChannel(`${CACHE_NAME}:control`); } catch (_) { return null; }
+  })();
   const MEDIA_PATH = /\/(?:sys|usr)\//i;
   const MEDIA_EXT = /\.(?:aac|aiff?|avif|flac|gif|jpe?g|m4a|m4v|mov|mp3|mp4|oga|ogg|ogv|opus|png|svg|wav|webm|webp)$/i;
   const AUDIO_EXT = /\.(?:aac|aiff?|flac|m4a|mp3|oga|ogg|opus|wav)$/i;
@@ -1018,16 +1021,26 @@ const vcardMediaCache = (() => {
   scope.signal.addEventListener('abort', () => {
     cancelPendingCache();
     resourceObserver?.disconnect();
+    cacheChannel?.close();
   }, { once: true });
+  cacheChannel?.addEventListener('message', (event) => {
+    if (event.data?.type === 'clear') {
+      cancelPendingCache();
+      sessionResources.clear();
+    }
+    if (event.data?.type === 'cleared') document.dispatchEvent(new CustomEvent('vcard:media-cache-change'));
+  }, { signal: scope.signal });
   window.addEventListener('pagehide', (event) => {
     if (!event.persisted) scope.abort();
   }, { signal: scope.signal });
   const clear = async () => {
     if (scope.signal.aborted || !('caches' in window)) return false;
     cancelPendingCache();
+    cacheChannel?.postMessage({ type: 'clear' });
     sessionResources.clear();
     try { performance.clearResourceTimings(); } catch (_error) { }
     const cleared = await caches.delete(CACHE_NAME);
+    cacheChannel?.postMessage({ type: 'cleared' });
     if (!scope.signal.aborted) document.dispatchEvent(new CustomEvent('vcard:media-cache-change'));
     return cleared;
   };
@@ -1045,6 +1058,16 @@ const vcardMediaCache = (() => {
 })();
 
 window.vcardMediaCache = vcardMediaCache;
+
+// Resolve at click time: playback/navigation can change the current song.
+document.getElementById('vcard-mini-link')?.addEventListener('click', (event) => {
+  const target = new URL('m/', location.href);
+  const current = new URL(location.href);
+  for (const key of ['list', 'song']) {
+    if (current.searchParams.has(key)) target.searchParams.set(key, current.searchParams.get(key));
+  }
+  event.currentTarget.href = target.href;
+});
 
 const vcardSettingEnabled = (storageKey, defaultName, fallback = 'on') => (
   vcardStoredSetting(storageKey, defaultName, fallback).toLowerCase() !== 'off'
@@ -13143,7 +13166,7 @@ const createVCardFrameInitializer = () => {
         })());
         if ('caches' in window) {
           cleanupTasks.push(
-            caches.keys()
+            vcardMediaCache.clear().then(() => caches.keys())
               .then((names) => Promise.allSettled(names
                 .filter((name) => name.startsWith(vcardStoragePrefix))
                 .map((name) => caches.delete(name))))

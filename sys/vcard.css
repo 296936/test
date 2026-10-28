@@ -861,9 +861,10 @@ a.song-video-link:focus-visible {
 .list > .song__title { position: relative; }
 
 .song__selection {
-  position: absolute;
-  left: calc((100% - var(--cassette-line-width)) / 2);
-  top: 0.5em;
+  position: static;
+  display: inline-grid;
+  vertical-align: middle;
+  margin-right: 0.3em;
 }
 
 .tabs__item.tabs__item--user { height: 5.375em; align-self: flex-end; }
@@ -1473,3 +1474,4 @@ button {
     gap: 0.15em;
   }
 }
+.vcard-mobile-link { text-align: center; margin: 0.3em 0 0; }

@@ -1,2 +1,2 @@
 window.VCARD_MEDIA_LISTS ||= {};
-window.VCARD_MEDIA_LISTS[document.currentScript.src] = ["p04.jpg?v=0f642484eb20","m04.png?v=59eb43dfa20e"];
+window.VCARD_MEDIA_LISTS[document.currentScript.src] = ["p05.jpg?v=343c74f8ca15","m05.png?v=e631013c4ada"];
