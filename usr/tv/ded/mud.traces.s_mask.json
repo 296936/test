@@ -1,0 +1,49 @@
+{
+  "format": "aliswb-style-params-1",
+  "style": "s_mask",
+  "profile_sha256": "ea2c9a426444adef152cf3106ee8357f1c762ce53913617a5a4d6ad04c5f0e34",
+  "files": {
+    "004": {
+      "sha256": "82a636f4b9592db8ba00dfc964213c1458436db253aa50fcceac214566b35d44",
+      "input_mode": "color",
+      "parameters": {
+        "width": 1280,
+        "height": 720,
+        "file": "004.png",
+        "source": "cobj",
+        "cobj_sha256": "05c398750ac8dcd87a3d582d547b7681e4f0b06bc22f5f83557930dd6cd8bca6",
+        "mask_sha256": "af6e7d2c92ae293bd88869ff57dba261cafd66dc810b0d04b64c55f188e34fd1"
+      },
+      "deploy_sha256": "40d7f760d531343944c52d17d3d3c267703e84a2842b361e71fcabee73eccdba",
+      "deploy_output_sha256": "af6e7d2c92ae293bd88869ff57dba261cafd66dc810b0d04b64c55f188e34fd1"
+    },
+    "007": {
+      "sha256": "872d76d8cf020000abc16b8a12d644919922be4f8dc9b25282702b11fb50702e",
+      "input_mode": "color",
+      "parameters": {
+        "width": 1280,
+        "height": 720,
+        "file": "007.png",
+        "source": "cobj",
+        "cobj_sha256": "6b99b4a7651b5e230878b3f1802faa990d0062739695b11e5a66ec9883e0c863",
+        "mask_sha256": "6efa3740621942e6066df92b628ce39d0d532ac969f36d2f29dd2190fe07cbfa"
+      },
+      "deploy_sha256": "351941de0aaca2bc93af46cf4e9373177e865136fcc814176e59bb863f974741",
+      "deploy_output_sha256": "6efa3740621942e6066df92b628ce39d0d532ac969f36d2f29dd2190fe07cbfa"
+    },
+    "014": {
+      "sha256": "25c8d5166039bbe6cc68ed1032372b50cff7c87e3327285a6dcc5766c28d3140",
+      "input_mode": "color",
+      "parameters": {
+        "width": 1280,
+        "height": 720,
+        "file": "014.png",
+        "source": "cobj",
+        "cobj_sha256": "71bc6b5c89d5d6194437dfb4ce82210371fb4ed62704fd8d7b01af646952410e",
+        "mask_sha256": "9def2f9cb0e86c39d62002440dc9ed549b57179d04c927402738d41d6f670f94"
+      },
+      "deploy_sha256": "58749d2867fedb34a515dedfbf9a61658a7f4f4daa026b972171324250dc6832",
+      "deploy_output_sha256": "9def2f9cb0e86c39d62002440dc9ed549b57179d04c927402738d41d6f670f94"
+    }
+  }
+}

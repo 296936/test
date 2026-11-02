@@ -1,0 +1,31 @@
+{
+  "format": "aliswb-style-params-1",
+  "style": "s_alarm",
+  "profile_sha256": "480ab06fdbb09ebae6c837e3eb679dd5be99e129809b972d1f72cca4e485f81a",
+  "files": {
+    "005": {
+      "sha256": "38ab4a24267ce2e70784d373ea7c9ef53d6aeed4bf9b1481687bdc2ca7a7c108",
+      "input_mode": "color",
+      "parameters": {
+        "black": 44,
+        "white": 87,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "832f3a90545e450849bfd376deb237cb265b3f4316db38dddd78b857e6618861"
+    },
+    "018": {
+      "sha256": "cbd9e7e442fa8281d59370b1f31930f8e18d74f6251d0f4d7692df7c398da305",
+      "input_mode": "color",
+      "parameters": {
+        "black": 25,
+        "white": 104,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "a6aafe99fa8f0b587880a6dafd01eb88df167e17ebc131e0a98f4609ee560dbb"
+    }
+  }
+}
