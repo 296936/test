@@ -20,7 +20,6 @@
   const currentClock = document.getElementById('current-time');
   const totalClock = document.getElementById('total-time');
   const status = document.getElementById('status');
-  const systemTheme = matchMedia('(prefers-color-scheme: dark)');
   const textCache = new Map();
   const cacheJobs = new Map();
   const historyQueue = [];
@@ -40,7 +39,9 @@
   const preferences = { ...data.defaults, ...(saved.preferences || {}) };
   const fontFamilies = [['Fairfax', 'Fairfax'], ['serif', 'С засечками'], ['sans-serif', 'Без засечек'], ['monospace', 'Моноширинный'], ['system-ui', 'Системный интерфейсный']];
   preferences.fontFamily = fontFamilies.some(([value]) => value === preferences.fontFamily) ? preferences.fontFamily : 'Fairfax';
-  preferences.theme = ['system', 'light', 'dark'].includes(preferences.theme) ? preferences.theme : 'system';
+  const themes = [['auto','<АВТО>'], ['night','НОЧЬ'], ['mono','МОНО'], ['duo','ДУО'], ['newspaper','ГАЗЕТА']];
+  preferences.theme = ({system:'auto', light:'newspaper', dark:'night'})[preferences.theme] || preferences.theme;
+  if (!themes.some(([key]) => key === preferences.theme)) preferences.theme = 'auto';
   preferences.fontSize = Math.max(14, Math.min(36, Number(preferences.fontSize) || 20));
   const excluded = saved.excluded && typeof saved.excluded === 'object' && !Array.isArray(saved.excluded) ? saved.excluded : {};
   let userLists = Array.isArray(saved.lists) ? saved.lists.filter(l => l && typeof l.id === 'string' && l.id.startsWith('user-') && typeof l.title === 'string' && Array.isArray(l.songs)).map(l => ({...l, songs: l.songs.filter(k => Object.prototype.hasOwnProperty.call(data.songs, k)), user:true})) : [];
@@ -156,13 +157,54 @@
     status.textContent = text;
     if (text) statusTimer = setTimeout(() => { status.textContent = ''; }, 5000);
   }
+  const palette = ['#ffa6c1','#00e3c8','#ecbe24','#adc2ff','#ffae89','#5ed4ff','#95db6c','#e4a9ff',
+    '#ffaaa6','#00deeb','#c6ce3f','#c6b9ff','#ffb259','#92caff','#55e39b','#ff9fe5',
+    '#ffa8b3','#00e0da','#dbc62d','#b9beff','#ffb076','#7ecfff','#78df83','#f99dfb',
+    '#ffac98','#00dbfc','#afd555','#d3b2ff','#fbb62b','#a1c6ff','#20e4b2','#ffa3d1'];
+  let schemeBag = [];
+  let activeTheme = '';
+  let pageColor = '';
+  function renewColors() {
+    const root = document.documentElement;
+    let scheme = preferences.theme;
+    if (scheme === 'auto') {
+      if (!schemeBag.length) {
+        schemeBag = themes.slice(1).map(([key]) => key);
+        for (let i = schemeBag.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [schemeBag[i], schemeBag[j]] = [schemeBag[j], schemeBag[i]];
+        }
+      }
+      if (schemeBag.length > 1 && schemeBag[schemeBag.length - 1] === activeTheme) {
+        [schemeBag[0], schemeBag[schemeBag.length - 1]] = [schemeBag[schemeBag.length - 1], schemeBag[0]];
+      }
+      scheme = schemeBag.pop();
+    }
+    activeTheme = scheme;
+    const candidates = palette.filter(color => color !== pageColor);
+    pageColor = candidates[Math.floor(Math.random() * candidates.length)];
+    let ink = pageColor, accent = pageColor, paper = '#000';
+    if (scheme === 'night') { ink = '#fff'; accent = '#ffd400'; }
+    else if (scheme === 'newspaper') { paper = '#fff'; ink = accent = '#000'; }
+    else if (scheme === 'duo') {
+      const rgb = color => color.slice(1).match(/\w\w/g).map(channel => parseInt(channel, 16));
+      const base = rgb(pageColor);
+      const distance = color => rgb(color).reduce((sum, channel, i) => sum + (channel-base[i]) ** 2, 0);
+      const contrasting = palette.filter(color => color !== pageColor)
+        .sort((a,b) => distance(b) - distance(a)).slice(0,3);
+      accent = contrasting[Math.floor(Math.random() * contrasting.length)];
+    }
+    root.dataset.theme = scheme;
+    root.style.setProperty('--paper', paper);
+    root.style.setProperty('--ink', ink);
+    root.style.setProperty('--accent', accent);
+  }
   function applyPreferences() {
-    document.documentElement.dataset.theme = preferences.theme === 'system' ? (systemTheme.matches ? 'dark' : 'light') : preferences.theme;
     document.documentElement.style.fontSize = `${preferences.fontSize}px`;
     document.documentElement.style.lineHeight = String(data.lineHeight || 1.35);
     document.documentElement.style.fontFamily = preferences.fontFamily === 'Fairfax' ? '"Fairfax", monospace' : preferences.fontFamily;
   }
-  systemTheme.addEventListener('change', applyPreferences);
+  renewColors();
   applyPreferences();
   const el = (tag, text, className) => {
     const node = document.createElement(tag);
@@ -322,6 +364,7 @@
     go({kind:'root'});
   }
   async function render() {
+    screen.dataset.view = route.kind;
     if (route.kind !== 'song') window.VCardAnalytics?.leave();
     refreshSettingsCache = null;
     const revision = ++paintRevision;
@@ -337,7 +380,11 @@
         for (const anchor of map.content.querySelectorAll('a[data-list][data-song]')) {
           const list = data.playlists.find(p => p.id === anchor.dataset.list);
           const key = list?.songs.find(k => data.songs[k].id === anchor.dataset.song);
-          if (key) anchor.replaceWith(link(anchor.textContent, {kind:'song', list:list.id, song:key}));
+          if (key) {
+            const replacement = link('', {kind:'song', list:list.id, song:key});
+            replacement.append(...anchor.childNodes);
+            anchor.replaceWith(replacement);
+          }
         }
         screen.append(map.content);
         return;
@@ -425,6 +472,7 @@
   function choose(song, list, launch = 'manual') {
     playingList = list || song.list;
     if (current?.key === song.key) return;
+    if (current) renewColors();
     playbackLaunch = launch;
     analyticsRun++;
     current = song;
@@ -491,6 +539,7 @@
     if (current && direction > 0) historyQueue.push(current.key);
     if (historyQueue.length > 100) historyQueue.shift();
     const list = playingList;
+    if (current?.key === next.key) renewColors();
     choose(next, list, automatic ? 'automatic' : 'manual');
     go({kind:'song', list, song:next.key});
     playbackLaunch = automatic ? 'automatic' : 'manual';
@@ -561,12 +610,12 @@
   }
   function settings() {
     const theme = el('select');
-    for (const [value,label] of [['system','Система'],['light','Светлая'],['dark','Тёмная']]) {
+    for (const [value,label] of themes) {
       const option = el('option', label); option.value = value; theme.append(option);
     }
     theme.value = preferences.theme;
-    theme.addEventListener('change', () => { preferences.theme = theme.value; persist(); applyPreferences(); });
-    setting('Тема', theme);
+    theme.addEventListener('change', () => { preferences.theme = theme.value; persist(); renewColors(); });
+    setting('Цветовая схема', theme);
     const font = el('select');
     for (const [value,label] of fontFamilies) {
       const option = el('option', label); option.value = value; font.append(option);

@@ -899,6 +899,9 @@ a.song-video-link:focus-visible {
   column-gap: 1.2em;
 }
 .release-map__entry { break-inside: avoid; text-align: left; }
+.release-map__date { color:var(--vc-acc); }
+.release-map__list { color:color-mix(in srgb,var(--vc-text) 55%,var(--vc-win)); }
+.release-map__song { color:var(--vc-text); }
 .release-map__year-gap { height: 1.45em; break-inside: avoid; }
 @media (orientation: landscape) {
   .release-map__entry { white-space: nowrap; }
