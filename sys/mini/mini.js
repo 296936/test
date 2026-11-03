@@ -10,7 +10,10 @@
   const content = document.getElementById('content');
   const screen = document.getElementById('screen');
   const navSlots = document.querySelectorAll('header [data-mini-nav]');
+  const navLabels = Object.fromEntries([...navSlots].map(node => [node.dataset.miniNav, node.dataset.miniLabel]));
   const playButton = document.getElementById('play');
+  const playLabel = playButton.dataset.playLabel ?? playButton.textContent;
+  const pauseLabel = playButton.dataset.pauseLabel ?? 'PAUSE';
   const seek = document.getElementById('seek');
   const volume = document.getElementById('volume');
   const clock = document.getElementById('time');
@@ -220,8 +223,8 @@
       return node;
     };
     const lists = document.createDocumentFragment();
-    lists.append(navLink('Списки', {kind:'root'}));
-    const full = el('a', 'FULL');
+    lists.append(navLink(navLabels.lists ?? 'Списки', {kind:'root'}));
+    const full = el('a', navLabels.full ?? 'FULL');
     full.title = 'Открыть полное представление';
     full.setAttribute('aria-label', full.title);
     const fullUrl = new URL(siteRoot);
@@ -229,15 +232,15 @@
       const value = new URL(href(route)).searchParams.get(key);
       if (value) fullUrl.searchParams.set(key, value);
     }
-    full.href = fullUrl.href;
+    full.setAttribute('href', `../${fullUrl.search}`);
     const list = listById(route.list);
     if (list) lists.append(document.createTextNode(' > '), navLink(list.title, {kind:'list', list:list.id}));
     const song = data.songs[route.song];
     if (song) lists.append(document.createTextNode(' > '), navLink(song.title, {kind:'song', list:list?.id || song.list, song:song.key}));
     for (const slot of navSlots) {
       const kind = slot.dataset.miniNav;
-      if (kind === 'opt') slot.replaceChildren(navLink('Настройки', {...route, kind:'opt'}));
-      else if (kind === 'map') slot.replaceChildren(navLink('RMAP', {...route, kind:'map'}));
+      if (kind === 'opt') slot.replaceChildren(navLink(navLabels.opt ?? 'Настройки', {...route, kind:'opt'}));
+      else if (kind === 'map') slot.replaceChildren(navLink(navLabels.map ?? 'RMAP', {...route, kind:'map'}));
       else if (kind === 'lists') slot.replaceChildren(lists);
       else if (kind === 'full') slot.replaceChildren(full);
     }
@@ -255,12 +258,18 @@
   function selectionActions(list) {
     const bar = el('div', undefined, 'list-actions list-actions--selection');
     const selectAll = value => { (list ? [list] : allLists()).forEach(l => setAll(l, value)); persist(); nextCandidate = null; render(); };
-    bar.append(action('ВыбратьВсе', () => selectAll(true)),
-      action('СброситьВсе', () => selectAll(false)),
-      action('ДобавитьСписок', saveList));
-    const remove = action('УдалитьСписок', () => removeList(list));
-    remove.disabled = !list?.user;
-    bar.append(remove);
+    bar.innerHTML = data.listActionsHtml || '';
+    const handlers = {
+      SELECT_ALL: () => selectAll(true),
+      CLEAR_ALL: () => selectAll(false),
+      ADD_LIST: saveList,
+      REMOVE_LIST: () => removeList(list),
+    };
+    bar.querySelectorAll('[data-list-action]').forEach(button => {
+      const name = button.dataset.listAction;
+      if (handlers[name]) button.addEventListener('click', handlers[name]);
+      if (name === 'REMOVE_LIST') button.disabled = !list?.user;
+    });
     return bar;
   }
   async function dialog(title, body, yes = 'Да') {
@@ -474,7 +483,7 @@
         if (audio.getAttribute('src') !== source) { audio.src = source; audio.load(); }
       } catch (_) { message('Не удалось расшифровать MP3. Откройте песню ещё раз.'); return; }
     }
-    audio.play().catch(error => { if (current?.key === expected && error.name !== 'AbortError') message('Не удалось начать воспроизведение. Нажмите PLAY ещё раз.'); });
+    audio.play().catch(error => { if (current?.key === expected && error.name !== 'AbortError') message(`Не удалось начать воспроизведение. Нажмите ${playLabel} ещё раз.`); });
   }
   function advance(direction, automatic = false) {
     const next = following(direction);
@@ -494,10 +503,10 @@
     if (current?.audio) cacheMedia(current.audio).catch(() => {});
     if (preferences.autoNext) advance(1, true);
   });
-  audio.addEventListener('error', () => { if (current) message('Аудио недоступно. Проверьте соединение и нажмите PLAY.'); });
+  audio.addEventListener('error', () => { if (current) message(`Аудио недоступно. Проверьте соединение и нажмите ${playLabel}.`); });
   const time = seconds => `${Math.floor((Number.isFinite(seconds) ? seconds : 0) / 60).toString().padStart(2,'0')}:${Math.floor((Number.isFinite(seconds) ? seconds : 0) % 60).toString().padStart(2,'0')}`;
   function syncPlayer() {
-    playButton.textContent = audio.paused ? 'PLAY' : 'PAUSE';
+    playButton.textContent = audio.paused ? playLabel : pauseLabel;
     playButton.title = audio.paused ? 'Воспроизвести песню' : 'Приостановить воспроизведение';
     playButton.setAttribute('aria-label', playButton.title);
     document.getElementById('prev').disabled = !current;

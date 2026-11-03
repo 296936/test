@@ -1,7 +1,0 @@
-{
-  "description": "Technical SVG substitutes for symbols absent from the original font",
-  "icons": {
-    "1f6d7": "elevator.svg",
-    "1fa96": "military-helmet.svg"
-  }
-}
