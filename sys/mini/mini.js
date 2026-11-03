@@ -198,6 +198,12 @@
     root.style.setProperty('--paper', paper);
     root.style.setProperty('--ink', ink);
     root.style.setProperty('--accent', accent);
+    const channels = color => color.slice(1).match(/\w\w/g).map(value => parseInt(value, 16));
+    const expand = color => color.length === 4 ? '#' + [...color.slice(1)].map(value => value + value).join('') : color;
+    const foreground = channels(expand(ink)), background = channels(expand(paper));
+    const muted = '#' + foreground.map((value, i) => Math.round(value * 0.55 + background[i] * 0.45)
+      .toString(16).padStart(2, '0')).join('');
+    root.style.setProperty('--muted', muted);
   }
   function applyPreferences() {
     document.documentElement.style.fontSize = `${preferences.fontSize}px`;
