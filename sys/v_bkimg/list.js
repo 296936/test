@@ -1,2 +1,2 @@
 window.VCARD_MEDIA_LISTS ||= {};
-window.VCARD_MEDIA_LISTS[document.currentScript.src] = ["fine-paper.webp?v=8252c4ed058f"];
+window.VCARD_MEDIA_LISTS[document.currentScript.src] = ["fibrous-paper.webp?v=d23940f295ed","fine-canvas.webp?v=cdf47f65c9d8","fine-paper.webp?v=8252c4ed058f","rosewood-bw.webp?v=fbb0a780e1be","rosewood.webp?v=6b5258408493&vc-color=1","rough-canvas.webp?v=64a682a41828","rough-laid-paper.webp?v=25d088596f9e","watercolor-cold-press.webp?v=f1ffbf21ec31","watercolor-paper.webp?v=d9fad794b7aa"];

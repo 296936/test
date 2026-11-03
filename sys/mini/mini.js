@@ -35,8 +35,8 @@
   } catch (_) { }
   if (!saved || typeof saved !== 'object' || Array.isArray(saved) || saved.version !== 1) saved = {};
   const preferences = { ...data.defaults, ...(saved.preferences || {}) };
-  const fontFamilies = [['serif', 'С засечками'], ['sans-serif', 'Без засечек'], ['monospace', 'Моноширинный'], ['system-ui', 'Системный интерфейсный']];
-  preferences.fontFamily = fontFamilies.some(([value]) => value === preferences.fontFamily) ? preferences.fontFamily : 'serif';
+  const fontFamilies = [['Fairfax', 'Fairfax'], ['serif', 'С засечками'], ['sans-serif', 'Без засечек'], ['monospace', 'Моноширинный'], ['system-ui', 'Системный интерфейсный']];
+  preferences.fontFamily = fontFamilies.some(([value]) => value === preferences.fontFamily) ? preferences.fontFamily : 'Fairfax';
   preferences.theme = ['system', 'light', 'dark'].includes(preferences.theme) ? preferences.theme : 'system';
   preferences.fontSize = Math.max(14, Math.min(36, Number(preferences.fontSize) || 20));
   const excluded = saved.excluded && typeof saved.excluded === 'object' && !Array.isArray(saved.excluded) ? saved.excluded : {};
@@ -156,7 +156,8 @@
   function applyPreferences() {
     document.documentElement.dataset.theme = preferences.theme === 'system' ? (systemTheme.matches ? 'dark' : 'light') : preferences.theme;
     document.documentElement.style.fontSize = `${preferences.fontSize}px`;
-    document.documentElement.style.fontFamily = preferences.fontFamily;
+    document.documentElement.style.lineHeight = String(data.lineHeight || 1.35);
+    document.documentElement.style.fontFamily = preferences.fontFamily === 'Fairfax' ? '"Fairfax", monospace' : preferences.fontFamily;
   }
   systemTheme.addEventListener('change', applyPreferences);
   applyPreferences();
@@ -194,6 +195,10 @@
   function link(text, view) {
     const node = el('a', text);
     node.href = href(view);
+    if (view.kind === 'map') {
+      node.title = 'Карта релизов';
+      node.setAttribute('aria-label', node.title);
+    }
     node.addEventListener('click', event => {
       if (event.button || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
       event.preventDefault();
@@ -217,6 +222,8 @@
     const lists = document.createDocumentFragment();
     lists.append(navLink('Списки', {kind:'root'}));
     const full = el('a', 'FULL');
+    full.title = 'Открыть полное представление';
+    full.setAttribute('aria-label', full.title);
     const fullUrl = new URL(siteRoot);
     for (const key of ['list','song']) {
       const value = new URL(href(route)).searchParams.get(key);
@@ -491,6 +498,8 @@
   const time = seconds => `${Math.floor((Number.isFinite(seconds) ? seconds : 0) / 60).toString().padStart(2,'0')}:${Math.floor((Number.isFinite(seconds) ? seconds : 0) % 60).toString().padStart(2,'0')}`;
   function syncPlayer() {
     playButton.textContent = audio.paused ? 'PLAY' : 'PAUSE';
+    playButton.title = audio.paused ? 'Воспроизвести песню' : 'Приостановить воспроизведение';
+    playButton.setAttribute('aria-label', playButton.title);
     document.getElementById('prev').disabled = !current;
     document.getElementById('next').disabled = !current;
     const duration = Number.isFinite(audio.duration) && audio.duration > 0 ? audio.duration : 0;

@@ -1,9 +1,11 @@
-:root { color-scheme:light; --paper:#fff; --ink:#000; font:20px/1.35 serif; }
+@font-face { font-family:"Fairfax"; src:url("../fonts/fairfax.woff2") format("woff2"); font-style:normal; font-weight:500; font-display:swap; }
+:root { color-scheme:light; --paper:#fff; --ink:#000; font:20px/1.35 "Fairfax",monospace; text-transform:uppercase; }
 :root[data-theme="dark"] { color-scheme:dark; --paper:#000; --ink:#fff; }
 * { box-sizing:border-box; }
 body { margin:0; height:100vh; height:100dvh; display:flex; flex-direction:column; background:var(--paper); color:var(--ink); overflow:hidden; }
 a { color:inherit; text-underline-offset:.15em; }
 button, input, select, h1, h2, small { font:inherit; }
+button, input, select, option { text-transform:inherit; }
 input { accent-color:var(--ink); }
 button { color:inherit; background:transparent; border:0; text-decoration:underline; text-underline-offset:.15em; padding:0; cursor:pointer; }
 button:disabled { opacity:.4; cursor:default; }

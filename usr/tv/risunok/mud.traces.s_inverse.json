@@ -3,6 +3,24 @@
   "style": "s_inverse",
   "profile_sha256": "480ab06fdbb09ebae6c837e3eb679dd5be99e129809b972d1f72cca4e485f81a",
   "files": {
+    "003": {
+      "sha256": "1e11db1497e94e8932d84cdab7f843a1768c6e67ce28e8da2a098ba454bf3ba8",
+      "input_mode": "color",
+      "parameters": {
+        "threshold": 104,
+        "invert": 1,
+        "radius": 0,
+        "strength": 0,
+        "bias": 0,
+        "black": 87,
+        "white": 206,
+        "gamma": 2.8,
+        "out_black": 0,
+        "out_white": 255,
+        "apply_bitmap": 1
+      },
+      "deploy_sha256": "996b42bbda605acc70991ca336e8a1616b1ccc3be933fdd036144d958b48ac01"
+    },
     "006": {
       "sha256": "1c02626107f7329eb350a69de49ca24e7a158ca9db8bc1df52322c30a6204803",
       "input_mode": "color",
@@ -21,41 +39,23 @@
       },
       "deploy_sha256": "c9a4d6468f22d9dd244f48200fb7410311ca501e1becc407b08d8d4a511cae8b"
     },
-    "025": {
-      "sha256": "7f2e9ed5e16cd440e55a7f38011d34c82012a1e934f2d2990740951dc2218182",
+    "029": {
+      "sha256": "394e4c425484d498ec99b220f683f8331afbb862e345048a563519900c5c987f",
       "input_mode": "color",
       "parameters": {
-        "threshold": 73,
+        "threshold": 28,
         "invert": 1,
         "radius": 0,
         "strength": 0,
         "bias": 0,
-        "black": 28,
-        "white": 163,
-        "gamma": 1.6,
-        "out_black": 0,
-        "out_white": 255,
-        "apply_bitmap": 1
-      },
-      "deploy_sha256": "dce23bb0574313c6f7e2e5421a41a8ba4acd53996bb64727ddf32363121953fa"
-    },
-    "031": {
-      "sha256": "6d25011767e07b1771bbe7feefe0a36259f8313c397afc13357be0792b8e9867",
-      "input_mode": "color",
-      "parameters": {
-        "threshold": 30,
-        "invert": 1,
-        "radius": 0,
-        "strength": 0,
-        "bias": 0,
-        "black": 14,
-        "white": 46,
+        "black": 19,
+        "white": 37,
         "gamma": 1,
         "out_black": 0,
         "out_white": 255,
         "apply_bitmap": 1
       },
-      "deploy_sha256": "c5cb55fc9b0b87928015e96e0eee5b7b64e115c77c3516b8014b1fb8c4bb45c3"
+      "deploy_sha256": "9a53d3c8f9d3af9a1c584c091d23c2ae8d4df711832fdb6f3d7c3a5c031a7fe2"
     }
   }
 }
