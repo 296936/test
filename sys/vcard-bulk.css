@@ -1802,7 +1802,8 @@ img:is(
   height: 0.95em;
 }
 
-.vcard-player-television {
+.vcard-player-television,
+.vcard-player-mobile {
   flex: 0 0 1.35em;
   width: 1.35em;
   height: 1.2em;
@@ -1810,7 +1811,7 @@ img:is(
   margin-inline-start: 0 !important;
 }
 
-.vcard-player-television svg {
+:is(.vcard-player-television, .vcard-player-mobile) svg {
   width: 0.95em;
   height: 0.95em;
 }

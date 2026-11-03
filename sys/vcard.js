@@ -1060,13 +1060,16 @@ const vcardMediaCache = (() => {
 window.vcardMediaCache = vcardMediaCache;
 
 // Resolve at click time: playback/navigation can change the current song.
-document.getElementById('vcard-mini-link')?.addEventListener('click', (event) => {
+const vcardMiniUrl = () => {
   const target = new URL('m/', location.href);
   const current = new URL(location.href);
   for (const key of ['list', 'song']) {
     if (current.searchParams.has(key)) target.searchParams.set(key, current.searchParams.get(key));
   }
-  event.currentTarget.href = target.href;
+  return target.href;
+};
+document.getElementById('vcard-mini-link')?.addEventListener('click', (event) => {
+  event.currentTarget.href = vcardMiniUrl();
 });
 
 const vcardSettingEnabled = (storageKey, defaultName, fallback = 'on') => (
@@ -11010,15 +11013,24 @@ const createVCardFrameInitializer = () => {
         controls.prepend(sitemapButton);
         const televisionButton = document.createElement('button');
         televisionButton.type = 'button';
-        televisionButton.className = 'plyr__control plyr__controls__item vcard-player-television';
-        televisionButton.dataset.portalToggle = 'image';
-        televisionButton.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2v10M7 5.5a8.5 8.5 0 1 0 10 0" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="butt"/></svg>';
-        televisionButton.addEventListener('click', (event) => {
-          const input = { type: 'Portal.ToggleVisibility', source: 'Player', target: televisionButton,
-            preview: currentPortalPreview(), trusted: event.isTrusted };
-          if (!window.VCCommands) window.VCardPlayerControls.toggleVisibility(input);
-          else window.VCCommands.dispatch(input);
-        }, { signal: playerControlsScope.signal });
+        if (vcardUiConfig.playerEndButton === 'mobile') {
+          televisionButton.className = 'plyr__control plyr__controls__item vcard-player-mobile';
+          keepPlayerHint(televisionButton, 'Открыть мобильное представление');
+          televisionButton.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 1v5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><rect x="5" y="6" width="14" height="16" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"/><rect x="8" y="9" width="8" height="5" fill="currentColor"/><path d="M8 17h2m4 0h2m-8 3h2m4 0h2" fill="none" stroke="currentColor" stroke-width="2"/></svg>';
+          televisionButton.addEventListener('click', () => {
+            location.assign(vcardMiniUrl());
+          }, { signal: playerControlsScope.signal });
+        } else {
+          televisionButton.className = 'plyr__control plyr__controls__item vcard-player-television';
+          televisionButton.dataset.portalToggle = 'image';
+          televisionButton.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2v10M7 5.5a8.5 8.5 0 1 0 10 0" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="butt"/></svg>';
+          televisionButton.addEventListener('click', (event) => {
+            const input = { type: 'Portal.ToggleVisibility', source: 'Player', target: televisionButton,
+              preview: currentPortalPreview(), trusted: event.isTrusted };
+            if (!window.VCCommands) window.VCardPlayerControls.toggleVisibility(input);
+            else window.VCCommands.dispatch(input);
+          }, { signal: playerControlsScope.signal });
+        }
         controls.append(televisionButton);
         projectColorControls(window.VCPlayer?.current?.() || {
           colorSettings: window.VCardDecoration?.current?.(),
