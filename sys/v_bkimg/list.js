@@ -1,2 +1,2 @@
 window.VCARD_MEDIA_LISTS ||= {};
-window.VCARD_MEDIA_LISTS[document.currentScript.src] = ["rough-canvas.webp?v=64a682a41828"];
+window.VCARD_MEDIA_LISTS[document.currentScript.src] = ["rosewood-bw.webp?v=fbb0a780e1be"];
