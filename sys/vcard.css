@@ -564,7 +564,7 @@ a.song-video-link:visited {
 
 .song-portal-stage + .song-video-links:has(> .song-video-link) {
   /* Keep the video links centered in the gap between PortalTV and lyrics. */
-  margin-top: calc(1.291667em + var(--link-line-width));
+  margin-top: 1.333333em;
 }
 
 a.song-video-link:is(:hover, :focus-visible, :active, .is-active) {
@@ -1102,8 +1102,14 @@ a.song-video-link:focus-visible {
 
 @media (orientation: portrait) {
   :root {
+    --cassette-line-width: var(--block-full-width);
     --portal-small-width: 100%;
     --portal-mid-width: 100%;
+  }
+
+  .tabs-selector__inner,
+  .list.release-map {
+    padding-inline: 0;
   }
 }
 
@@ -1160,13 +1166,17 @@ a.song-video-link:focus-visible {
   margin-top: 1.333333em;
 }
 
+.list--flow > .song__preview.is-visible:has(> .song-video-links > .song-video-link[href]:not([href=""])) {
+  margin-top: 0;
+}
+
 .list--flow > .song__preview.is-visible:has(> .song__preview-text) {
   /* The former text bottom margin is internal space of the open preview. */
   padding-bottom: 1.666667em;
 }
 
 .list--flow .song-video-links {
-  margin-bottom: 0;
+  margin-block: 1.333333em;
 }
 
 .list--flow .song__preview-text {
@@ -1176,8 +1186,7 @@ a.song-video-link:focus-visible {
 
 .list--flow .song-video-links:has(> .song-video-link[href]:not([href=""]))
   + .song__preview-text {
-  /* The lower half of the centered PortalTV-video-links gap. */
-  margin-top: 1.291667em;
+  margin-top: 0;
 }
 
 .footer--flow[ids="about"] {

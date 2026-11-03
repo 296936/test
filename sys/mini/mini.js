@@ -246,7 +246,7 @@
   }
   function setAll(list, value) { excluded[list.id] = value ? [] : [...list.songs]; }
   function selectionActions(list) {
-    const bar = el('div', undefined, 'list-actions');
+    const bar = el('div', undefined, 'list-actions list-actions--selection');
     const selectAll = value => { (list ? [list] : allLists()).forEach(l => setAll(l, value)); persist(); nextCandidate = null; render(); };
     bar.append(action('ВыбратьВсе', () => selectAll(true)),
       action('СброситьВсе', () => selectAll(false)),
@@ -315,7 +315,6 @@
     activeVerse = -1;
     if (route.kind === 'opt') { settings(); return; }
     if (route.kind === 'map') {
-      screen.append(el('h2', 'RMAP', 'screen-title'));
       if (data.rmapHtml) {
         const map = document.createElement('template');
         map.innerHTML = data.rmapHtml;
@@ -330,7 +329,6 @@
       return;
     }
     if (route.kind === 'root') {
-      screen.append(el('h2', 'СПИСКИ', 'screen-title'));
       const ul = el('ul');
       if (data.releaseMap) {
         const row = el('li', undefined, 'entry');
@@ -548,7 +546,6 @@
     screen.append(row);
   }
   function settings() {
-    screen.append(el('h2', 'Настройки', 'screen-title'));
     const theme = el('select');
     for (const [value,label] of [['system','Система'],['light','Светлая'],['dark','Тёмная']]) {
       const option = el('option', label); option.value = value; theme.append(option);

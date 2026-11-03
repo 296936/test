@@ -1383,6 +1383,10 @@ img:is(
   object-fit: contain;
 }
 
+.song-vibeframe > img.song-portal-idle-still:not(.song-portal-crossani-still) {
+  object-fit: fill;
+}
+
 
 
 .song-portal-video--crossani {
