@@ -330,10 +330,6 @@
     }
     if (route.kind === 'root') {
       const ul = el('ul');
-      if (data.releaseMap) {
-        const row = el('li', undefined, 'entry');
-        row.append(link('RMAP', {kind:'map'})); ul.append(row);
-      }
       for (const list of allLists()) {
         const count = list.songs.filter(k => selected(list, k)).length;
         const row = el('li', undefined, 'entry');

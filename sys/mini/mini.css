@@ -37,9 +37,10 @@ header [data-mini-nav] a[aria-current="page"] { color:var(--paper); background:v
 }
 main { flex:1; min-height:0; overflow-y:auto; overscroll-behavior-y:contain; overflow-anchor:none; padding:.5rem max(.5rem,env(safe-area-inset-right)) max(.5rem,env(safe-area-inset-bottom)) max(.5rem,env(safe-area-inset-left)); }
 .player-row--custom { display:flex; flex-wrap:wrap; align-items:center; gap:.4ch; }
-.player-transport { display:flex; align-items:center; gap:.5ch; }
+.player-transport { display:flex; flex-wrap:wrap; align-items:center; gap:.5ch; }
 .player-transport > :not(.player-media) { flex:none; white-space:nowrap; }
-.player-transport > .player-media { flex:0 1 auto; min-width:0; width:max-content; grid-template-columns:minmax(0,216px) max-content minmax(0,112px); }
+.player-transport > .player-media { flex:0 1 auto; min-width:min(100%,12em); max-width:100%; width:max-content; grid-template-columns:minmax(48px,216px) max-content minmax(48px,112px); }
+.player-transport > .player-identity { flex:0 1 auto; min-width:0; white-space:normal; overflow-wrap:anywhere; }
 .player-transport input[type="range"] { width:100%; min-width:0; }
 ul { list-style:none; padding:0; margin:0; }
 .entry { display:flex; align-items:baseline; gap:.6rem; padding:.25rem 0; }
