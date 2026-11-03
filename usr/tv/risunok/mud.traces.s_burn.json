@@ -3,41 +3,41 @@
   "style": "s_burn",
   "profile_sha256": "480ab06fdbb09ebae6c837e3eb679dd5be99e129809b972d1f72cca4e485f81a",
   "files": {
-    "017": {
-      "sha256": "80833a430f5992f7b0423cb242ba437ed7c15be34babd7676edbdebfcaa4b605",
+    "011": {
+      "sha256": "dec45759c9da5e5a2b9ffef324c551f18ff136ed70eed56d9544e0351be59e2c",
       "input_mode": "color",
       "parameters": {
-        "black": 77,
-        "white": 104,
+        "black": 91,
+        "white": 162,
         "gamma": 1,
         "out_black": 0,
         "out_white": 255
       },
-      "deploy_sha256": "b06289f5c130d0f314c5aee44dd77c69603811ecfec9fbade3da9c0332d93b02"
+      "deploy_sha256": "79276645115c7a05c18c5abf382b5218262098f20bc80741a998c6a6c440a47f"
     },
-    "022": {
-      "sha256": "e75afe2f782cfc1d9184a8e599f3bb858bcb2f1bf8d4b472f2588fee94fea47d",
+    "012": {
+      "sha256": "002909285e08bb63cbd5c3a13dcbf10e544e2d536b02997f9ba635d73bb13e77",
       "input_mode": "color",
       "parameters": {
-        "black": 38,
-        "white": 173,
-        "gamma": 1.09,
-        "out_black": 0,
-        "out_white": 255
-      },
-      "deploy_sha256": "21176cb106ea7af32cbb7fc8a73f673ad5e6d2ed9fd18a0346e2fee05a32b521"
-    },
-    "027": {
-      "sha256": "4afd6278e0e96b6d4d734781495a0d2410ef96460bd5fafc24c4a72bbcb9c263",
-      "input_mode": "color",
-      "parameters": {
-        "black": 41,
-        "white": 108,
+        "black": 55,
+        "white": 117,
         "gamma": 1,
         "out_black": 0,
         "out_white": 255
       },
-      "deploy_sha256": "be690b977296d06e030566611194d246707fcdbb8f12c883d33e909b26010a6c"
+      "deploy_sha256": "aad8a9491648145fa8a1e6761429ddcac5f90aa839cee222952d8975e0d4b0d4"
+    },
+    "020": {
+      "sha256": "92513d3770969a8f3427daf1ae7d7bd1ae377a855114783e9d86a410e21f11c8",
+      "input_mode": "color",
+      "parameters": {
+        "black": 34,
+        "white": 171,
+        "gamma": 0.64,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "c432cd6de4b7dc66fdafacd70dd7f7b13c81c715eb6d7f6652bddb619e41eafa"
     }
   }
 }

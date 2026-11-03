@@ -1,7 +1,7 @@
 @font-face { font-family:"Fairfax"; src:url("../fonts/fairfax.woff2") format("woff2"); font-style:normal; font-weight:500; font-display:swap; }
 :root { color-scheme:dark; --paper:#000; --ink:#fff; --accent:#ffd400; font:20px/1.35 "Fairfax",monospace; text-transform:uppercase; }
 :root[data-theme="newspaper"] { color-scheme:light; }
-#screen:is([data-view="root"], [data-view="list"], [data-view="song"]) { color:var(--accent); }
+#screen:is([data-view="root"], [data-view="list"], [data-view="song"], [data-view="opt"]) { color:var(--accent); }
 * { box-sizing:border-box; }
 body { margin:0; height:100vh; height:100dvh; display:flex; flex-direction:column; background:var(--paper); color:var(--ink); overflow:hidden; }
 a { color:inherit; text-underline-offset:.15em; }
@@ -80,6 +80,7 @@ select { color:inherit; background:var(--paper); }
 .release-map__date { color:var(--accent); }
 .release-map__list { color:var(--muted, #888); }
 .release-map__song { color:var(--ink); }
+.release-map__entry a { text-decoration-color:var(--muted, #888); }
 #status:empty { display:none; }
 #status { position:fixed; bottom:0; left:0; right:0; background:var(--paper); padding:.3rem .5rem; }
 dialog { color:var(--ink); background:var(--paper); width:min(92vw,36rem); max-height:85dvh; border:1px solid currentColor; padding:1rem; }
