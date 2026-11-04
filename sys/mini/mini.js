@@ -23,6 +23,10 @@
   const textCache = new Map();
   const cacheJobs = new Map();
   const historyQueue = [];
+  let historyCursor = -1;
+  let pendingHistoryIndex = null;
+  let confirmedRun = -1;
+  let selectionState = null;
   let saved = {};
   try {
     const stored = localStorage.getItem(profileKey);
@@ -87,7 +91,6 @@
   let paintRevision = 0;
   let activeVerse = -1;
   let manualScrollUntil = 0;
-  let nextCandidate = null;
   let cacheGeneration = 0;
   let preloadRunning = false;
   let swReady = null;
@@ -134,6 +137,30 @@
   const listById = id => allLists().find(l => l.id === id);
   const selected = (list, key) => !(Array.isArray(excluded[list.id]) && excluded[list.id].includes(key));
   const playable = list => (list?.songs || []).filter(key => selected(list, key) && data.songs[key]?.audio);
+  function selection() {
+    if (selectionState) return selectionState;
+    const entries = Object.values(data.songs).map(song => ({
+      miniKey:song.key, listId:song.list, localId:song.id, songId:song.song,
+      releaseId:song.release, releaseKey:releaseFor(song.key),
+      entryKey:JSON.stringify([song.list.toLowerCase(), song.song.toLowerCase(), song.release.toLowerCase()]),
+      playable:Boolean(song.audio),
+    }));
+    const byKey = new Map(entries.map(entry => [entry.miniKey, entry]));
+    const scope = new AbortController();
+    const life = { scope, dead:false, publish() {},
+      queue:{post:work => Promise.resolve().then(() => { if (!life.dead) return work(); })} };
+    const storage = {
+      getItem(key) { try { return localStorage.getItem(prefix + key); } catch (_) { return null; } },
+      setItem(key, value) { try { localStorage.setItem(prefix + key, value); } catch (_) {} },
+    };
+    const { TSelectionMemory, TPlaylistSelector } = window.VCardSelectionCore;
+    const memory = new TSelectionMemory(life, {catalog:{entries}, storage, storageKey:key => prefix + key});
+    life.selectionMemory = memory;
+    const selector = new TPlaylistSelector(entries, memory, null,
+      () => playbackQueue().map(item => byKey.get(item.key)).filter(Boolean));
+    selectionState = {memory, selector, byKey, life, scope};
+    return selectionState;
+  }
   const persist = () => {
     try {
       writeSelection();
@@ -148,7 +175,7 @@
         userLists = [];
         for (const id of Object.keys(excluded)) delete excluded[id];
       }
-      nextCandidate = null;
+      selectionState?.selector.reset();
       render();
     } catch (_) { message('Не удалось прочитать общий выбор песен.'); }
   });
@@ -299,13 +326,13 @@
     node.checked = checked;
     node.indeterminate = mixed;
     node.setAttribute('aria-label', label);
-    node.addEventListener('change', () => { change(node.checked); persist(); nextCandidate = null; render(); });
+    node.addEventListener('change', () => { change(node.checked); persist(); selectionState?.selector.reset(); render(); });
     return node;
   }
   function setAll(list, value) { excluded[list.id] = value ? [] : [...list.songs]; }
   function selectionActions(list) {
     const bar = el('div', undefined, 'list-actions list-actions--selection');
-    const selectAll = value => { (list ? [list] : allLists()).forEach(l => setAll(l, value)); persist(); nextCandidate = null; render(); };
+    const selectAll = value => { (list ? [list] : allLists()).forEach(l => setAll(l, value)); persist(); selectionState?.selector.reset(); render(); };
     bar.innerHTML = data.listActionsHtml || '';
     const handlers = {
       SELECT_ALL: () => selectAll(true),
@@ -365,7 +392,7 @@
     userLists = userLists.filter(l => l.id !== list.id);
     delete excluded[list.id];
     if (playingList === list.id) playingList = current?.list || '';
-    nextCandidate = null;
+    selectionState?.selector.reset();
     persist();
     go({kind:'root'});
   }
@@ -475,15 +502,17 @@
     if (typeof texts[song.textKey] !== 'string') throw new Error('Missing lyrics');
     return texts[song.textKey];
   }
-  function choose(song, list, launch = 'manual') {
+  function choose(song, list, launch = 'manual', restart = false) {
     playingList = list || song.list;
-    if (current?.key === song.key) return;
+    if (current?.key === song.key && !restart) return;
+    const reservation = selectionState?.selector.reservation;
+    if (reservation && reservation.entry.releaseKey !== releaseFor(song.key)) reservation.cancel();
+    if (!restart) pendingHistoryIndex = null;
     if (current) renewColors();
     playbackLaunch = launch;
     analyticsRun++;
     current = song;
     currentTimes = (song.track.match(/\d+:\d{2}/g) || []).map(t => { const [m,s] = t.split(':').map(Number); return m * 60 + s; });
-    nextCandidate = null;
     audio.pause();
     audio.removeAttribute('src');
     if (song.audio && !window.VCardCrypt?.protectedUrl(song.audio)) audio.src = song.audio;
@@ -503,32 +532,45 @@
     ensureWorker();
   }
   function following(direction = 1) {
-    const list = listById(playingList) || listById(current?.list);
-    const keys = playable(list);
-    if (!keys.length) return null;
-    if (direction < 0 && preferences.shuffle && historyQueue.length) {
-      const previous = historyQueue.pop();
-      if (keys.includes(previous)) return data.songs[previous];
+    const queue = playbackQueue();
+    if (!queue.length) return null;
+    const identity = current && releaseFor(current.key);
+    if (direction < 0) {
+      for (let index = historyCursor - 1; index >= 0; index--) {
+        const entry = queue.find(item => item.id === historyQueue[index]);
+        if (entry) return {...entry, historyIndex:index};
+      }
+      return null;
     }
     if (direction > 0 && preferences.shuffle) {
-      if (nextCandidate && keys.includes(nextCandidate) && nextCandidate !== current?.key) return data.songs[nextCandidate];
-      const options = keys.filter(k => k !== current?.key);
-      nextCandidate = options.length ? options[Math.floor(Math.random() * options.length)] : keys[0];
-      return data.songs[nextCandidate];
+      const reservation = selection().selector.reserve();
+      return reservation ? queue.find(item => item.id === reservation.entry.releaseKey) || null : null;
     }
-    const index = keys.indexOf(current?.key);
-    return data.songs[keys[index < 0 ? (direction < 0 ? keys.length - 1 : 0) : (index + direction + keys.length) % keys.length]];
+    const index = queue.findIndex(item => item.id === identity);
+    return queue[index < 0 ? (direction < 0 ? queue.length - 1 : 0) : (index + direction + queue.length) % queue.length];
+  }
+  function playbackQueue() {
+    const seen = new Set();
+    return allLists().flatMap(list => playable(list).flatMap(key => {
+      const id = releaseFor(key);
+      if (seen.has(id)) return [];
+      seen.add(id);
+      return [{key, list:list.id, id}];
+    }));
   }
   async function start() {
     if (!current?.audio) {
-      const list = listById(route.list) || data.playlists.find(p => playable(p).length);
-      const song = data.songs[playable(list)[0]];
+      const list = listById(route.list);
+      const key = playable(list)[0];
+      const entry = key ? {key, list:list.id} : playbackQueue()[0];
+      const song = data.songs[entry?.key];
       if (!song) { message('Нет отмеченных песен для воспроизведения.'); return; }
-      choose(song, list.id);
-      go({kind:'song', list:list.id, song:song.key});
+      choose(song, entry.list);
+      go({kind:'song', list:entry.list, song:song.key});
     }
     // Invoke play in the user gesture; neither cache nor text loading gates it.
     const expected = current.key;
+    selectionState?.selector.invalid.delete(releaseFor(current.key));
     volumeContext?.resume().catch(() => {});
     if (window.VCardCrypt?.protectedUrl(current.audio)) {
       try {
@@ -540,13 +582,12 @@
     audio.play().catch(error => { if (current?.key === expected && error.name !== 'AbortError') message(`Не удалось начать воспроизведение. Нажмите ${playLabel} ещё раз.`); });
   }
   function advance(direction, automatic = false) {
-    const next = following(direction);
-    if (!next) { message('Нет отмеченных песен для перехода.'); return; }
-    if (current && direction > 0) historyQueue.push(current.key);
-    if (historyQueue.length > 100) historyQueue.shift();
-    const list = playingList;
-    if (current?.key === next.key) renewColors();
-    choose(next, list, automatic ? 'automatic' : 'manual');
+    const entry = following(direction);
+    if (!entry) { message('Нет отмеченных песен для перехода.'); return; }
+    const next = data.songs[entry.key];
+    const list = entry.list;
+    pendingHistoryIndex = entry.historyIndex ?? null;
+    choose(next, list, automatic ? 'automatic' : 'manual', true);
     go({kind:'song', list, song:next.key});
     playbackLaunch = automatic ? 'automatic' : 'manual';
     start();
@@ -558,7 +599,13 @@
     if (current?.audio) cacheMedia(current.audio).catch(() => {});
     if (preferences.autoNext) advance(1, true);
   });
-  audio.addEventListener('error', () => { if (current) message(`Аудио недоступно. Проверьте соединение и нажмите ${playLabel}.`); });
+  audio.addEventListener('error', () => {
+    if (!current) return;
+    const selector = selectionState?.selector;
+    selector?.invalid.add(releaseFor(current.key));
+    selector?.reservation?.cancel();
+    message(`Аудио недоступно. Проверьте соединение и нажмите ${playLabel}.`);
+  });
   const time = seconds => `${Math.floor((Number.isFinite(seconds) ? seconds : 0) / 60).toString().padStart(2,'0')}:${Math.floor((Number.isFinite(seconds) ? seconds : 0) % 60).toString().padStart(2,'0')}`;
   function syncPlayer() {
     playButton.textContent = audio.paused ? playLabel : pauseLabel;
@@ -576,7 +623,27 @@
   for (const event of ['play','pause','loadedmetadata','durationchange','emptied']) audio.addEventListener(event, syncPlayer);
   audio.addEventListener('timeupdate', () => { syncPlayer(); track(); });
   audio.addEventListener('playing', () => {
-    const next = following();
+    if (current && confirmedRun !== analyticsRun) {
+      const state = selection();
+      const identity = state.byKey.get(current.key);
+      if (identity) {
+        const reservation = state.selector.reservation;
+        if (reservation?.entry.releaseKey === identity.releaseKey) reservation.commit();
+        else reservation?.cancel();
+        state.selector.started(identity);
+        state.memory.record({song:{identity}, runId:analyticsRun});
+        if (pendingHistoryIndex !== null) historyCursor = pendingHistoryIndex;
+        else {
+          historyQueue.splice(historyCursor + 1);
+          historyQueue.push(identity.releaseKey);
+          if (historyQueue.length > 100) historyQueue.shift();
+          historyCursor = historyQueue.length - 1;
+        }
+        pendingHistoryIndex = null;
+        confirmedRun = analyticsRun;
+      }
+    }
+    const next = data.songs[following()?.key];
     if (next?.audio) {
       const task = window.VCardCrypt?.protectedUrl(next.audio)
         ? window.VCardCrypt.audioUrl(next.audio) : cacheMedia(next.audio);
@@ -636,7 +703,11 @@
     setting('Размер шрифта', size);
     for (const [name,label] of [['tracking','Сопровождение куплета'],['autoNext','Следующая песня автоматически'],['shuffle','Перемешивать песни']]) {
       const input = el('input'); input.type = 'checkbox'; input.checked = Boolean(preferences[name]);
-      input.addEventListener('change', () => { preferences[name] = input.checked; nextCandidate = null; persist(); });
+      input.addEventListener('change', () => {
+        preferences[name] = input.checked;
+        selectionState?.selector.reset();
+        persist();
+      });
       setting(label, input);
     }
     screen.append(el('h2', 'Кэш (общий с полной версией)'));
@@ -718,7 +789,14 @@
     return promise;
   }
   window.addEventListener('pagehide', event => {
-    if (!event.persisted) { cancelCacheJobs(); cacheChannel?.close(); }
+    if (!event.persisted) {
+      cancelCacheJobs(); cacheChannel?.close();
+      if (selectionState) {
+        selectionState.selector.reservation?.cancel();
+        selectionState.life.dead = true;
+        selectionState.scope.abort();
+      }
+    }
   });
   route = readRoute();
   render();

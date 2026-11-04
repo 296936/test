@@ -3,41 +3,41 @@
   "style": "s_alarm",
   "profile_sha256": "480ab06fdbb09ebae6c837e3eb679dd5be99e129809b972d1f72cca4e485f81a",
   "files": {
-    "011": {
-      "sha256": "dec45759c9da5e5a2b9ffef324c551f18ff136ed70eed56d9544e0351be59e2c",
+    "007": {
+      "sha256": "ed73f1d289d7b015c52f75d9a6e32aeb5ea922df1539774ed6bc47537c4c1635",
       "input_mode": "color",
       "parameters": {
-        "black": 91,
-        "white": 162,
+        "black": 31,
+        "white": 87,
         "gamma": 1,
         "out_black": 0,
         "out_white": 255
       },
-      "deploy_sha256": "79276645115c7a05c18c5abf382b5218262098f20bc80741a998c6a6c440a47f"
+      "deploy_sha256": "76578bdcc915760ccfb87ecfc07da78f15a1c5ff4f9de184c2630af9b4ae4180"
     },
-    "012": {
-      "sha256": "002909285e08bb63cbd5c3a13dcbf10e544e2d536b02997f9ba635d73bb13e77",
+    "026": {
+      "sha256": "a20cd95c197d3b4ddef17eb659a6888dfa65ea661f32e8a5933d1f141be2ad26",
       "input_mode": "color",
       "parameters": {
-        "black": 55,
-        "white": 117,
+        "black": 0,
+        "white": 103,
+        "gamma": 1.45,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "efd58d3036273cc248915b065d136b5f1dad25689b1b4278a7dfe35d1c22d666"
+    },
+    "031": {
+      "sha256": "6d25011767e07b1771bbe7feefe0a36259f8313c397afc13357be0792b8e9867",
+      "input_mode": "color",
+      "parameters": {
+        "black": 14,
+        "white": 46,
         "gamma": 1,
         "out_black": 0,
         "out_white": 255
       },
-      "deploy_sha256": "aad8a9491648145fa8a1e6761429ddcac5f90aa839cee222952d8975e0d4b0d4"
-    },
-    "020": {
-      "sha256": "92513d3770969a8f3427daf1ae7d7bd1ae377a855114783e9d86a410e21f11c8",
-      "input_mode": "color",
-      "parameters": {
-        "black": 34,
-        "white": 171,
-        "gamma": 0.64,
-        "out_black": 0,
-        "out_white": 255
-      },
-      "deploy_sha256": "c432cd6de4b7dc66fdafacd70dd7f7b13c81c715eb6d7f6652bddb619e41eafa"
+      "deploy_sha256": "c5cb55fc9b0b87928015e96e0eee5b7b64e115c77c3516b8014b1fb8c4bb45c3"
     }
   }
 }
