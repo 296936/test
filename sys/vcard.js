@@ -1068,10 +1068,6 @@ const vcardMiniUrl = () => {
   }
   return target.href;
 };
-document.getElementById('vcard-mini-link')?.addEventListener('click', (event) => {
-  event.currentTarget.href = vcardMiniUrl();
-});
-
 document.addEventListener('dblclick', (event) => {
   const trigger = event.target.closest?.('[data-title-dblclick]');
   if (!trigger?.closest('[ids="tits"] h1')) return;
