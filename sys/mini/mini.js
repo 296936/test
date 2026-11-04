@@ -309,7 +309,7 @@
     }
     full.setAttribute('href', `../${fullUrl.search}`);
     const list = listById(route.list);
-    if (list) lists.append(document.createTextNode(' > '), navLink(list.short || list.title, {kind:'list', list:list.id}));
+    if (list) lists.append(document.createTextNode(' > '), navLink(list.user ? list.title : list.id.toUpperCase(), {kind:'list', list:list.id}));
     const song = data.songs[route.song];
     if (song) lists.append(document.createTextNode(' > '), navLink(song.song, {kind:'song', list:list?.id || song.list, song:song.key}));
     for (const slot of navSlots) {
