@@ -309,9 +309,9 @@
     }
     full.setAttribute('href', `../${fullUrl.search}`);
     const list = listById(route.list);
-    if (list) lists.append(document.createTextNode(' > '), navLink(list.title, {kind:'list', list:list.id}));
+    if (list) lists.append(document.createTextNode(' > '), navLink(list.short || list.title, {kind:'list', list:list.id}));
     const song = data.songs[route.song];
-    if (song) lists.append(document.createTextNode(' > '), navLink(song.title, {kind:'song', list:list?.id || song.list, song:song.key}));
+    if (song) lists.append(document.createTextNode(' > '), navLink(song.song, {kind:'song', list:list?.id || song.list, song:song.key}));
     for (const slot of navSlots) {
       const kind = slot.dataset.miniNav;
       if (kind === 'opt') slot.replaceChildren(navLink(navLabels.opt ?? 'Настройки', {...route, kind:'opt'}));
@@ -441,12 +441,11 @@
       for (const key of list.songs) {
         const song = data.songs[key];
         const row = el('li', undefined, 'entry entry--song');
-        row.append(link(song.title, {kind:'song', list:list.id, song:key}), document.createTextNode(' '),
-          checkbox(`Выбрать песню ${song.title}`, selected(list, key), false, value => {
+        row.append(checkbox(`Выбрать песню ${song.title}`, selected(list, key), false, value => {
           const items = new Set(Array.isArray(excluded[list.id]) ? excluded[list.id] : []);
           value ? items.delete(key) : items.add(key);
           excluded[list.id] = [...items];
-        }));
+        }), link(song.title, {kind:'song', list:list.id, song:key}));
         ul.append(row);
       }
       screen.append(ul, selectionActions(list));
@@ -456,7 +455,7 @@
       window.VCardAnalytics?.open({song_id:song.song, release_id:song.release, playlist_id:route.list});
       choose(song, route.list);
       const lyrics = el('div', 'Загрузка текста…', 'lyrics');
-      screen.append(lyrics);
+      screen.append(el('h1', song.title, 'song-title'), lyrics);
       try {
         const html = await loadText(song);
         if (revision !== paintRevision) return;

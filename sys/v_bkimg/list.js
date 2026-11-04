@@ -1,2 +1,2 @@
 window.VCARD_MEDIA_LISTS ||= {};
-window.VCARD_MEDIA_LISTS[document.currentScript.src] = ["fine-canvas.webp?v=cdf47f65c9d8"];
+window.VCARD_MEDIA_LISTS[document.currentScript.src] = ["rough-canvas.webp?v=64a682a41828"];

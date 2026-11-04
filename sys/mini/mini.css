@@ -8,6 +8,22 @@ a { color:inherit; text-underline-offset:.15em; }
 button, input, select, h1, h2, small { font:inherit; }
 button, input, select, option { text-transform:inherit; }
 input { accent-color:currentColor; }
+input[type="checkbox"] {
+  appearance:none; -webkit-appearance:none;
+  display:inline-grid; place-content:center; vertical-align:middle;
+  width:1em; height:1em; margin:0; color:inherit;
+  border:1px solid currentColor; border-radius:.1em; background:var(--paper);
+}
+input[type="checkbox"]:checked { background:currentColor; }
+input[type="checkbox"]:checked::before {
+  content:""; width:.5em; height:.28em;
+  border-left:.1em solid var(--paper); border-bottom:.1em solid var(--paper);
+  transform:translateY(-.06em) rotate(-45deg);
+}
+input[type="checkbox"]:indeterminate { background:var(--muted); }
+input[type="checkbox"]:indeterminate::before {
+  content:""; width:.5em; height:.1em; border:0; background:var(--paper); transform:none;
+}
 button { color:inherit; background:transparent; border:0; text-decoration:underline; text-underline-offset:.15em; padding:0; cursor:pointer; }
 button:disabled { color:var(--muted, #888); opacity:1; cursor:default; }
 button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible { outline:2px solid currentColor; outline-offset:2px; }
@@ -60,7 +76,7 @@ main { flex:1; min-height:0; overflow-y:auto; overscroll-behavior-y:contain; ove
 .player-transport #seek { flex:0 1 216px; width:216px; min-width:48px; }
 .player-transport #volume { flex:0 1 112px; width:112px; min-width:48px; }
 ul { list-style:none; padding:0; margin:0; }
-.entry { display:flex; align-items:baseline; gap:.6rem; padding:.25rem 0; }
+.entry { display:flex; align-items:center; gap:.6rem; padding:.25rem 0; }
 .entry input { flex:none; width:1em; height:1em; margin:0; accent-color:currentColor; }
 .entry a { flex:none; }
 .entry--song { align-items:center; gap:.25em; }
@@ -70,6 +86,7 @@ ul { list-style:none; padding:0; margin:0; }
 .list-actions--selection { gap:1ch; color:var(--ink); }
 .list-actions--selection button+button::before { content:none; }
 .lyrics { overflow-wrap:anywhere; }
+.song-title { margin:0 0 .65rem; font:inherit; overflow-wrap:anywhere; }
 .verse { margin:0 0 1.3em; scroll-margin-block:1em; }
 .verse.active { font-weight:bold; }
 .text-note { margin:.6em 0 1.3em; }
