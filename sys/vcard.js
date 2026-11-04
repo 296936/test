@@ -1072,6 +1072,16 @@ document.getElementById('vcard-mini-link')?.addEventListener('click', (event) =>
   event.currentTarget.href = vcardMiniUrl();
 });
 
+document.addEventListener('dblclick', (event) => {
+  const trigger = event.target.closest?.('[data-title-dblclick]');
+  if (!trigger?.closest('[ids="tits"] h1')) return;
+  const target = new URL(trigger.dataset.titleDblclick, document.baseURI);
+  if (target.protocol !== 'https:') return;
+  event.preventDefault();
+  window.getSelection()?.removeAllRanges();
+  window.location.assign(target.href);
+});
+
 const vcardSettingEnabled = (storageKey, defaultName, fallback = 'on') => (
   vcardStoredSetting(storageKey, defaultName, fallback).toLowerCase() !== 'off'
 );

@@ -311,7 +311,7 @@
     const list = listById(route.list);
     if (list) lists.append(document.createTextNode(' > '), navLink(list.user ? list.title : list.id.toUpperCase(), {kind:'list', list:list.id}));
     const song = data.songs[route.song];
-    if (song) lists.append(document.createTextNode(' > '), navLink(song.song, {kind:'song', list:list?.id || song.list, song:song.key}));
+    if (song) lists.append(document.createTextNode(' > '), navLink(song.title, {kind:'song', list:list?.id || song.list, song:song.key}));
     for (const slot of navSlots) {
       const kind = slot.dataset.miniNav;
       if (kind === 'opt') slot.replaceChildren(navLink(navLabels.opt ?? 'Настройки', {...route, kind:'opt'}));
@@ -455,7 +455,7 @@
       window.VCardAnalytics?.open({song_id:song.song, release_id:song.release, playlist_id:route.list});
       choose(song, route.list);
       const lyrics = el('div', 'Загрузка текста…', 'lyrics');
-      screen.append(el('h1', song.title, 'song-title'), lyrics);
+      screen.append(lyrics);
       try {
         const html = await loadText(song);
         if (revision !== paintRevision) return;

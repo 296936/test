@@ -452,6 +452,12 @@ h1 {
   color: var(--vc-acc);
 }
 
+[ids="tits"] h1 [data-title-dblclick] {
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
 /* Raise only SStars asterisks; retain the surrounding title's font size/line box. */
 .song__mark-stars {
   position: relative;
