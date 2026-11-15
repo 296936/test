@@ -1,0 +1,61 @@
+{
+  "format": "aliswb-style-params-1",
+  "style": "s_inverse",
+  "profile_sha256": "480ab06fdbb09ebae6c837e3eb679dd5be99e129809b972d1f72cca4e485f81a",
+  "files": {
+    "008": {
+      "sha256": "6ca0c9e75f58dfdb0ccc22b96477d20b139e63e5f90570b880a640f45189e51d",
+      "input_mode": "color",
+      "parameters": {
+        "threshold": 56,
+        "invert": 1,
+        "radius": 0,
+        "strength": 0,
+        "bias": 0,
+        "black": 48,
+        "white": 65,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255,
+        "apply_bitmap": 1
+      },
+      "deploy_sha256": "8b5cee64f474447b62c666de6f07be33f0e137020adbf3c9e1e21c6cdc6f10b9"
+    },
+    "030": {
+      "sha256": "040aedaa06dc2be0a2193cf0f889c88265c94003629828d9c649881e18cfb1de",
+      "input_mode": "color",
+      "parameters": {
+        "threshold": 88,
+        "invert": 1,
+        "radius": 0,
+        "strength": 0,
+        "bias": 0,
+        "black": 62,
+        "white": 113,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255,
+        "apply_bitmap": 1
+      },
+      "deploy_sha256": "c2cdf2f3e1ca938296b4f247d0d104222a9259b788ea9dd16f652257df320628"
+    },
+    "041": {
+      "sha256": "d11748fef0be5ff5299adfec0984bca54f86058e773c24639a5c98db336db823",
+      "input_mode": "color",
+      "parameters": {
+        "threshold": 80,
+        "invert": 1,
+        "radius": 0,
+        "strength": 0,
+        "bias": 0,
+        "black": 72,
+        "white": 89,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255,
+        "apply_bitmap": 1
+      },
+      "deploy_sha256": "0d1a6c567192b39b04d425032347e04816ad298e699f39c8d3b2ade4f582f10f"
+    }
+  }
+}

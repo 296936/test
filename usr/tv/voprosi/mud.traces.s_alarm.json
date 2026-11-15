@@ -1,0 +1,67 @@
+{
+  "format": "aliswb-style-params-1",
+  "style": "s_alarm",
+  "profile_sha256": "480ab06fdbb09ebae6c837e3eb679dd5be99e129809b972d1f72cca4e485f81a",
+  "files": {
+    "001": {
+      "sha256": "a686896f954adb8fbe74b65eaed1add82ff46ade7ca2077246e810c7119c64de",
+      "input_mode": "color",
+      "parameters": {
+        "black": 59,
+        "white": 72,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "bbba9a547f9bf09e958b6f6ea90b64875de96dae8a8110ec5ae419e0daded903"
+    },
+    "005": {
+      "sha256": "b53625f5ea2c59e56f8cf52866f18d5f7f083308c7764595d17d0b4ed51b5fbc",
+      "input_mode": "color",
+      "parameters": {
+        "black": 47,
+        "white": 67,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "6f9232f91620c1528299901552156bbc44a5b48319ad1ffce78332b9adc6ae9a"
+    },
+    "011": {
+      "sha256": "278515dae16e3437ac7ddc8d04b84d55bd67a1546338a245b365259dfd815e68",
+      "input_mode": "color",
+      "parameters": {
+        "black": 50,
+        "white": 92,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "e3e8ad484e021f7ea8fabcd40585aada55801c69608db0ed8d72720767fb093c"
+    },
+    "013": {
+      "sha256": "fb8475ba3792914870dca40a4d229c85d0e7d08d048998b76f24fb9cfc765bb7",
+      "input_mode": "color",
+      "parameters": {
+        "black": 52,
+        "white": 105,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "96cef9a844289d55b0328f0786af0f89315fa8fc9dd148ffb12e8be614431bff"
+    },
+    "017": {
+      "sha256": "5ce46fccf3f3f1fccc9a578245bd9a864b704cbcecbdb568bf77b219c1be97c8",
+      "input_mode": "color",
+      "parameters": {
+        "black": 59,
+        "white": 107,
+        "gamma": 1,
+        "out_black": 0,
+        "out_white": 255
+      },
+      "deploy_sha256": "77ea0e1d62e971fd288f71bd564b6eef41a618aabcd9d807ac6460854f51c3b5"
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "format": "aliswb-style-params-1",
+  "style": "s_mask",
+  "profile_sha256": "ea2c9a426444adef152cf3106ee8357f1c762ce53913617a5a4d6ad04c5f0e34",
+  "files": {
+    "014": {
+      "sha256": "2ace3cc92245ba0405a4804b6939a66fb7dbd93af8f2a664c1f95f69e11ae1e1",
+      "input_mode": "color",
+      "parameters": {
+        "width": 1280,
+        "height": 720,
+        "file": "014.png",
+        "source": "cobj",
+        "cobj_sha256": "1dd374e8f9046edcdc2ba8b699c9c584837fb9a3134d788700df4ab55775c250",
+        "mask_sha256": "e4b8016a6353a023a87063fe1be813f49934a6d4867445a35ae553beb8cf2aec"
+      },
+      "deploy_sha256": "243c25b4c7c3828a43c320afd196c4954229dbd43a316ed72588a50e1d9f07ff",
+      "deploy_output_sha256": "e4b8016a6353a023a87063fe1be813f49934a6d4867445a35ae553beb8cf2aec"
+    }
+  }
+}

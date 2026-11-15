@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "dev.aliswb.vcard.slot61",
+      "sha256_cert_fingerprints": [
+        "EC:F1:D8:D0:66:23:EF:C5:3E:40:34:B0:C4:4E:8C:6F:B6:2A:01:F0:4C:CD:00:6A:12:0C:F8:A2:C5:14:D5:E0"
+      ]
+    }
+  }
+]
