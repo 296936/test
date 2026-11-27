@@ -10,5 +10,17 @@
         "EC:F1:D8:D0:66:23:EF:C5:3E:40:34:B0:C4:4E:8C:6F:B6:2A:01:F0:4C:CD:00:6A:12:0C:F8:A2:C5:14:D5:E0"
       ]
     }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "dev.aliswb.suf",
+      "sha256_cert_fingerprints": [
+        "53:DD:C1:61:38:EA:F7:01:89:CC:0C:40:39:2B:C2:F7:08:49:E0:BC:3F:F7:72:68:F4:F6:45:F1:0E:B3:DC:2E"
+      ]
+    }
   }
 ]
